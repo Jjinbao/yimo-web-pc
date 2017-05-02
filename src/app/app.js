@@ -3,7 +3,7 @@
 angular.module('swalk', ['ngRoute','ngTouch','app.router','app.login','app.home','app.info','app.teach','app.mine'])
     /*所有控制器的父控制器*/
     .controller('rootTabCtrl', ['$scope','$location',function($scope,$location) {
-        $scope.activeTab='ZX'
+        $scope.activeTab='YMY'
         $scope.clickTab=function(val){
             if($scope.activeTab==val){
                 return;

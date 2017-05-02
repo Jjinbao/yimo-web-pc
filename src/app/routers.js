@@ -4,7 +4,7 @@ angular.module('app.router',[])
   .config(function($routeProvider,$locationProvider) {
     $locationProvider.html5Mode(true);
     $routeProvider
-      .when('/home',{
+      .when('/cloud',{
         controller:'swalkHome',
         templateUrl:'app/views/home/home.html'
       })
@@ -24,5 +24,5 @@ angular.module('app.router',[])
         controller:'mine',
         templateUrl:'app/views/mine/mine.tpl.html'
       })
-      .otherwise({redirectTo:'/info'});
+      .otherwise({redirectTo:'/cloud'});
   })
