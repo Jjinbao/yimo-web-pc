@@ -1,8 +1,30 @@
 <div class="main-container">
-    <div class="">
-
+    <div class="cloud-sort">
+        <div class="sort-item">
+            <span ng-click="changeItem('ymy')" ng-class="{true:'sort-item-active'}[nowActive=='ymy']">医模云平台</span>
+        </div>
+        <div class="sort-item">
+            <span ng-click="changeItem('ad')" ng-class="{true:'sort-item-active'}[nowActive=='ad']">艾德产品</span>
+        </div>
+        <div class="sort-item">
+            <span ng-click="changeItem('fs')" ng-class="{true:'sort-item-active'}[nowActive=='fs']">复苏小龙</span>
+        </div>
     </div>
-    <div class="cloud-intro">
+    <div class="cloud-intro" ng-show="nowActive=='ymy'">
+        <div class="software-download">
+            <div class="left-down-img">
+                <img src="./app/img/u12.png" alt=""/>
+            </div>
+            <div class="right-down-btn">
+                <h2 style="font-weight: normal">医模云平台</h2>
+                <span>您可以在医模云平台上使用医模科技的智能硬件产品、了解最新的行业资讯、学习经典医学知识。医模云平台将带给您前所未见的使用体验。</span>
+                <div></div>
+            </div>
+        </div>
+        <img src="./app/img/1120-700-1.jpg">
+        <img src="./app/img/1120-700-2.jpg">
+    </div>
+    <div class="cloud-intro" ng-show="nowActive!='ymy'">
         <img src="./app/img/1120-700-1.jpg">
         <img src="./app/img/1120-700-2.jpg">
     </div>
