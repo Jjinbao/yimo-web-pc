@@ -18,7 +18,7 @@
 }
 
 @header-tab-height:100px;
-@app-min-width:1383px;
+@app-min-width:1280px;
 @main-color:#9e62df;
 
 [class^="icon-"], [class*=" icon-"] {
@@ -52,8 +52,10 @@ html,body{
   height: 100%;
   width: 100%;
   overflow-y: hidden;
+  overflow-x: auto;
   padding: 0;
   margin: 0;
+  min-width: @app-min-width;
   font-family: "Microsoft YaHei Regular","Microsoft YaHei";
 }
 //body{
@@ -67,11 +69,13 @@ html,body{
 .nav-tab-bar{
   width: 100%;
   height: @header-tab-height;
-  position: fixed;
+  z-index: 10;
+  position: absolute;
   top: 0;
   left: 0;
   background-color: @main-color;
   min-width: @app-min-width;
+  overflow-y: hidden;
   .nav-bar-content{
     height: @header-tab-height;
     line-height: @header-tab-height;
@@ -123,8 +127,6 @@ html,body{
 }
 
 .main-container{
-  overflow-y: hidden;
+  //overflow-y: hidden;
   height: 100%;
-  overflow-x: auto;
-  min-width: 1366px !important;
 }

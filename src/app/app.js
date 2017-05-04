@@ -58,17 +58,9 @@ angular.module('swalk', ['ngRoute', 'ui.bootstrap', 'ngTouch', 'app.router', 'ap
         var resultStyle={};
 
         scope.style = function () {
-          if(attr.panlWidth){
-            return {
-              'height': (newValue.h - 100) + 'px',
-              'width':((newValue.w<1366?1366:newValue.w)-attr.menuWidth)+'px'
-            }
-          }else{
             return {
               'height': (newValue.h - 100) + 'px'
             };
-          }
-
         };
 
       }, true);
@@ -78,5 +70,30 @@ angular.module('swalk', ['ngRoute', 'ui.bootstrap', 'ngTouch', 'app.router', 'ap
       });
     }
   })
+    .directive('resizePanel', function ($window) {
+      return function (scope, element,attr) {
+        var w = angular.element($window);
+        scope.getWindowDimensions = function () {
+          return {'h': w.height(), 'w': w.width()};
+        };
+        scope.$watch(scope.getWindowDimensions, function (newValue, oldValue) {
+          scope.windowHeight = newValue.h;
+          scope.windowWidth = newValue.w;
+          var resultStyle={};
+
+          scope.style = function () {
+              return {
+                'height': (newValue.h - 100) + 'px',
+                'width':((newValue.w<1366?1366:newValue.w)-attr.menuWidth)+'px'
+              }
+          };
+
+        }, true);
+
+        w.bind('resizePanel', function () {
+          scope.$apply();
+        });
+      }
+    })
 
 
