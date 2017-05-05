@@ -1,0 +1,15 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h2 class="panel-title">帮助与反馈>{{helpFeedData.appName}}</h2>
+  </div>
+  <div class="panel-body" style="padding-left: 20px;padding-right: 20px;">
+    <div class="one-app-question" ng-repeat="question in resData.list">
+      <div class="question">
+        {{question.question}}
+      </div>
+      <div class="answer">
+        {{question.answer}}
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,12 +1,18 @@
 <div class="login-panel">
     <div class="login-header">
-        <img src="./app/img/u10.png">
+        <!--<img src="./app/img/u10.png">-->
         请使用医模云ID登录
     </div>
     <div class="login-body">
-        内容
+        <div class="login-user-name">
+            <input type="text" placeholder="手机号" ng-model="loginUser.phone" required>
+        </div>
+        <div class="login-password">
+            <input type="password" placeholder="请输入密码" maxlength="12" ng-model="loginUser.password" required>
+        </div>
+
     </div>
-    <div class="login-footer" ng-click="toLogin()">
-        按钮
+    <div class="login-footer">
+        <button class="btn btn-primary login-btn" ng-click="toLogin()">登录</button>
     </div>
 </div>

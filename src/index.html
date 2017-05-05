@@ -42,6 +42,7 @@
       </div>
       <div class="mine-img-tab" ng-click="clickTab('WD')">
         <!--<img src="./app/img/touxiang@2x.png">-->
+        <img ng-show="userImg" ng-src="{{userImg}}">
       </div>
     </div>
     <div style="height: 100%;width: 100%" ng-view></div>

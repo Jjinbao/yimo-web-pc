@@ -9,13 +9,24 @@ angular.module('app.mine',[])
       $scope.$watchCollection($scope.getWindowDimensions,function(newVal){
         $scope.panelWidth={
           height:newVal.h-100,
-          width:newVal.w<1280?1030:newVal.w-250
+          width:newVal.w<1366?1116:newVal.w-250
         }
       })
+
     //修改用户头像和姓名
     $scope.changeUserInfo=function(){
-
+      $scope.haveLoginuser=userService.userMsg;
+      $scope.$emit('user.nav.img',$scope.haveLoginuser.smallImg);
     }
+      if(userService.userMsg.accountId){
+        $scope.changeUserInfo();
+      }
+
+      $scope.mineLogin=function(){
+        $scope.login('',function(value){
+          $scope.changeUserInfo();
+        });
+      }
     //应用
     $scope.application=function(val){
       if($scope.nowActivePanel==val){
@@ -25,10 +36,22 @@ angular.module('app.mine',[])
           $scope.nowActivePanel=val;
         }else{
           $scope.login(val,function(value){
+            $scope.changeUserInfo();
             $scope.nowActivePanel=value;
           });
         }
     }
+      $scope.historySubtitle='';
+      $scope.$on('history.type',function(evt,data){
+        $scope.historySubtitle=data;
+        $scope.nowActivePanel=''
+      })
+
+      $scope.$on('help.feed.type',function(evt,data){
+        console.log(data);
+        $scope.helpFeedData=data;
+        $scope.nowActivePanel='helpFeedApp'
+      })
     //反馈记录
     $scope.feedRecord=function(val){
       if($scope.nowActivePanel==val){
@@ -38,6 +61,7 @@ angular.module('app.mine',[])
         $scope.nowActivePanel=val;
       }else{
         $scope.login(val,function(value){
+          $scope.changeUserInfo();
           $scope.nowActivePanel=value;
         });
       }
@@ -52,21 +76,20 @@ angular.module('app.mine',[])
         $scope.nowActivePanel='user';
       }else{
         $scope.login('',function(value){
+          $scope.changeUserInfo();
           $scope.nowActivePanel='user';
         });
       }
     }
     //退出登录
     $scope.quitLogin=function(){
-
+      $scope.haveLoginuser=userService.userMsg={};
+      $scope.haveLoginuser='';
+      $scope.$emit('user.nav.img','');
     }
     //获取反馈的应用列表
     $scope.helpFeedApp=function(){
       $scope.nowActivePanel='feed';
-    }
-
-    $scope.appFeedRecord=function(val){
-      console.log(val)
     }
   }])
   .directive('helpFeed',function($http){
@@ -81,11 +104,52 @@ angular.module('app.mine',[])
         }).error(function () {
 
         })
+
+        $scope.appFeedRecord=function(val){
+          $scope.$emit('help.feed.type',val);
+        }
       },
       templateUrl:'app/views/mine/help.feed.tpl.html'
     }
   })
-  .directive('application',function(userService,$http){
+    .directive('helpFeedApp',function(userService,$http){
+      return {
+        restrict: 'EA',
+        link: function ($scope, element, attr) {
+          console.log($scope.helpFeedData);
+          $scope.reqDate = {
+            appId: $scope.helpFeedData.appId,
+            sign: md5('ymy' + $scope.helpFeedData.appId),
+            pageNumber: 1,
+            pageSize: 10
+          }
+          $scope.resData = {
+            totalPage: 0,
+            list: []
+          }
+          requestDate();
+          function requestDate() {
+            $http({
+              url: baseUrl + 'ym/question2/list.api',
+              method: 'POST',
+              params: $scope.reqDate
+            }).success(function (data) {
+              if (data.result == 1) {
+                $scope.resData.totalPage = data.totalPage;
+                $scope.resData.list = data.categoryQuestionList;
+                console.log($scope.resData);
+              } else {
+
+              }
+            }).error(function () {
+              //$scope.alertTab('网络异常,请检查网络!', $scope.netBreakBack);
+            })
+          }
+        },
+        templateUrl:'app/views/mine/help.feed.questions.html'
+      }
+    })
+  .directive('historyRecord',function(userService,$http){
     return {
       restrict: 'EA',
       link: function ($scope, element, attr) {
@@ -109,7 +173,7 @@ angular.module('app.mine',[])
           //$scope.alertTab('网络异常,请检查网络!',$scope.netBreakBack);
         })
       },
-      templateUrl:'app/views/mine/application.tpl.html'
+      templateUrl:'app/views/mine/history.tpl.html'
     }
   })
   .directive('feedRecord',function(userService,$http){

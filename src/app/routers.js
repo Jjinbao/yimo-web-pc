@@ -22,7 +22,8 @@ angular.module('app.router',[])
       // })
       .when('/mine',{
         controller:'mine',
-        templateUrl:'app/views/mine/mine.tpl.html'
+        templateUrl:'app/views/mine/mine.tpl.html',
+          cache:false
       })
       .otherwise({redirectTo:'/cloud'});
   })

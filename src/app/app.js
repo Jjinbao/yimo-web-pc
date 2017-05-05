@@ -16,12 +16,21 @@ angular.module('app', ['ngAnimate','ngRoute','ui.bootstrap','ympc.services','app
       }
     }
 
+      $scope.$on('user.nav.img',function(evt,data){
+        $scope.userImg=data;
+        console.log(data);
+      })
+
     $scope.login=function(backParams,callback){
       $rootScope.modal = $modal.open({
         templateUrl: "app/views/mine/login.tpl.html",
         backdrop: true,
         keyboard: false,
         controller: function ($scope,$http,userService) {
+          $scope.loginUser={
+            phone:'',
+            password:''
+          }
           $scope.closeModal = function () {
             $scope.modal.close();
           };
@@ -30,13 +39,14 @@ angular.module('app', ['ngAnimate','ngRoute','ui.bootstrap','ympc.services','app
               url:baseUrl+'ym/account/login.api',
               method:'POST',
               params:{
-                phone:'13661398953',
-                password:md5('12345678'),
-                sign:md5('ymy'+md5('12345678')+'13661398953')
+                phone:$scope.loginUser.phone,
+                password:md5($scope.loginUser.password),
+                sign:md5('ymy'+md5($scope.loginUser.password)+$scope.loginUser.phone)
               }
             }).success(function(data){
               console.log(data);
               if(data.result==1){
+                $scope.$emit('user.nav.img',data)
                 userService.userMsg=data;
                 if(callback){
                   callback(backParams)
