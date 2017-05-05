@@ -1,27 +1,34 @@
 <div class="main-container">
     <div class="mine-left-menu" ng-style="style()" resize>
-        <div class="mine-portrait">
+        <div class="mine-portrait-img">
+            <div class="mine-portrait">
+            </div>
+            <div class="login-btn" ng-click="login()">登录</div>
         </div>
-        <div class="login-btn">登录</div>
-        <div class="mine-item-list">
+
+        <div class="mine-item-list" ng-class="{true:'active-list'}[nowActivePanel=='history']" ng-click="application('history')">
             历史记录
         </div>
-        <div class="mine-item-list">
+        <div class="mine-item-list" ng-class="{true:'active-list'}[nowActivePanel=='feed']" ng-click="helpFeedApp('feed')">
             帮助与反馈
         </div>
-        <div class="mine-item-list">
+        <div class="mine-item-list" ng-class="{true:'active-list'}[nowActivePanel=='record']" ng-click="feedRecord('record')">
             反馈记录
+        </div>
+        <div class="mine-item-list" ng-class="{true:'active-list'}[nowActivePanel=='user']" ng-click="userInfo()">
+            用户资料
+        </div>
+        <div class="mine-item-list" ng-click="quitLogin()">
+            退出登录
         </div>
     </div>
     <div class="mine-right-panel" ng-style="panelWidth">
-        我的
-        <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-        <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-        <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-        <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-        <p>1111</p>
-        <p>1111</p>
-        <p>1111</p>
-        <p>1111</p>
+        <div ng-switch="nowActivePanel">
+            <application ng-switch-when="history"></application>
+            <help-feed ng-switch-when="feed"></help-feed>
+            <feed-record ng-switch-when="record"></feed-record>
+            <user-info ng-switch-when="user"></user-info>
+        </div>
+
     </div>
 </div>

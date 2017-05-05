@@ -99,6 +99,17 @@ gulp.task('other', function () {
         .pipe(fileFilter)
         .pipe(gulp.dest(path.join(conf.paths.dist, '/')));
 });
+gulp.task('configjs', function () {
+  var fileFilter = $.filter(function (file) {
+    return file.stat.isFile();
+  });
+
+  return gulp.src([
+    path.join(conf.paths.src, '/config.js')
+  ])
+    .pipe(fileFilter)
+    .pipe(gulp.dest(path.join(conf.paths.dist, '/')));
+});
 
 gulp.task('clean', function (done) {
     $.del([path.join(conf.paths.dist, '/'), path.join(conf.paths.tmp, '/')], done);
@@ -110,4 +121,4 @@ gulp.task('clean-console', function () {
         .pipe(gulp.dest('dist'))
 })
 
-gulp.task('build', ['html', 'fonts', 'other', 'printHtml']);
+gulp.task('build', ['html', 'fonts','configjs', 'other', 'printHtml']);

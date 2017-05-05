@@ -1,6 +1,6 @@
 'use strict'
 angular.module('app.home', [])
-  .controller('swalkHome', ['$rootScope','$scope', '$http', '$interval', function ($rootScope,$scope, $http, $interval) {
+  .controller('swalkHome', ['$rootScope', '$scope', '$http', '$interval', function ($rootScope, $scope, $http, $interval) {
     $scope.nowActive = 'ymy';
     $scope.changeItem = function (val) {
       if ($scope.nowActive == val) {
@@ -8,8 +8,8 @@ angular.module('app.home', [])
       }
       $scope.nowActive = val;
     };
-    $scope.menuStyle={
-      height:$rootScope.windowHeight-100+'px'
+    $scope.menuStyle = {
+      height: $rootScope.windowHeight - 100 + 'px'
     }
 
   }])

@@ -1,0 +1,11 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="panel-title">帮助与反馈</h2>
+    </div>
+    <div class="panel-body" style="padding-left: 20px;padding-right: 20px;">
+        <div class="one-app-item" ng-repeat="pro in appProList" ng-click="appFeedRecord(pro)">
+            <img ng-src="{{pro.smallImage}}">
+            <span>{{pro.appName}}</span>
+        </div>
+    </div>
+</div>

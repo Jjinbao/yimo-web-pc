@@ -1,0 +1,21 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="panel-title">反馈记录</h2>
+    </div>
+    <div class="panel-body" style="padding-left: 20px;padding-right: 20px;">
+        <div class="feed-record-item" ng-repeat="que in resData.list">
+            <div class="feed-question">
+                {{que.question}}
+            </div>
+            <div class="feed-time">
+                {{que.useDate}}
+            </div>
+            <div class="feed-app">
+                {{que.appName}}
+            </div>
+            <div class="deal-status" ng-class="{'no-deal':que.status==1,'have-deal':que.status==2,'deal-ing':que.status==3}">
+                {{que.statusWord}}
+            </div>
+        </div>
+    </div>
+</div>

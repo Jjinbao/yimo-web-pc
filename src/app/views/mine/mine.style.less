@@ -3,26 +3,32 @@
   overflow-y: auto;
   border-right: 1px solid gainsboro;
   margin-top: 100px;
-  .mine-portrait{
-    width: 100px;
-    height: 100px;
-    background: url(../app/img/touxiang@2x.png) left center no-repeat;
-    background-size: 100px 100px;
-    display: block;
-    margin: 50px auto 20px;
+  .mine-portrait-img{
+    width: 100%;
+    height: 200px;
+    border-bottom: 1px solid gainsboro;
+    .mine-portrait{
+      width: 100px;
+      height: 100px;
+      background: url(../app/img/touxiang@2x.png) left center no-repeat;
+      background-size: 100px 100px;
+      display: block;
+      margin: 50px auto 20px;
+    }
+    .login-btn{
+      text-align: center;
+      width: 100px;
+      height: 40px;
+      line-height: 39px;
+      font-size: 20px;
+      color: white;
+      margin-left: 75px;
+      border-radius: 6px;
+      background-color: @main-color;
+      cursor: pointer;
+    }
   }
-  .login-btn{
-    text-align: center;
-    width: 100px;
-    height: 40px;
-    line-height: 39px;
-    font-size: 20px;
-    color: white;
-    margin-left: 75px;
-    border-radius: 6px;
-    background-color: @main-color;
-    cursor: pointer;
-  }
+
 
   .mine-item-list{
     width: 100%;
@@ -31,13 +37,101 @@
     text-align: center;
     font-size: 18px;
     border-bottom: 1px solid gainsboro;
+    cursor: pointer;
+  }
+  .active-list{
+    color: @main-color;
+  }
+  .mine-item-list:hover{
+    color: @main-color;
   }
 }
 
 .mine-right-panel{
   position: absolute;
+  padding: 10px;
   left: 250px;
   top: 100px;
   overflow-x: auto;
-  width: calc(100% - 250px);
+}
+.modal-dialog{
+  width: 400px;
+}
+
+.login-panel{
+  position: relative;
+  .login-header{
+    font-size: 20px;
+    height: 100px;
+    text-align: center;
+    img{
+      width: 60px;
+    }
+  }
+  .login-body{
+
+  }
+  .login-footer{
+
+  }
+}
+
+.one-app-item{
+  width: 100%;
+  height: 100px;
+  line-height: 100px;
+  border-bottom: 1px solid gainsboro;
+  cursor: pointer;
+  img{
+    width: 80px;
+  }
+  span{
+    margin-left: 20px;
+    font-size: 20px;
+  }
+}
+
+.feed-record-item{
+  width: 100%;
+  height: 100px;
+  border-bottom: 1px solid gainsboro;
+  cursor: pointer;
+  padding-top: 10px;
+  padding-left: 20px;
+  position: relative;
+  .feed-question{
+    font-size: 20px;
+  }
+  .feed-time{
+    margin-top: 10px;
+    display: inline-block;
+    color: gray;
+  }
+  .feed-app{
+    margin-top: 10px;
+    display: inline-block;
+    margin-left: 50px;
+    color: gray;
+  }
+  .deal-status{
+    position: absolute;
+    right: 50px;
+    top: 0;
+    height: 100px;
+    line-height: 100px;
+  }
+  .have-deal{
+    color: green;
+  }
+  .no-deal{
+    color: red;
+  }
+  .deal-ing{
+    color: yellow;
+  }
+}
+
+.user-info-portrait{
+  height: 200px;
+  border-bottom: 1px solid gainsboro;
 }
