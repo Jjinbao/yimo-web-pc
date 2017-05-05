@@ -18,6 +18,9 @@ angular.module('app.mine',[])
     }
     //应用
     $scope.application=function(val){
+      if($scope.nowActivePanel==val){
+        return;
+      }
         if(userService.userMsg&&userService.userMsg.accountId){
           $scope.nowActivePanel=val;
         }else{
@@ -28,6 +31,9 @@ angular.module('app.mine',[])
     }
     //反馈记录
     $scope.feedRecord=function(val){
+      if($scope.nowActivePanel==val){
+        return;
+      }
       if(userService.userMsg&&userService.userMsg.accountId){
         $scope.nowActivePanel=val;
       }else{
@@ -39,7 +45,16 @@ angular.module('app.mine',[])
 
     //用户信息
     $scope.userInfo=function(){
-      $scope.nowActivePanel='user';
+      if($scope.nowActivePanel=='user'){
+        return;
+      }
+      if(userService.userMsg&&userService.userMsg.accountId){
+        $scope.nowActivePanel='user';
+      }else{
+        $scope.login('',function(value){
+          $scope.nowActivePanel='user';
+        });
+      }
     }
     //退出登录
     $scope.quitLogin=function(){
@@ -149,7 +164,7 @@ angular.module('app.mine',[])
       templateUrl:'app/views/mine/feed.record.html'
     }
   })
-  .directive('userInfo',function(){
+  .directive('userInfo',function(userService,$http){
     return {
       restrict: 'EA',
       link: function (scope, element, attr) {
