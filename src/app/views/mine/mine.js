@@ -273,8 +273,16 @@ angular.module('app.mine', [])
     .directive('userInfo', function (userService, $http) {
         return {
             restrict: 'EA',
-            link: function (scope, element, attr) {
-
+            link: function ($scope, element, attr) {
+                $scope.modifyPortrait=function(){
+                    console.log('修改头像');
+                }
+                $scope.modifyName=function(){
+                    console.log('修改姓名');
+                }
+                $scope.modifyPassword=function(){
+                    console.log('修改密码');
+                }
             },
             templateUrl: 'app/views/mine/user.info.html'
         }
@@ -288,3 +296,23 @@ angular.module('app.mine', [])
             templateUrl: 'app/views/mine/nologin.panel.tpl.html'
         }
     })
+    .filter('phoneHash', [function () {
+        return function (value) {
+            var input = value + '';
+            input = input.replace(/(\s+)/g, "");
+            var out = '';
+            for(var i = 0; i < input.length; i++){
+                if(i == 2){
+                    out = out + input[i] + ' ';
+                }else if(i>2 && i<=6){
+                    out = out + '*';
+                    if(i == 6){
+                        out = out + ' '
+                    }
+                }else {
+                    out = out + input[i]
+                }
+            }
+            return out
+        }
+    }])
