@@ -24,6 +24,7 @@ angular.module('app.mine', [])
 
         if (userService.userMsg.accountId) {
             $scope.changeUserInfo();
+            $scope.nowActivePanel ='history';
         }else{
             $scope.nowActivePanel = 'noLogin'
         }
