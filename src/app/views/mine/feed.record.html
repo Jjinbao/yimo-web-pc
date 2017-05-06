@@ -3,7 +3,7 @@
         <h2 class="panel-title">反馈记录</h2>
     </div>
     <div class="panel-body" style="padding-left: 20px;padding-right: 20px;">
-        <div class="feed-record-item" ng-repeat="que in resData.list">
+        <div class="feed-record-item" ng-repeat="que in resData.list" ng-click="toOneFeedQuestion(que)">
             <div class="feed-question">
                 {{que.question}}
             </div>

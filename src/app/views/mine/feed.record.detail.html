@@ -1,0 +1,24 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="panel-title">反馈记录>详情</h2>
+    </div>
+    <div class="panel-body" style="padding-left: 20px;padding-right: 20px;padding-bottom: 50px;">
+        <div class="feed-record-item" style="border-bottom: none;">
+            <div class="feed-question">
+                {{feedDetailData.question}}
+            </div>
+            <div class="feed-time">
+                {{feedDetailData.useDate}}
+            </div>
+            <div class="feed-app">
+                {{feedDetailData.appName}}
+            </div>
+            <div class="deal-status" ng-class="{'no-deal':que.status==1,'have-deal':que.status==2,'deal-ing':que.status==3}">
+                {{feedDetailData.statusWord}}
+            </div>
+            <div class="deal-intro">
+                尊敬的用户，我们的工作人员正在处理！
+            </div>
+        </div>
+    </div>
+</div>
