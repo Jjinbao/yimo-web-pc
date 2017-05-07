@@ -72,6 +72,19 @@ angular.module('app', ['ngAnimate','ngRoute','ui.bootstrap','ympc.services','app
         }
       });
     }
+
+      $scope.$on('alter.confirm.window',function(evt,data){
+        console.log(data);
+        $rootScope.modal = $modal.open({
+          templateUrl: "app/views/confirm/tip.tpl.html",
+          backdrop: true,
+          keyboard: false,
+          controller: function ($scope,$http,userService) {
+            $scope.alterMsg=data;
+          }
+        });
+      })
+
   }])
   .directive('renderFinish', function ($timeout) {//监听dom渲染完毕
     return {

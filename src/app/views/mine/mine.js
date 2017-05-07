@@ -271,7 +271,7 @@ angular.module('app.mine', [])
             templateUrl: 'app/views/mine/feed.record.detail.html'
         }
     })
-    .directive('userInfo', function (userService, $http) {
+    .directive('userInfo', function (userService, $http,$modal,$rootScope) {
         return {
             restrict: 'EA',
             link: function ($scope, element, attr) {
@@ -279,10 +279,95 @@ angular.module('app.mine', [])
                     console.log('修改头像');
                 }
                 $scope.modifyName=function(){
-                    console.log('修改姓名');
+                    $rootScope.modal = $modal.open({
+                        templateUrl: "app/views/mine/modify.name.card.html",
+                        backdrop: true,
+                        keyboard: false,
+                        controller: function ($scope,$http,userService) {
+                            $scope.closeModal=function(){
+                                $scope.modal.close();
+                            }
+                            $scope.modifyNameCan=true;
+                            $scope.user={
+                                name:userService.userMsg.userName
+                            }
+                            $scope.modifyUserName=function(){
+                                if(!$scope.modifyNameCan){
+                                    return;
+                                }
+                                $scope.modifyNameCan=false;
+                                $http({
+                                    url:baseUrl+'ym/account/updateInfo.api',
+                                    method:'POST',
+                                    params:{
+                                        accountId:userService.userMsg.accountId,
+                                        userName:encodeURI($scope.user.name),
+                                        sign:md5('ymy'+userService.userMsg.accountId+$scope.user.name)
+                                    }
+                                }).success(function(data){
+                                    console.log(data);
+                                    if(data.result==1){
+                                        $scope.closeModal();
+                                        $scope.$emit('alter.confirm.window','修改成功');
+                                        userService.userMsg.userName=$scope.user.name;
+                                    }else{
+
+                                    }
+
+                                    $scope.modifyNameCan=true;
+                                }).error(function(){
+
+                                })
+
+                            }
+
+
+                        }
+                    });
                 }
                 $scope.modifyPassword=function(){
-                    console.log('修改密码');
+                    $rootScope.modal = $modal.open({
+                        templateUrl: "app/views/mine/modify.password.card.html",
+                        backdrop: true,
+                        keyboard: false,
+                        controller: function ($scope,$http,userService) {
+                            $scope.closeModal=function(){
+                                $scope.modal.close();
+                            }
+                            $scope.passwordInfo={
+                                oldPassword:'',
+                                newPassword:'',
+                                reNewPassword:''
+                            }
+                            $scope.doubleClick=false;
+                            $scope.modifyUserPassword=function(){
+                                if($scope.doubleClick){
+                                    return;
+                                }
+                                $scope.doubleClick=true;
+                                $http({
+                                    url:baseUrl+'ym/account/updatePassword.api',
+                                    method:'POST',
+                                    params:{
+                                        phone:userService.userMsg.phone,
+                                        oldPassword:md5($scope.passwordInfo.oldPassword),
+                                        newPassword:md5($scope.passwordInfo.newPassword),
+                                        sign:md5('ymy'+md5($scope.passwordInfo.newPassword)+md5($scope.passwordInfo.oldPassword)+userService.userMsg.phone)
+                                    }
+                                }).success(function(data){
+                                    console.log(data);
+                                    if(data.result==1){
+                                        $scope.closeModal();
+                                    }else if(data.result==103){
+
+                                    }
+                                    $scope.doubleClick=false;
+                                }).error(function(){
+                                    $scope.doubleClick=false;
+                                })
+                            }
+                        }
+                    });
                 }
             },
             templateUrl: 'app/views/mine/user.info.html'
