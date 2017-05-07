@@ -1,11 +1,12 @@
 <div class="login-panel">
+    <div class="close-btn" ng-click="closeModal()">&times;</div>
     <div class="login-header">
         <!--<img src="./app/img/u10.png">-->
         请使用医模云ID登录
     </div>
     <div class="login-body">
         <div class="login-user-name">
-            <input type="text" class="input-small" placeholder="手机号" ng-model="loginUser.phone" required>
+            <input type="text" class="input-small" placeholder="手机号" ng-model="loginUser.phone" autofocus required>
         </div>
         <div class="login-password">
             <input type="password" placeholder="请输入密码" maxlength="12" ng-model="loginUser.password" required>

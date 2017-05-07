@@ -139,3 +139,77 @@ html,body{
   margin-top: 50%;
 
 }
+.modal-login{
+  width: 400px;
+}
+
+.modal-feed{
+  width: 500px;
+}
+
+.common-panel{
+  position: relative;
+  .close-btn{
+    display: block;
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    cursor: pointer;
+    z-index: 10;
+    font-size: 26px;
+  }
+  .common-panel-header{
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    font-size: 20px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    background-color: gainsboro;
+    position: relative;
+    img{
+      width: 60px;
+    }
+  }
+  .common-panel-body{
+    padding-left: 20px;
+    padding-right: 20px;
+    .feed-stage{
+      height: 40px;
+      line-height: 40px;
+      font-size: 18px;
+    }
+    .feed-user-name{
+      width: 100%;
+      margin-top: 10px;
+      input{
+        width: 100%;
+        height: 40px;
+        border-radius: 5px;
+        border: 1px solid gainsboro;
+        padding-left: 5px;
+      }
+    }
+    .feed-text-area{
+      width: 100%;
+      margin-top: 20px;
+      .massage-area{
+        width: 100%;
+        border-radius: 5px;
+        border: 1px solid gainsboro;
+        min-height: 150px;
+        resize: none;
+      }
+    }
+
+  }
+  .common-panel-footer{
+    padding: 20px;
+    .feed-btn{
+      width: 100%;
+      background-color: @main-color;
+      border: none;
+      height: 40px;
+    }
+  }
+}

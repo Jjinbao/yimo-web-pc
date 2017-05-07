@@ -5,6 +5,7 @@ angular.module('app', ['ngAnimate','ngRoute','ui.bootstrap','ympc.services','app
 /*所有控制器的父控制器*/
   .controller('rootTabCtrl', ['$rootScope', '$scope', '$location','$modal', function ($rootScope, $scope, $location,$modal) {
     $scope.activeTab = 'YMY'
+      $scope.size=600;
     $scope.clickTab = function (val) {
       console.log(val);
       if ($scope.activeTab == val) {
@@ -26,7 +27,9 @@ angular.module('app', ['ngAnimate','ngRoute','ui.bootstrap','ympc.services','app
         templateUrl: "app/views/mine/login.tpl.html",
         backdrop: true,
         keyboard: false,
+        size:'login',
         controller: function ($scope,$http,userService) {
+            console.log($('modal-dialog'))
           $scope.loginUser={
             phone:'',
             password:''

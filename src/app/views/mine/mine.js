@@ -131,11 +131,10 @@ angular.module('app.mine', [])
             templateUrl: 'app/views/mine/help.feed.tpl.html'
         }
     })
-    .directive('helpFeedApp', function (userService, $http) {
+    .directive('helpFeedApp', function (userService, $http,$rootScope,$modal) {
         return {
             restrict: 'EA',
             link: function ($scope, element, attr) {
-                console.log($scope.helpFeedData);
                 $scope.reqDate = {
                     appId: $scope.helpFeedData.appId,
                     sign: md5('ymy' + $scope.helpFeedData.appId),
@@ -163,6 +162,43 @@ angular.module('app.mine', [])
                     }).error(function () {
                         //$scope.alertTab('网络异常,请检查网络!', $scope.netBreakBack);
                     })
+                }
+                $scope.alterFeedWindow=function(val){
+                    $rootScope.modal = $modal.open({
+                        templateUrl: "app/views/mine/feed.question.card.html",
+                        backdrop: true,
+                        keyboard: false,
+                        size:'feed',
+                        controller: function ($scope,$http,userService) {
+
+                            $scope.feedTarget=val;
+                            $scope.closeModal=function(){
+                                $scope.modal.close();
+                            }
+                            $scope.feedInfo={
+                                contact:'',
+                                info:'',
+                            }
+                            $scope.doubleClick=false;
+                            $scope.modifyUserPassword=function(){
+                                if($scope.doubleClick){
+                                    return;
+                                }
+                                $scope.doubleClick=true;
+
+                            }
+                        }
+                    });
+                }
+                $scope.feedQuestion=function(val){
+                    if(userService.userMsg&&userService.userMsg.accountId){
+                        $scope.alterFeedWindow(val);
+                    }else{
+                        $scope.login('', function (value) {
+                            $scope.changeUserInfo();
+                            //$scope.alterFeedWindow(val);
+                        });
+                    }
                 }
             },
             templateUrl: 'app/views/mine/help.feed.questions.html'
@@ -283,6 +319,7 @@ angular.module('app.mine', [])
                         templateUrl: "app/views/mine/modify.name.card.html",
                         backdrop: true,
                         keyboard: false,
+                        size:'login',
                         controller: function ($scope,$http,userService) {
                             $scope.closeModal=function(){
                                 $scope.modal.close();
@@ -330,6 +367,7 @@ angular.module('app.mine', [])
                         templateUrl: "app/views/mine/modify.password.card.html",
                         backdrop: true,
                         keyboard: false,
+                        size:'login',
                         controller: function ($scope,$http,userService) {
                             $scope.closeModal=function(){
                                 $scope.modal.close();

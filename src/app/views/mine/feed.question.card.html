@@ -1,0 +1,20 @@
+<div class="common-panel">
+    <div class="close-btn" ng-click="closeModal()">&times;</div>
+    <div class="common-panel-header">
+        反馈问题
+    </div>
+    <div class="common-panel-body">
+        <div class="feed-stage">
+            {{feedTarget.appName}}
+        </div>
+        <div class="feed-user-name">
+            <input type="text" class="input-small" maxlength="12" placeholder="请填写姓名,单位,联系方式" ng-model="feedInfo.contact" autofocus required>
+        </div>
+        <div class="feed-text-area">
+            <textarea class="massage-area" ng-model="feedInfo.info" placeholder="想和我们说些什么呢？"></textarea>
+        </div>
+    </div>
+    <div class="common-panel-footer">
+        <button class="btn btn-primary feed-btn" ng-click="modifyUserName()">提交问题</button>
+    </div>
+</div>
