@@ -432,6 +432,9 @@ angular.module('app.mine', [])
                                 if(!$scope.modifyNameCan){
                                     return;
                                 }
+                                if(!$scope.user.name){
+                                    return;
+                                }
                                 $scope.modifyNameCan=false;
                                 $http({
                                     url:baseUrl+'ym/account/updateInfo.api',
