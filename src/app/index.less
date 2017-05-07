@@ -135,16 +135,18 @@ html,body{
   //overflow-y: hidden;
   height: 100%;
 }
-.modal-content{
-  margin-top: 50%;
-
-}
 .modal-login{
   width: 400px;
+  padding-top: 20vh;
 }
 
 .modal-feed{
   width: 500px;
+  padding-top: 10vh;
+}
+.modal-tip{
+  width: 200px;
+  padding-top: 30vh;
 }
 
 .common-panel{
@@ -194,6 +196,7 @@ html,body{
       width: 100%;
       margin-top: 20px;
       .massage-area{
+        padding: 5px;
         width: 100%;
         border-radius: 5px;
         border: 1px solid gainsboro;
@@ -201,7 +204,9 @@ html,body{
         resize: none;
       }
     }
-
+    .feed-error-tip{
+      color: red;
+    }
   }
   .common-panel-footer{
     padding: 20px;
@@ -211,5 +216,28 @@ html,body{
       border: none;
       height: 40px;
     }
+  }
+}
+
+.common-success-panel{
+  position: relative;
+  .close-btn{
+    display: block;
+    position: absolute;
+    right: 10px;
+    top: 0px;
+    cursor: pointer;
+    z-index: 10;
+    font-size: 26px;
+  }
+  .panel-header{
+    border-radius: 8px;
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+  }
+  .panel-body{
+    text-align: center;
+    font-size: 18px;
   }
 }

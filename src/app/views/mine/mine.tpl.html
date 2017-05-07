@@ -8,7 +8,7 @@
             <div class="user-name" ng-show="haveLoginuser.accountId">{{haveLoginuser.userName}}</div>
         </div>
 
-        <div class="mine-item-list" ng-class="{true:'active-list'}[nowActivePanel=='history'||nowActivePanel=='appRecord']" ng-click="application('history')">
+        <div class="mine-item-list" ng-class="{true:'active-list'}[nowActivePanel=='history'||nowActivePanel=='appRecord'||nowActivePanel=='videoRecord'||nowActivePanel=='passageRecord']" ng-click="application('history')">
             历史记录
         </div>
         <div class="mine-item-list" ng-class="{true:'active-list'}[nowActivePanel=='feed'||nowActivePanel=='helpFeedApp']" ng-click="helpFeedApp('feed')">
@@ -35,6 +35,8 @@
             <no-login-panel ng-switch-when="noLogin"></no-login-panel>
             <feed-record-detail ng-switch-when="feedDetail"></feed-record-detail>
             <app-use-record ng-switch-when="appRecord"></app-use-record>
+            <video-use-record ng-switch-when="videoRecord"></video-use-record>
+            <passage-use-record ng-switch-when="passageRecord"></passage-use-record>
         </div>
 
     </div>

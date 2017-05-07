@@ -56,7 +56,7 @@ angular.module('app.mine', [])
         })
 
         $scope.$on('help.feed.type', function (evt, data) {
-            console.log(data);
+
             $scope.helpFeedData = data;
             $scope.nowActivePanel = 'helpFeedApp'
         })
@@ -68,7 +68,17 @@ angular.module('app.mine', [])
         //查看应用的使用记录
         $scope.$on('my.app.history',function(evt,data){
             $scope.nowActivePanel='appRecord';
-            console.log(data);
+
+        })
+        //产看视频观看记录
+        $scope.$on('my.video.history',function(evt,data){
+            $scope.nowActivePanel='videoRecord';
+
+        })
+        //产看文章观看记录
+        $scope.$on('my.passage.history',function(evt,data){
+            $scope.nowActivePanel='passageRecord';
+
         })
         //反馈记录
         $scope.feedRecord = function (val) {
@@ -155,7 +165,7 @@ angular.module('app.mine', [])
                         if (data.result == 1) {
                             $scope.resData.totalPage = data.totalPage;
                             $scope.resData.list = data.categoryQuestionList;
-                            console.log($scope.resData);
+
                         } else {
 
                         }
@@ -180,11 +190,43 @@ angular.module('app.mine', [])
                                 info:'',
                             }
                             $scope.doubleClick=false;
-                            $scope.modifyUserPassword=function(){
+                            $scope.feedErroMsg='';
+                            $scope.startFeedQuestion=function(){
                                 if($scope.doubleClick){
                                     return;
                                 }
+                                if(!$scope.feedInfo.contact){
+                                    $scope.feedErroMsg='请填写反馈人联系方式';
+                                    return;
+                                }
+                                if(!$scope.feedInfo.info){
+                                    $scope.feedErroMsg='请填写反馈内容';
+                                    return;
+                                }
                                 $scope.doubleClick=true;
+
+                                $http({
+                                    url: baseUrl + 'ym/question/add.api',
+                                    method: 'POST',
+                                    params: {
+                                        publisher: userService.userMsg.accountId,
+                                        appId: $scope.feedTarget.appId,
+                                        extstr1: encodeURI($scope.feedInfo.contact),
+                                        question: encodeURI($scope.feedInfo.info),
+                                        sign: md5('ymy' + $scope.feedTarget.appId + $scope.feedInfo.contact + userService.userMsg.accountId + $scope.feedInfo.info)
+                                    }
+                                }).success(function (data) {
+                                    if (data.result == 1) {
+                                        $scope.closeModal();
+                                        $rootScope.successAlter('反馈成功');
+                                    } else {
+                                        $scope.feedErroMsg='反馈失败';
+                                    }
+                                    $scope.doubleClick=false;
+                                }).error(function () {
+                                    $scope.doubleClick=false;
+                                    $scope.feedErroMsg='网络异常,请检查网络!';
+                                })
 
                             }
                         }
@@ -213,6 +255,12 @@ angular.module('app.mine', [])
                 $scope.appUseHistory=function(val){
                     $scope.$emit('my.app.history',val);
                 }
+                $scope.appVideoHistory=function(val){
+                    $scope.$emit('my.video.history',val);
+                }
+                $scope.appPassageHistory=function(val){
+                    $scope.$emit('my.passage.history',val);
+                }
             },
             templateUrl: 'app/views/mine/history.tpl.html'
         }
@@ -231,19 +279,72 @@ angular.module('app.mine', [])
                         sign: md5('ymy' + userService.userMsg.accountId + 'app')
                     }
                 }).success(function (data) {
-                    console.log(data);
+
                     if (data.result == 1) {
                         $scope.appUseList = data.list;
                         $scope.appUseList.forEach(function (val) {
                             val.date = new Date(parseInt(val.readTime) * 1000).toLocaleString().replace(/:\d{1,2}$/, ' ');
                         })
-                        console.log($scope.appUseList);
                     }
                 }).error(function () {
                     //$scope.alertTab('网络异常,请检查网络!',$scope.netBreakBack);
                 })
             },
             templateUrl: 'app/views/mine/app.use.history.html'
+        }
+    })
+    .directive('videoUseRecord',function(userService,$http){
+        return {
+            restrict: 'EA',
+            link: function ($scope, element, attr) {
+                //$http({
+                //    url: baseUrl + 'ym/history/list.api',
+                //    method: 'POST',
+                //    params: {
+                //        accountId: userService.userMsg.accountId,
+                //        type: 'app',
+                //        sign: md5('ymy' + userService.userMsg.accountId + 'app')
+                //    }
+                //}).success(function (data) {
+                //
+                //    if (data.result == 1) {
+                //        $scope.appUseList = data.list;
+                //        $scope.appUseList.forEach(function (val) {
+                //            val.date = new Date(parseInt(val.readTime) * 1000).toLocaleString().replace(/:\d{1,2}$/, ' ');
+                //        })
+                //    }
+                //}).error(function () {
+                //    //$scope.alertTab('网络异常,请检查网络!',$scope.netBreakBack);
+                //})
+            },
+            templateUrl: 'app/views/mine/history.video.tpl.html'
+        }
+    })
+    .directive('passageUseRecord',function(userService,$http){
+        return {
+            restrict: 'EA',
+            link: function ($scope, element, attr) {
+                $http({
+                    url: baseUrl + 'ym/history/list.api',
+                    method: 'POST',
+                    params: {
+                        accountId: userService.userMsg.accountId,
+                        type: 'news',
+                        sign: md5('ymy' + userService.userMsg.accountId + 'news')
+                    }
+                }).success(function (data) {
+                    console.log(data);
+                    if (data.result == 1) {
+                        $scope.appUseList = data.list;
+                        $scope.appUseList.forEach(function (val) {
+                            val.date = new Date(parseInt(val.readTime) * 1000).toLocaleString().replace(/:\d{1,2}$/, ' ');
+                        })
+                    }
+                }).error(function () {
+                    //$scope.alertTab('网络异常,请检查网络!',$scope.netBreakBack);
+                })
+            },
+            templateUrl: 'app/views/mine/history.passage.tpl.html'
         }
     })
     .directive('feedRecord', function (userService, $http) {
@@ -270,7 +371,6 @@ angular.module('app.mine', [])
                     method: 'POST',
                     params: $scope.reqParams
                 }).success(function (data) {
-                    console.log(data);
                     if (data.result == 1) {
                         $scope.resData.list = $scope.resData.list.concat(data.categoryQuestionList);
                         $scope.resData.totalNum = data.totalPage;
@@ -312,7 +412,7 @@ angular.module('app.mine', [])
             restrict: 'EA',
             link: function ($scope, element, attr) {
                 $scope.modifyPortrait=function(){
-                    console.log('修改头像');
+
                 }
                 $scope.modifyName=function(){
                     $rootScope.modal = $modal.open({
@@ -342,10 +442,10 @@ angular.module('app.mine', [])
                                         sign:md5('ymy'+userService.userMsg.accountId+$scope.user.name)
                                     }
                                 }).success(function(data){
-                                    console.log(data);
                                     if(data.result==1){
                                         $scope.closeModal();
-                                        $scope.$emit('alter.confirm.window','修改成功');
+                                        $rootScope.successAlter('修改成功');
+                                        //$scope.$emit('alter.confirm.window','修改成功');
                                         userService.userMsg.userName=$scope.user.name;
                                     }else{
 
@@ -378,8 +478,25 @@ angular.module('app.mine', [])
                                 reNewPassword:''
                             }
                             $scope.doubleClick=false;
+                            $scope.modifyPasswordTip=''
                             $scope.modifyUserPassword=function(){
                                 if($scope.doubleClick){
+                                    return;
+                                }
+                                if(!$scope.passwordInfo.oldPassword){
+                                    $scope.modifyPasswordTip='请输入旧密码';
+                                    return;
+                                }
+                                if(!$scope.passwordInfo.newPassword){
+                                    $scope.modifyPasswordTip='请输入新密码';
+                                    return;
+                                }
+                                if($scope.passwordInfo.newPassword.length<8){
+                                    $scope.modifyPasswordTip='新密码长度不应少于8位';
+                                    return;
+                                }
+                                if($scope.passwordInfo.newPassword!=$scope.passwordInfo.reNewPassword){
+                                    $scope.modifyPasswordTip='两次新密码输入不一致';
                                     return;
                                 }
                                 $scope.doubleClick=true;
@@ -393,14 +510,15 @@ angular.module('app.mine', [])
                                         sign:md5('ymy'+md5($scope.passwordInfo.newPassword)+md5($scope.passwordInfo.oldPassword)+userService.userMsg.phone)
                                     }
                                 }).success(function(data){
-                                    console.log(data);
                                     if(data.result==1){
                                         $scope.closeModal();
+                                        $rootScope.successAlter('修改成功');
                                     }else if(data.result==103){
-
+                                        $scope.modifyPasswordTip='旧密码输入不正确'
                                     }
                                     $scope.doubleClick=false;
                                 }).error(function(){
+                                    $scope.modifyPasswordTip='网络故障，请稍候再试'
                                     $scope.doubleClick=false;
                                 })
                             }

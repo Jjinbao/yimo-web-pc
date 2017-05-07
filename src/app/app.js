@@ -29,15 +29,22 @@ angular.module('app', ['ngAnimate','ngRoute','ui.bootstrap','ympc.services','app
         keyboard: false,
         size:'login',
         controller: function ($scope,$http,userService) {
-            console.log($('modal-dialog'))
           $scope.loginUser={
             phone:'',
             password:''
           }
           $scope.closeModal = function () {
-            $scope.modal.close();
+            $rootScope.modal.close();
+            //$scope.modal.close();
+
           };
+          $scope.messageTip='';
+          $scope.doubleClick=false;
           $scope.toLogin=function(){
+            if($scope.doubleClick){
+              return;
+            }
+            $scope.doubleClick=true;
             $http({
               url:baseUrl+'ym/account/login.api',
               method:'POST',
@@ -57,36 +64,56 @@ angular.module('app', ['ngAnimate','ngRoute','ui.bootstrap','ympc.services','app
                 $scope.closeModal();
                 //$scope.back();
               }else if(data.result==102){
-                //$scope.alertTab('手机号输入错误');
+                $scope.messageTip='手机号输入错误';
               }else if(data.result==103){
-                //$scope.alertTab('手机号未注册');
+                $scope.messageTip='手机号未注册';
               }else if(data.result==104){
-                //$scope.alertTab('账号封停,1小时后重试');
+                $scope.messageTip='账号封停,1小时后重试';
               }else if(data.result==105){
-                //$scope.alertTab('密码错误');
+                $scope.messageTip='密码错误';
               }else if(data.result==106){
-                //$scope.alertTab('系统错误，稍后重试');
+                $scope.messageTip='系统错误，稍后重试';
               }
-
+              $scope.doubleClick=false;
             }).error(function(){
-              //$scope.alertTab('网络异常,请检查网络');
+              $scope.messageTip='网络异常,请检查网络';
+              $scope.doubleClick=false;
             })
           }
         }
       });
     }
 
-      $scope.$on('alter.confirm.window',function(evt,data){
-        console.log(data);
-        $rootScope.modal = $modal.open({
+      //$scope.$on('alter.confirm.window',function(evt,data){
+      $rootScope.successAlter=function(data) {
+        $rootScope.alterModal = $modal.open({
           templateUrl: "app/views/confirm/tip.tpl.html",
-          backdrop: true,
+          backdrop: 'static',
           keyboard: false,
-          controller: function ($scope,$http,userService) {
-            $scope.alterMsg=data;
+          size:'tip',
+          controller: function ($scope, $http, $interval, userService) {
+            $scope.closeAlertModal = function () {
+              $rootScope.alterModal.close();
+            }
+            $scope.alterMsg = data;
+            $scope.showTime = 3;
+            var alterInterId = $interval(function () {
+              $scope.showTime--;
+              if ($scope.showTime <= 0) {
+                $interval.cancel(alterInterId);
+                $scope.closeAlertModal();
+              }
+            }, 1000);
+            $scope.closeModelTip = function () {
+              if (alterInterId) {
+                $interval.cancel(alterInterId);
+              }
+              $scope.closeAlertModal();
+            }
           }
         });
-      })
+      }
+      //})
 
   }])
   .directive('renderFinish', function ($timeout) {//监听dom渲染完毕

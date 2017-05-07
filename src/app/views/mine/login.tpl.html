@@ -6,12 +6,14 @@
     </div>
     <div class="login-body">
         <div class="login-user-name">
-            <input type="text" class="input-small" placeholder="手机号" ng-model="loginUser.phone" autofocus required>
+            <input type="text" class="input-small" placeholder="手机号" ng-model="loginUser.phone" required>
         </div>
         <div class="login-password">
             <input type="password" placeholder="请输入密码" maxlength="12" ng-model="loginUser.password" required>
         </div>
-
+        <div class="login-info-tip">
+            {{messageTip}}
+        </div>
     </div>
     <div class="login-footer">
         <button class="btn btn-primary login-btn" ng-click="toLogin()">登录</button>
