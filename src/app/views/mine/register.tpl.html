@@ -1,0 +1,30 @@
+<div class="login-panel">
+    <div class="close-btn" ng-click="closeRegisterModal()">&times;</div>
+    <div class="login-header">
+        <!--<img src="./app/img/u10.png">-->
+        注册医模云ID
+    </div>
+    <div class="login-body">
+        <div class="login-user-name">
+            <input type="text" class="input-small" placeholder="手机号" ng-model="registerUser.phone" required>
+        </div>
+        <div class="register-code">
+            <input type="text" class="input-small" placeholder="验证码" ng-model="registerUser.code" required>
+        </div>
+        <div class="register-img-code">
+            <input type="text" class="input-small" placeholder="图形验证码" ng-model="registerUser.imgcode" required>
+        </div>
+        <div class="login-password">
+            <input type="password" placeholder="请输入密码" maxlength="12" ng-model="registerUser.password" required>
+        </div>
+        <div class="login-password">
+            <input type="password" placeholder="请重复密码" maxlength="12" ng-model="registerUser.rePassword" required>
+        </div>
+        <div class="login-info-tip">
+            {{registerTip}}
+        </div>
+    </div>
+    <div class="login-footer">
+        <button class="btn btn-primary login-btn" ng-click="toLogin()">登录</button>
+    </div>
+</div>
