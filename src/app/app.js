@@ -22,7 +22,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'angularFileUploa
             console.log(data);
         })
 
-        $scope.login = function (backParams, callback) {
+        $rootScope.login = function (backParams, callback) {
             $rootScope.loginModal = $modal.open({
                 templateUrl: "app/views/mine/login.tpl.html",
                 backdrop: true,
@@ -38,6 +38,16 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'angularFileUploa
                         //$scope.modal.close();
 
                     };
+                    $scope.toRegisterId=function(){
+                        $scope.closeModal();
+                        $rootScope.register();
+                    }
+
+                    $scope.toFindPassword=function(){
+                        $scope.closeModal();
+                        $rootScope.findBackPassword();
+                    }
+
                     $scope.messageTip = '';
                     $scope.doubleClick = false;
                     $scope.toLogin = function () {
@@ -85,7 +95,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'angularFileUploa
         }
 
         //注册接口
-        $scope.register = function () {
+        $rootScope.register = function () {
             $rootScope.registerModal = $modal.open({
                 templateUrl: "app/views/mine/register.tpl.html",
                 backdrop: true,
@@ -222,7 +232,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'angularFileUploa
             });
         }
         //找回密码
-        $scope.findBackPassword=function(){
+        $rootScope.findBackPassword=function(){
             $rootScope.findPasswordModal = $modal.open({
                 templateUrl: "app/views/mine/forgot.password.tpl.html",
                 backdrop: true,
@@ -248,7 +258,13 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'angularFileUploa
                         })
                     }
                     $scope.getImgCode();
-
+                    $scope.findPasswordWord={
+                        phone:'',
+                        code:'',
+                        identify:'',
+                        password:'',
+                        rePassword:''
+                    }
                     //获取手机验证码接口
                     $scope.canGetCode = true;
                     $scope.timeLong = 60;
@@ -257,8 +273,9 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'angularFileUploa
                         if(!$scope.canGetCode){
                             return;
                         }
-                        if(!$scope.registerUser.phone||$scope.registerUser.phone.length<11){
-                            $scope.registerTip='请填写正确的手机号';
+                        console.log($scope.findPasswordWord.phone.length);
+                        if($scope.findPasswordWord.phone.length<11){
+                            $scope.findPasswordTip='请填写正确的手机号';
                             return;
                         }
                         $scope.canGetCode = false;
@@ -266,14 +283,14 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'angularFileUploa
                             url: baseUrl + 'ym/phoneCode/sendCode.api',
                             method: 'POST',
                             params: {
-                                phone: $scope.registerUser.phone,
-                                operation: 1,
-                                sign: md5('ymy' + '1' + $scope.registerUser.phone)
+                                phone: $scope.findPasswordWord.phone,
+                                operation: 2,
+                                sign: md5('ymy' + '2' + $scope.findPasswordWord.phone)
                             }
                         }).success(function (data) {
                             console.log(data);
                             if (data.result == 1) {
-                                $scope.registerUser.identify = data.identifier;
+                                $scope.findPasswordWord.identify = data.identifier;
                                 $scope.intervalId = $interval(function () {
                                     if ($scope.timeLong > 1) {
                                         $scope.timeLong--;
@@ -287,19 +304,110 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'angularFileUploa
                                 }, 1000);
                             } else {
                                 if (data.result == 102) {
-                                    $scope.registerTip='手机号不合法';
+                                    $scope.findPasswordTip='手机号不合法';
                                 } else if (data.result == 103) {
-                                    $scope.registerTip='手机号已经注册';
+                                    $scope.findPasswordTip='手机号已经注册';
                                 } else if (data.result == 104) {
-                                    $scope.registerTip='手机号还没有注册';
+                                    $scope.findPasswordTip='手机号还没有注册';
                                 }
                                 $scope.canGetCode = true;
                             }
-
                         }).error(function () {
                             $scope.canGetCode = true;
-                            $scope.registerTip='网络异常,请检查网络!';
+                            $scope.findPasswordTip='网络异常,请检查网络!';
                         })
+                    }
+
+                    var handleDoubleClick=false;
+                    $scope.nextAndFinish=function(){
+                        if($scope.findPasswordType==1){
+                            if(!$scope.findPasswordWord.phone||!$scope.findPasswordWord.code){
+                                $scope.findPasswordTip='请填写手机号和验证码';
+                                return;
+                            }
+                            if(handleDoubleClick){
+                                return;
+                            }
+                            handleDoubleClick=true;
+                            $http({
+                                url:baseUrl+'ym/phoneCode/checkCode.api',
+                                method:'POST',
+                                params:{
+                                    phone:$scope.findPasswordWord.phone,
+                                    identifier:$scope.findPasswordWord.identify,
+                                    randCode:$scope.findPasswordWord.code,
+                                    sign:md5('ymy'+$scope.findPasswordWord.identify+$scope.findPasswordWord.phone+$scope.findPasswordWord.code)
+                                }
+                            }).success(function(data){
+                                console.log(data);
+                                if(data.result==1){
+                                    if(data.checkFlag==1){
+                                        $scope.findPasswordType++;
+                                    }else if(data.checkFlag==2){
+                                        $scope.findPasswordTip='验证码错误';
+                                    }else if(data.checkFlag==3){
+                                        $scope.findPasswordTip='验证码已过期';
+                                    }
+                                    handleDoubleClick=false;
+                                }else{
+                                    if(data.result==102){
+                                        $scope.findPasswordTip='手机号不合法';
+                                    }else if(data.result==103){
+                                        $scope.findPasswordTip='系统错误';
+                                    }
+                                    handleDoubleClick=false;
+                                }
+                            }).error(function(){
+                                handleDoubleClick=false;
+                                $scope.findPasswordTip='网络异常,请检查网络!';
+                            })
+                        }else{
+                            if(handleDoubleClick){
+                                return;
+                            }
+                            if(!$scope.findPasswordWord.password){
+                                $scope.findPasswordTip='请设置密码';
+                                return;
+                            }
+
+                            if($scope.findPasswordWord.password.length<8){
+                                $scope.findPasswordTip='密码不能少于8位';
+                                return;
+                            }
+
+                            if(!$scope.findPasswordWord.rePassword){
+                                $scope.findPasswordTip='请确认密码';
+                                return;
+                            }
+
+                            if($scope.findPasswordWord.password!=$scope.findPasswordWord.rePassword){
+                                $scope.findPasswordTip='两次输入密码不一致';
+                                return;
+                            }
+                            handleDoubleClick=true;
+                            $http({
+                                url:baseUrl+'ym/account/findPassword.api',
+                                method:'POST',
+                                params:{
+                                    phone:$scope.findPasswordWord.phone,
+                                    password:md5($scope.findPasswordWord.password),
+                                    sign:md5('ymy'+md5($scope.findPasswordWord.password)+$scope.findPasswordWord.phone)
+                                }
+                            }).success(function(data){
+                                if(data.result==1){
+                                    $rootScope.findPasswordModal.close();
+                                    $rootScope.login();
+                                }else{
+
+                                }
+                                handleDoubleClick=false;
+                            }).error(function(){
+                                $scope.findPasswordTip='网络异常,请检查网络!';
+                            })
+
+                        }
+
+
                     }
 
                 }

@@ -113,15 +113,52 @@
       }
     }
     .register-code{
-
+      position: relative;
+      height: 50px;
+      input{
+        height: 40px;
+        line-height: 40px;
+        padding-left: 5px;
+        margin-left: 50px;
+        width: 180px;
+        border-radius: 5px;
+        border: 1px solid gainsboro;
+      }
+      .yanzheng-code-btn{
+        height: 40px;
+        position: absolute;
+        right: 50px;
+        width: 110px;
+        text-align: center;
+        border:1px solid gainsboro;
+        border-radius: 6px;
+        cursor: pointer;
+        top: 0;
+        line-height: 39px;
+      }
     }
     .register-img-code{
-
+      height: 50px;
+      position: relative;
+      input{
+        height: 40px;
+        line-height: 40px;
+        padding-left: 5px;
+        margin-left: 50px;
+        width: 180px;
+        border-radius: 5px;
+        border: 1px solid gainsboro;
+      }
+      img{
+        position: absolute;
+        height: 40px;
+        top: 0;
+        left: 240px;
+      }
     }
     .login-password{
       width: 300px;
       margin-left: 50px;
-      margin-top: 20px;
       height: 50px;
       input{
         padding-left: 5px;
@@ -129,6 +166,30 @@
         border-radius: 5px;
         border: 1px solid gainsboro;
         width: 100%;
+      }
+    }
+    .login-reg-find{
+      position: relative;
+      background-color: green;
+      .reg-user{
+        position: absolute;
+        left: 50px;
+        top: 0;
+        cursor: pointer;
+        color: #ccc;
+      }
+      .reg-user:hover{
+        color: @main-color;
+      }
+      .find-password{
+        position: absolute;
+        right: 50px;
+        top: 0;
+        cursor: pointer;
+        color: #ccc;
+      }
+      .find-password:hover{
+        color: @main-color;
       }
     }
     .feed-stage{
@@ -143,11 +204,12 @@
       color: red;
       font-size: 16px;
       margin-left: 50px;
+      margin-top: 25px;
     }
   }
   .login-footer{
     width: 100%;
-    padding-top: 20px;
+    padding-top: 10px;
     padding-bottom: 40px;
     .login-btn{
       background-color: @main-color;

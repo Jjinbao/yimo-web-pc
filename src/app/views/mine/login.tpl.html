@@ -10,7 +10,17 @@
         </div>
         <div class="login-password">
             <input type="password" placeholder="请输入密码" maxlength="12" ng-model="loginUser.password" required>
+
         </div>
+        <div class="login-reg-find">
+            <div class="reg-user" ng-click="toRegisterId()">
+                注册医模云ID
+            </div>
+            <div class="find-password" ng-click="toFindPassword()">
+                忘记密码？
+            </div>
+        </div>
+
         <div class="login-info-tip">
             {{messageTip}}
         </div>

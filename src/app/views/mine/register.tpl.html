@@ -20,11 +20,11 @@
         <div class="login-password">
             <input type="password" placeholder="请重复密码" maxlength="12" ng-model="registerUser.rePassword" required>
         </div>
-        <div class="login-info-tip">
+        <div class="login-info-tip" ng-show="registerTip">
             {{registerTip}}
         </div>
     </div>
     <div class="login-footer">
-        <button class="btn btn-primary login-btn" ng-click="toLogin()">登录</button>
+        <button class="btn btn-primary login-btn" ng-click="toLogin()">注册</button>
     </div>
 </div>
