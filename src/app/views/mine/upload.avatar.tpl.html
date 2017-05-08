@@ -1,0 +1,16 @@
+<div class="common-panel">
+    <div class="close-btn" ng-click="closeAvatarModal()">&times;</div>
+    <div class="common-panel-header">
+        上传头像
+    </div>
+    <div class="common-panel-body">
+        <input class="file-name" type="text" readonly="readonly" ng-model="fileItem.name"/>
+        <a href="javascript:;" class="choose-book">
+            <input type="file" name="certificate" nv-file-select uploader="uploader" ng-click="clearItems()"/>浏览
+        </a>
+        <img ng-show="fileItem.name" ng-src="{{fileItem.name}}">
+    </div>
+    <div class="common-panel-footer">
+        <button class="btn btn-primary feed-btn" ng-click="startFeedQuestion()">确认上传</button>
+    </div>
+</div>

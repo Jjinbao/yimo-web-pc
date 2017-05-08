@@ -63,6 +63,7 @@ angular.module('app.mine', [])
         //查看我的反馈问题处理情况
         $scope.$on('my.feed.question',function(evt,data){
             $scope.feedDetailData=data;
+            console.log(data);
             $scope.nowActivePanel = 'feedDetail'
         })
         //查看应用的使用记录
@@ -279,7 +280,7 @@ angular.module('app.mine', [])
                         sign: md5('ymy' + userService.userMsg.accountId + 'app')
                     }
                 }).success(function (data) {
-
+                    console.log(data);
                     if (data.result == 1) {
                         $scope.appUseList = data.list;
                         $scope.appUseList.forEach(function (val) {
@@ -412,7 +413,61 @@ angular.module('app.mine', [])
             restrict: 'EA',
             link: function ($scope, element, attr) {
                 $scope.modifyPortrait=function(){
+                    $rootScope.uploadAvatar=$modal.open({
+                        templateUrl: "app/views/mine/upload.avatar.tpl.html",
+                        backdrop: true,
+                        keyboard: false,
+                        size:'feed',
+                        controller: function ($scope,$http,userService,FileUploader) {
+                            $scope.closeAvatarModal=function(){
+                                $rootScope.uploadAvatar.close();
+                            }
+                            $scope.modifyNameCan=true;
+                            var uploader = $scope.uploader = new FileUploader({
+                                url: 'upload.php',
+                                queueLimit: 1,     //文件个数
+                                removeAfterUpload: true   //上传后删除文件
+                            });
 
+                            $scope.clearItems = function(){    //重新选择文件时，清空队列，达到覆盖文件的效果
+                                uploader.clearQueue();
+                            }
+                            $scope.clearItems1 = function(){
+                                uploader.clearQueue();
+                            }
+                            uploader.onAfterAddingFile = function(fileItem) {
+                                $scope.fileItem = fileItem._file;    //添加文件之后，把文件信息赋给scope
+                                console.log($scope.fileItem);
+                            };
+                            // uploader.onAfterAddingFile = function(fileItem) {
+                            //     $scope.fileItem1 = fileItem._file;    //添加文件之后，把文件信息赋给scope
+                            //     //能够在这里判断添加的文件名后缀和文件大小是否满足需求。
+                            // };
+                            uploader.onSuccessItem = function(fileItem, response, status, headers) {
+                                $scope.uploadStatus = true;   //上传成功则把状态改为true
+                            };
+                            // uploader1.onSuccessItem = function(fileItem,response, status, headers){
+                            //     $scope.uploadStatus1 = true;
+                            // }
+                            $scope.UploadFile = function(){
+                                uploader.uploadAll();
+                                uploader1.uploadAll();
+                                if(status){
+                                    if(status1){
+                                        alert('上传成功！');
+                                    }else{
+                                        alert('证书成功！私钥失败！');
+                                    }
+                                }else{
+                                    if(status1){
+                                        alert('私钥成功！证书失败！');
+                                    }else{
+                                        alert('上传失败！');
+                                    }
+                                }
+                            }
+                        }
+                    })
                 }
                 $scope.modifyName=function(){
                     $rootScope.modal = $modal.open({

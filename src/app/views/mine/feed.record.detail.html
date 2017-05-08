@@ -13,11 +13,17 @@
             <div class="feed-app">
                 {{feedDetailData.appName}}
             </div>
-            <div class="deal-status" ng-class="{'no-deal':que.status==1,'have-deal':que.status==2,'deal-ing':que.status==3}">
-                {{feedDetailData.statusWord}}
+            <div class="deal-status" ng-class="{'no-deal':feedDetailData.status=='1','have-deal':feedDetailData.status=='2','deal-ing':feedDetailData.status=='3'}">
+                {{feedDetailData.statusWord}}{{que.status}}
             </div>
-            <div class="deal-intro">
+            <div class="deal-intro" ng-show="feedDetailData.status=='1'">
                 尊敬的用户，我们的工作人员正在处理！
+            </div>
+            <div class="deal-intro" ng-show="feedDetailData.status=='2'">
+                {{feedDetailData.answer}}
+            </div>
+            <div class="deal-intro" ng-show="feedDetailData.status=='3'">
+                {{feedDetailData.answer}}
             </div>
         </div>
     </div>
