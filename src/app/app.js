@@ -18,8 +18,6 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'angularFileUploa
         }
 
         $scope.$on('user.nav.img', function (evt, data) {
-            console.log('-----------------登录注册翻上来的数据---------------');
-            console.log(data);
             $scope.userImg = data;
         })
 
@@ -41,12 +39,12 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'angularFileUploa
                     };
                     $scope.toRegisterId=function(){
                         $scope.closeModal();
-                        $rootScope.register();
+                        $rootScope.register(backParams, callback);
                     }
 
                     $scope.toFindPassword=function(){
                         $scope.closeModal();
-                        $rootScope.findBackPassword();
+                        $rootScope.findBackPassword(backParams, callback);
                     }
 
                     $scope.messageTip = '';
@@ -96,9 +94,8 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'angularFileUploa
         }
 
         //注册接口
-        $rootScope.register = function (params,callBack) {
+        $rootScope.register = function (backParams, callback) {
             console.log('--------reg----------');
-            console.log($location.url());
             $rootScope.registerModal = $modal.open({
                 templateUrl: "app/views/mine/register.tpl.html",
                 backdrop: true,
@@ -256,11 +253,13 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'angularFileUploa
                                 sign: md5('ymy' + $scope.registerUser.identifier.toString()+md5($scope.registerUser.password) + $scope.registerUser.phone+$scope.registerUser.code.toString()+$scope.registerUser.name.toString())
                             }
                         }).success(function (data) {
-                            console.log('----------------注册结果-------------------');
                             console.log(data);
                             if (data.result == 1) {
                                 $scope.$emit('user.nav.img', data)
                                 userService.userMsg = data;
+                                if (callback) {
+                                    callback(backParams)
+                                }
                                 $rootScope.registerModal.close();
                                 //$scope.back();
                             } else if (data.result == 102) {
@@ -290,7 +289,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'angularFileUploa
             });
         }
         //找回密码
-        $rootScope.findBackPassword=function(){
+        $rootScope.findBackPassword=function(backParams, callback){
             $rootScope.findPasswordModal = $modal.open({
                 templateUrl: "app/views/mine/forgot.password.tpl.html",
                 backdrop: true,
@@ -473,7 +472,9 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'angularFileUploa
                             }).success(function(data){
                                 if(data.result==1){
                                     $rootScope.findPasswordModal.close();
-                                    $rootScope.login();
+                                    if (callback) {
+                                        $rootScope.login(backParams,callback);
+                                    }
                                 }else{
 
                                 }

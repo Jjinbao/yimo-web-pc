@@ -13,6 +13,10 @@ angular.module('app.mine', [])
             }
         })
 
+        $rootScope.regOrLogin=function(){
+            $scope.haveLoginuser = userService.userMsg;
+        }
+
         //修改用户头像和姓名
         $scope.changeUserInfo = function () {
             $scope.haveLoginuser = userService.userMsg;
