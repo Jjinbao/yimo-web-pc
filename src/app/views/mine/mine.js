@@ -16,7 +16,7 @@ angular.module('app.mine', [])
         //修改用户头像和姓名
         $scope.changeUserInfo = function () {
             $scope.haveLoginuser = userService.userMsg;
-            $scope.$emit('user.nav.img', $scope.haveLoginuser.smallImg);
+            $scope.$emit('user.nav.img', $scope.haveLoginuser);
             if(!$scope.haveLoginuser.accountId){
                 $scope.nowActivePanel = 'noLogin'
             }

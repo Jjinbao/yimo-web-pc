@@ -10,9 +10,14 @@
         </div>
         <div class="register-code">
             <input type="text" class="input-small" placeholder="验证码" ng-model="registerUser.code" required>
+            <div class="yanzheng-code-btn" ng-click="getPhoneCode()">{{getCodeBtn}}</div>
         </div>
         <div class="register-img-code">
             <input type="text" class="input-small" placeholder="图形验证码" ng-model="registerUser.imgcode" required>
+            <img ng-src="{{imgCode.img}}" ng-click="getImgCode()">
+        </div>
+        <div class="login-password">
+            <input type="text" placeholder="请输入用户名" maxlength="12" ng-model="registerUser.name" required>
         </div>
         <div class="login-password">
             <input type="password" placeholder="请输入密码" maxlength="12" ng-model="registerUser.password" required>
@@ -25,6 +30,6 @@
         </div>
     </div>
     <div class="login-footer">
-        <button class="btn btn-primary login-btn" ng-click="toLogin()">注册</button>
+        <button class="btn btn-primary login-btn" ng-click="toRegister()">注册</button>
     </div>
 </div>

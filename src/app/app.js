@@ -18,8 +18,9 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'angularFileUploa
         }
 
         $scope.$on('user.nav.img', function (evt, data) {
-            $scope.userImg = data;
+            console.log('-----------------登录注册翻上来的数据---------------');
             console.log(data);
+            $scope.userImg = data;
         })
 
         $rootScope.login = function (backParams, callback) {
@@ -95,19 +96,23 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'angularFileUploa
         }
 
         //注册接口
-        $rootScope.register = function () {
+        $rootScope.register = function (params,callBack) {
+            console.log('--------reg----------');
+            console.log($location.url());
             $rootScope.registerModal = $modal.open({
                 templateUrl: "app/views/mine/register.tpl.html",
                 backdrop: true,
                 keyboard: false,
                 size: 'login',
-                controller: function ($scope, $http, userService) {
+                controller: function ($scope, $http, userService,$interval) {
                     $scope.registerUser = {
                         phone: '',
                         code: '',
                         imgcode: '',
+                        identifier:'',
                         password: '',
                         rePassword: '',
+                        name:'',
                         img: ''
                     }
                     $scope.closeRegisterModal = function () {
@@ -117,18 +122,25 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'angularFileUploa
                     };
                     $scope.registerTip = '';
 
-
                     //获取图形验码啊接口
                     $scope.userImgCode = {
                         code: ''
                     };
+                    $scope.regImgDoubleClick=false;
                     $scope.getImgCode = function () {
+                        if($scope.regImgDoubleClick){
+                            return;
+                        }
+                        $scope.regImgDoubleClick=true;
                         $http({
                             url: baseUrl + 'ym/randCodeImage.api',
                             method: 'POST',
                         }).success(function (data) {
                             console.log(data);
                             $scope.imgCode = data;
+                            $scope.regImgDoubleClick=false;
+                        }).error(function(){
+                            $scope.regImgDoubleClick=false;
                         })
                     }
                     $scope.getImgCode();
@@ -141,10 +153,12 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'angularFileUploa
                         if(!$scope.canGetCode){
                             return;
                         }
+
                         if(!$scope.registerUser.phone||$scope.registerUser.phone.length<11){
                             $scope.registerTip='请填写正确的手机号';
                             return;
                         }
+
                         $scope.canGetCode = false;
                         $http({
                             url: baseUrl + 'ym/phoneCode/sendCode.api',
@@ -157,7 +171,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'angularFileUploa
                         }).success(function (data) {
                             console.log(data);
                             if (data.result == 1) {
-                                $scope.registerUser.identify = data.identifier;
+                                $scope.registerUser.identifier = data.identifier;
                                 $scope.intervalId = $interval(function () {
                                     if ($scope.timeLong > 1) {
                                         $scope.timeLong--;
@@ -192,40 +206,84 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'angularFileUploa
                         if ($scope.regDoubleClick) {
                             return;
                         }
+                        if(!$scope.registerUser.phone||$scope.registerUser.phone.length<11){
+                            $scope.registerTip='请填写正确的手机号';
+                            return;
+                        }
+                        if(!$scope.registerUser.code){
+                            $scope.registerTip='请填写验证码';
+                            return;
+                        }
+                        if(!$scope.registerUser.imgcode){
+                            $scope.registerTip='请填写图形验证码';
+                            return;
+                        }
+                        if($scope.registerUser.imgcode.toLowerCase()!=$scope.imgCode.code.toLowerCase()){
+                            $scope.registerTip='图形验证码不正确';
+                            return;
+                        }
+                        if(!$scope.registerUser.name){
+                            $scope.registerTip='请填写用户名';
+                            return;
+                        }
+                        if(!$scope.registerUser.password){
+                            $scope.registerTip='请填写密码';
+                            return;
+                        }
+                        if($scope.registerUser.password.length<8){
+                            $scope.registerTip='密码不应该少于8位';
+                            return;
+                        }
+                        if(!$scope.registerUser.rePassword){
+                            $scope.registerTip='请重复密码';
+                            return;
+                        }
+                        if($scope.registerUser.rePassword!=$scope.registerUser.password){
+                            $scope.registerTip='两次密码输入不一致';
+                            return;
+                        }
                         $scope.regDoubleClick = true;
+                        $scope.registerTip='';
                         $http({
-                            url: baseUrl + 'ym/account/login.api',
+                            url: baseUrl + 'ym/account/registerWithCode.api',
                             method: 'POST',
                             params: {
-                                phone: $scope.loginUser.phone,
-                                password: md5($scope.loginUser.password),
-                                sign: md5('ymy' + md5($scope.loginUser.password) + $scope.loginUser.phone)
+                                phone: $scope.registerUser.phone,
+                                identifier:$scope.registerUser.identifier,
+                                randCode:$scope.registerUser.code,
+                                userName:encodeURI($scope.registerUser.name),
+                                password: md5($scope.registerUser.password),
+                                sign: md5('ymy' + $scope.registerUser.identifier.toString()+md5($scope.registerUser.password) + $scope.registerUser.phone+$scope.registerUser.code.toString()+$scope.registerUser.name.toString())
                             }
                         }).success(function (data) {
+                            console.log('----------------注册结果-------------------');
                             console.log(data);
                             if (data.result == 1) {
                                 $scope.$emit('user.nav.img', data)
                                 userService.userMsg = data;
-                                if (callback) {
-                                    callback(backParams)
-                                }
-                                $scope.closeModal();
+                                $rootScope.registerModal.close();
                                 //$scope.back();
                             } else if (data.result == 102) {
-                                $scope.messageTip = '手机号输入错误';
+                                $scope.registerTip = '手机号输入错误';
                             } else if (data.result == 103) {
-                                $scope.messageTip = '手机号未注册';
+                                $scope.registerTip = '手机号未注册';
                             } else if (data.result == 104) {
-                                $scope.messageTip = '账号封停,1小时后重试';
+                                $scope.registerTip = '账号封停,1小时后重试';
                             } else if (data.result == 105) {
-                                $scope.messageTip = '密码错误';
+                                if(data.checkFlag==2){
+                                    $scope.registerTip='验证码错误';
+                                }else if(data.checkFlag==3){
+                                    $scope.registerTip='验证码已过期,请重新获取';
+                                }else{
+
+                                }
                             } else if (data.result == 106) {
-                                $scope.messageTip = '系统错误，稍后重试';
+                                $scope.registerTip = '系统错误，稍后重试';
                             }
-                            $scope.doubleClick = false;
+                            $scope.regDoubleClick = false;
                         }).error(function () {
-                            $scope.messageTip = '网络异常,请检查网络';
-                            $scope.doubleClick = false;
+                            $scope.registerTip = '网络异常,请检查网络';
+                            $scope.regDoubleClick = false;
                         })
                     }
                 }
@@ -248,19 +306,26 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'angularFileUploa
                     $scope.userImgCode = {
                         code: ''
                     };
+                    $scope.holdImgDoubleCode=false;
                     $scope.getImgCode = function () {
+                        if($scope.holdImgDoubleCode){
+                            return;
+                        }
+                        $scope.holdImgDoubleCode=true;
                         $http({
                             url: baseUrl + 'ym/randCodeImage.api',
                             method: 'POST',
                         }).success(function (data) {
                             console.log(data);
                             $scope.imgCode = data;
+                            $scope.holdImgDoubleCode=false;
                         })
                     }
                     $scope.getImgCode();
                     $scope.findPasswordWord={
                         phone:'',
                         code:'',
+                        imgcode:'',
                         identify:'',
                         password:'',
                         rePassword:''
@@ -321,11 +386,23 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'angularFileUploa
                     var handleDoubleClick=false;
                     $scope.nextAndFinish=function(){
                         if($scope.findPasswordType==1){
-                            if(!$scope.findPasswordWord.phone||!$scope.findPasswordWord.code){
-                                $scope.findPasswordTip='请填写手机号和验证码';
+                            if(!$scope.findPasswordWord.phone){
+                                $scope.findPasswordTip='请填写手机号';
+                                return;
+                            }
+                            if(!$scope.findPasswordWord.code){
+                                $scope.findPasswordTip='请填写手机验证码';
                                 return;
                             }
                             if(handleDoubleClick){
+                                return;
+                            }
+                            if(!$scope.findPasswordWord.imgcode){
+                                $scope.findPasswordTip='请填写图形验证码';
+                                return;
+                            }
+                            if($scope.findPasswordWord.imgcode.toLowerCase()!=$scope.imgCode.code.toLowerCase()){
+                                $scope.findPasswordTip='图形验证码不正确';
                                 return;
                             }
                             handleDoubleClick=true;
