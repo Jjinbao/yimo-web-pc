@@ -7,7 +7,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'angularFileUploa
         $scope.activeTab = 'YMY'
         $scope.size = 600;
         $scope.clickTab = function (val) {
-            console.log(val);
+
             if ($scope.activeTab == val) {
                 return;
             }
@@ -63,7 +63,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'angularFileUploa
                                 sign: md5('ymy' + md5($scope.loginUser.password) + $scope.loginUser.phone)
                             }
                         }).success(function (data) {
-                            console.log(data);
+
                             if (data.result == 1) {
                                 $scope.$emit('user.nav.img', data)
                                 userService.userMsg = data;
@@ -95,7 +95,6 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'angularFileUploa
 
         //注册接口
         $rootScope.register = function (backParams, callback) {
-            console.log('--------reg----------');
             $rootScope.registerModal = $modal.open({
                 templateUrl: "app/views/mine/register.tpl.html",
                 backdrop: true,
@@ -133,7 +132,6 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'angularFileUploa
                             url: baseUrl + 'ym/randCodeImage.api',
                             method: 'POST',
                         }).success(function (data) {
-                            console.log(data);
                             $scope.imgCode = data;
                             $scope.regImgDoubleClick=false;
                         }).error(function(){
@@ -166,7 +164,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'angularFileUploa
                                 sign: md5('ymy' + '1' + $scope.registerUser.phone)
                             }
                         }).success(function (data) {
-                            console.log(data);
+
                             if (data.result == 1) {
                                 $scope.registerUser.identifier = data.identifier;
                                 $scope.intervalId = $interval(function () {
@@ -253,7 +251,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'angularFileUploa
                                 sign: md5('ymy' + $scope.registerUser.identifier.toString()+md5($scope.registerUser.password) + $scope.registerUser.phone+$scope.registerUser.code.toString()+$scope.registerUser.name.toString())
                             }
                         }).success(function (data) {
-                            console.log(data);
+
                             if (data.result == 1) {
                                 $scope.$emit('user.nav.img', data)
                                 userService.userMsg = data;
@@ -315,7 +313,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'angularFileUploa
                             url: baseUrl + 'ym/randCodeImage.api',
                             method: 'POST',
                         }).success(function (data) {
-                            console.log(data);
+
                             $scope.imgCode = data;
                             $scope.holdImgDoubleCode=false;
                         })
@@ -337,7 +335,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'angularFileUploa
                         if(!$scope.canGetCode){
                             return;
                         }
-                        console.log($scope.findPasswordWord.phone.length);
+
                         if($scope.findPasswordWord.phone.length<11){
                             $scope.findPasswordTip='请填写正确的手机号';
                             return;
@@ -352,7 +350,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'angularFileUploa
                                 sign: md5('ymy' + '2' + $scope.findPasswordWord.phone)
                             }
                         }).success(function (data) {
-                            console.log(data);
+
                             if (data.result == 1) {
                                 $scope.findPasswordWord.identify = data.identifier;
                                 $scope.intervalId = $interval(function () {
@@ -415,7 +413,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'angularFileUploa
                                     sign:md5('ymy'+$scope.findPasswordWord.identify+$scope.findPasswordWord.phone+$scope.findPasswordWord.code)
                                 }
                             }).success(function(data){
-                                console.log(data);
+
                                 if(data.result==1){
                                     if(data.checkFlag==1){
                                         $scope.findPasswordType++;
