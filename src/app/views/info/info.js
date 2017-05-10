@@ -1,5 +1,16 @@
-angular.module('app.info',['angular-carousel'])
-  .controller('appPassage',['$scope','$http',function($scope,$http){
+angular.module('app.info',[])
+  .controller('appPassage',['$scope','$http','$window',function($scope,$http,$window){
+      var infoWindow = angular.element($window);
+      $scope.getWindowDimensions = function () {
+          return {'h': infoWindow.height(), 'w': infoWindow.width()};
+      };
+      $scope.panelPassageWidth = {}
+      $scope.$watchCollection($scope.getWindowDimensions, function (newValue) {
+          console.log(newValue);
+          $scope.panelPassageWidth = {
+              height: newValue.h - 100
+          }
+      })
     //获取轮播图
     $http({
       url: baseUrl + 'ym/show/list.api',

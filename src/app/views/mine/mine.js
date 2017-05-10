@@ -7,6 +7,7 @@ angular.module('app.mine', [])
         };
         $scope.panelWidth = {}
         $scope.$watchCollection($scope.getWindowDimensions, function (newVal) {
+            console.log(newVal);
             $scope.panelWidth = {
                 height: newVal.h - 100,
                 width: newVal.w < 1366 ? 1116 : newVal.w - 250
