@@ -416,6 +416,7 @@ angular.module('app.mine', [])
             restrict: 'EA',
             link: function ($scope, element, attr) {
                 $scope.modifyPortrait=function(){
+                    console.log(userService.userMsg);
                     $rootScope.uploadAvatar=$modal.open({
                         templateUrl: "app/views/mine/upload.avatar.tpl.html",
                         backdrop: true,
@@ -429,11 +430,10 @@ angular.module('app.mine', [])
 
                             var uploader = $scope.uploader1 = new FileUploader({
                                 url: baseUrl + "ym/upload/uploadImage",
-                                autoUpload:true,
-                                method:'POST',
-
-
+                                method:'POST'
                             });
+                            console.log('----------------uploader---------------');
+                            console.log($scope.uploader1.queue.length);
                             uploader.filters.push({
                                 name: 'imageFilter',
                                 fn: function(item /*{File|FileLikeObject}*/, options) {
@@ -512,6 +512,11 @@ angular.module('app.mine', [])
                             };
                             uploader.onCompleteItem = function (fileItem, response, status, headers) {
                             };
+                            $scope.uploaderFile=function(){
+                                if($scope.uploader1.queue.length>0){
+                                    $scope.uploader1.queue[0].upload();
+                                }
+                            }
                         }
                     })
                 }

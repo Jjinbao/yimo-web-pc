@@ -1,5 +1,5 @@
 angular.module('app.info',['angular-carousel'])
-  .controller('appInformation',['$scope','$http',function($scope,$http){
+  .controller('appPassage',['$scope','$http',function($scope,$http){
     //获取轮播图
     $http({
       url: baseUrl + 'ym/show/list.api',

@@ -1,6 +1,6 @@
 'use strict'
 angular.module('app.home', [])
-  .controller('swalkHome', ['$rootScope', '$scope', '$http', '$interval', function ($rootScope, $scope, $http, $interval) {
+  .controller('swalkApp', ['$rootScope', '$scope', '$http', '$interval', function ($rootScope, $scope, $http, $interval) {
     $scope.nowActive = 'ymy';
     $scope.changeItem = function (val) {
       if ($scope.nowActive == val) {
