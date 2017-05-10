@@ -7,7 +7,6 @@ angular.module('app.mine', [])
         };
         $scope.panelWidth = {}
         $scope.$watchCollection($scope.getWindowDimensions, function (newVal) {
-            console.log(newVal);
             $scope.panelWidth = {
                 height: newVal.h - 100,
                 width: newVal.w < 1366 ? 1116 : newVal.w - 250
@@ -20,8 +19,9 @@ angular.module('app.mine', [])
 
         //修改用户头像和姓名
         $scope.changeUserInfo = function () {
+            console.log(userService.userMsg);
             $scope.haveLoginuser = userService.userMsg;
-            $scope.$emit('user.nav.img', $scope.haveLoginuser);
+            $scope.$emit('user.nav.img', $scope.haveLoginuser.smallImg);
             if(!$scope.haveLoginuser.accountId){
                 $scope.nowActivePanel = 'noLogin'
             }

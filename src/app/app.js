@@ -29,7 +29,13 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'angularFileUploa
         }
 
         $scope.$on('user.nav.img', function (evt, data) {
-            $scope.userImg = data.smallImg;
+            console.log(data);
+            if(data){
+                $scope.userImg = data;
+            }else{
+                $scope.userImg='';
+            }
+
         })
 
         $rootScope.login = function (backParams, callback) {
@@ -414,6 +420,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'angularFileUploa
                                 return;
                             }
                             handleDoubleClick=true;
+                            $scope.findPasswordTip='';
                             $http({
                                 url:baseUrl+'ym/phoneCode/checkCode.api',
                                 method:'POST',
@@ -424,7 +431,6 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'angularFileUploa
                                     sign:md5('ymy'+$scope.findPasswordWord.identify+$scope.findPasswordWord.phone+$scope.findPasswordWord.code)
                                 }
                             }).success(function(data){
-
                                 if(data.result==1){
                                     if(data.checkFlag==1){
                                         $scope.findPasswordType++;

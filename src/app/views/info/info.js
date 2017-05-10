@@ -6,7 +6,6 @@ angular.module('app.info',[])
       };
       $scope.panelPassageWidth = {}
       $scope.$watchCollection($scope.getWindowDimensions, function (newValue) {
-          console.log(newValue);
           $scope.panelPassageWidth = {
               height: newValue.h - 100
           }

@@ -2,7 +2,7 @@
     <div class="mine-left-menu" ng-style="style()" resize>
         <div class="mine-portrait-img">
             <div class="mine-portrait">
-                <img ng-src="{{haveLoginuser.smallImg}}" ng-show="haveLoginuser.accountId">
+                <img ng-src="{{haveLoginuser.smallImg}}" ng-show="haveLoginuser.smallImg">
             </div>
             <div class="login-btn" ng-show="!haveLoginuser.accountId" ng-click="mineLogin()">登录</div>
             <div class="user-name" ng-show="haveLoginuser.accountId">{{haveLoginuser.userName}}</div>
