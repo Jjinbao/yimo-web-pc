@@ -1,6 +1,17 @@
 <div class="main-container">
-    <div class="home-left-menu" ng-style="style()" resize>
-        应用分类
+    <div class="mine-left-menu" ng-style="style()" resize>
+        <br>
+        <div class="mine-item-list" style="border-top: 1px solid #ccc" ng-class="{true:'active-list'}[nowActive=='myApp']" ng-click="changeItem('myApp')">
+            我的应用
+        </div>
+        <div class="mine-item-list" ng-class="{true:'active-list'}[nowActive=='recApp']" ng-click="changeItem('recApp')">
+            应用推荐
+        </div>
     </div>
-
+    <div class="mine-right-panel" ng-style="panelWidth">
+        <div ng-switch="nowActive">
+            <div ng-switch-when="myApp">我的应用</div>
+            <div ng-switch-when="recApp">推荐应用</div>
+        </div>
+    </div>
 </div>

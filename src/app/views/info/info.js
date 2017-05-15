@@ -8,7 +8,8 @@ angular.module('app.info',[])
       $scope.panelPassageWidth = {}
       $scope.$watchCollection($scope.getWindowDimensions, function (newValue) {
           $scope.panelPassageWidth = {
-              height: newValue.h - 100
+              //left:((newValue.w < 1366 ? 1366:newValue.w)-1129)/2
+              height:newValue.h-100
           }
       })
     //获取轮播图
@@ -36,6 +37,6 @@ angular.module('app.info',[])
        console.log(data);
      })
   }])
-    .controller('videoList',['$scope',function(){
+    .controller('videoList',['$scope',function($scope){
         console.log('视频列表');
     }])
