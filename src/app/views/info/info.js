@@ -1,3 +1,4 @@
+'use strict'
 angular.module('app.info',[])
   .controller('appPassage',['$scope','$http','$window',function($scope,$http,$window){
       var infoWindow = angular.element($window);
@@ -35,3 +36,6 @@ angular.module('app.info',[])
        console.log(data);
      })
   }])
+    .controller('videoList',['$scope',function(){
+        console.log('视频列表');
+    }])

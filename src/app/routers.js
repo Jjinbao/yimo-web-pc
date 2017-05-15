@@ -16,14 +16,13 @@ angular.module('app.router',[])
         controller:'appPassage',
         templateUrl:'app/views/info/info.tpl.html'
       })
-      .when('/teach',{
-        controller:'teach',
-        templateUrl:'app/views/teach/teach.tpl.html'
+      .when('/video',{
+         controller:'videoList',
+         templateUrl:'app/views/video/video.tpl.html'
       })
       .when('/mine',{
         controller:'mine',
-        templateUrl:'app/views/mine/mine.tpl.html',
-          cache:false
+        templateUrl:'app/views/mine/mine.tpl.html'
       })
       .otherwise({redirectTo:'/app'});
   })
