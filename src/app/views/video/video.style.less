@@ -1,0 +1,45 @@
+.video-left-menu {
+  width: 120px;
+  overflow-y: auto;
+  border-right: 1px solid gainsboro;
+  position: fixed;
+  left: 0;
+  top: 100px;
+  .video-item-list{
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    font-size: 18px;
+    border-bottom: 1px solid gainsboro;
+    cursor: pointer;
+  }
+  .video-item-list:hover{
+    color: @main-color;
+  }
+  .video-active-list{
+    color: #ffffff !important;
+    background-color: @main-color;
+  }
+}
+
+.video-center-menu{
+  width: 250px;
+  overflow-y: auto;
+  border-right: 1px solid gainsboro;
+  position: fixed;
+  background-color: green;
+  box-sizing: border-box;
+  overflow-y: auto;
+  left: 120px;
+  top: 100px;
+}
+
+.video-right-content{
+  background-color: red;
+  position: fixed;
+  top: 100px;
+  left: 370px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}

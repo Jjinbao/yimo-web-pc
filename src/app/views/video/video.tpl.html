@@ -1,5 +1,20 @@
-<div>视频分类和列表</div>
-<div>视频分类和列表</div>
-<div>视频分类和列表</div>
-<div>视频分类和列表</div>
-<div>视频分类和列表</div><div>视频分类和列表</div><div>视频分类和列表</div><div>视频分类和列表</div><div>视频分类和列表</div><div>视频分类和列表</div><div>视频分类和列表</div><div>视频分类和列表</div><div>视频分类和列表</div><div>视频分类和列表</div><div>视频分类和列表</div><div>视频分类和列表</div><div>视频分类和列表</div><div>视频分类和列表</div>
+<div class="main-container">
+  <div class="video-left-menu" ng-style="style()" resize>
+    <div class="video-item-list" style="border-top: 1px solid #ccc" ng-class="{true:'video-active-list'}[nowActive=='myApp']" ng-click="changeItem('myApp')">
+      学科门类
+    </div>
+    <div class="video-item-list" ng-class="{true:'video-active-list'}[nowActive=='recApp']" ng-click="changeItem('recApp')">
+      学校
+    </div>
+    <div class="video-item-list" ng-class="{true:'video-active-list'}[nowActive=='recApp']" ng-click="changeItem('recApp')">
+      其他
+    </div>
+  </div>
+  <div class="video-center-menu" ng-style="style()" resize>
+    <div>二级分类</div>
+  </div>
+  <div class="video-right-content" ng-style="videoListWidth">
+    <div>视频列表</div>
+
+  </div>
+</div>

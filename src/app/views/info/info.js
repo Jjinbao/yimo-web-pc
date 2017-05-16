@@ -178,5 +178,17 @@ angular.module('app.info', [])
         }
     }])
     .controller('videoList', ['$scope', function ($scope) {
-        console.log('视频列表');
+        $scope.videoListWidth = {
+            height:document.body.clientHeight-100,
+            width:(document.body.clientWidth-370)<910?910:document.body.clientWidth-370
+        }
+        window.onresize = function(){
+            var detailWidth=document.body.clientWidth;
+            var detailHeight=document.body.clientHeight;
+            $scope.videoListWidth = {
+                height: detailHeight - 100,
+                width:detailWidth-370<910?910:detailWidth-370
+            }
+            $scope.$digest();
+        }
     }])
