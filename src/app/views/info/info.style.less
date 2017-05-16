@@ -3,7 +3,51 @@
   margin-top: 100px;
   .passage-content-panel{
     width: 1129px;
-    border: 1px solid gainsboro;
     margin: 10px auto;
+    position: relative;
+    .passage-left-content{
+      width: 790px;
+      padding-left: 20px;
+      padding-top: 10px;
+      padding-right: 20px;
+      border-radius: 8px;
+      border: 1px solid gainsboro;
+      .passage-list{
+        .list-repeat{
+          margin-top: 5px;
+          padding-top: 5px;
+          padding-bottom: 5px;
+          border-bottom: 1px solid gainsboro;
+          .media-body{
+            .media-heading:hover{
+              cursor: pointer;
+            }
+          }
+        }
+        .none-border{
+          border: none;
+        }
+      }
+      .passage-detail-info{
+        img{
+          width: 100%;
+        }
+      }
+    }
+    .passage-right-content{
+      position: absolute;
+      top: 0;
+      right: 10px;
+      padding: 5px;
+      background-color: gainsboro;
+      width: 318px;
+      .rec-img{
+        width: 100%;
+        margin-top: 5px;
+      }
+      .rec-img:hover{
+        cursor: pointer;
+      }
+    }
   }
 }

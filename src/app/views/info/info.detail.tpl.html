@@ -1,0 +1,20 @@
+<div class="passage-container" ng-style="PassageDetailWidth" id="contain">
+    <div class="passage-content-panel" id="passagelist">
+        <div class="passage-left-content">
+            <div class="back-btn" ng-click="backToPre()">
+                <a href="#">返回</a>
+            </div>
+            <div>
+                {{detailMsg.title}}
+            </div>
+            <div class="passage-detail-info" ng-bind-html="detailMsg.detail">
+
+            </div>
+        </div>
+        <div class="passage-right-content">
+            <img class="rec-img" src="./app/img/u13.png">
+            <img class="rec-img" src="./app/img/u13.png">
+        </div>
+
+    </div>
+</div>
