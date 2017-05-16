@@ -27,8 +27,7 @@
             </div>
         </div>
         <div class="passage-right-content">
-            <img class="rec-img" src="./app/img/u13.png">
-            <img class="rec-img" src="./app/img/u13.png">
+            <img class="rec-img" ng-hide="rec.id==passageId" ng-repeat="rec in passageRec.list" ng-src="{{rec.imgSrc}}">
         </div>
 
     </div>

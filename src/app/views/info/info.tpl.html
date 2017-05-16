@@ -14,8 +14,7 @@
             </div>
         </div>
         <div class="passage-right-content">
-            <img class="rec-img" src="./app/img/u13.png">
-            <img class="rec-img" src="./app/img/u13.png">
+            <img class="rec-img" ng-repeat="rec in passageRec.list" ng-src="{{rec.imgSrc}}" ng-click="toDetailPage(rec)">
         </div>
 
     </div>

@@ -7,7 +7,6 @@
             <div class="login-btn" ng-show="!haveLoginuser.accountId" ng-click="mineLogin()">登录</div>
             <div class="user-name" ng-show="haveLoginuser.accountId">{{haveLoginuser.userName}}</div>
         </div>
-
         <div class="mine-item-list" ng-class="{true:'active-list'}[nowActivePanel=='history'||nowActivePanel=='appRecord'||nowActivePanel=='videoRecord'||nowActivePanel=='passageRecord']" ng-click="application('history')">
             历史记录
         </div>

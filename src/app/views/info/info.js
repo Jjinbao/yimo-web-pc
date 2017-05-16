@@ -5,13 +5,16 @@ angular.module('app.info', [])
         $scope.getWindowDimensions = function () {
             return {'h': infoWindow.height(), 'w': infoWindow.width()};
         };
-        $scope.panelPassageWidth = {}
-        $scope.$watchCollection($scope.getWindowDimensions, function (newValue) {
+        $scope.panelPassageWidth = {
+            height:$scope.getWindowDimensions().height-100
+        }
+        window.onresize = function(){
             $scope.panelPassageWidth = {
                 //left:((newValue.w < 1366 ? 1366:newValue.w)-1129)/2
-                height: newValue.h - 100
+                height: $scope.getWindowDimensions().h - 100
             }
-        })
+            $scope.$digest();
+        }
         //获取轮播图
         $http({
             url: baseUrl + 'ym/show/list.api',
@@ -45,6 +48,27 @@ angular.module('app.info', [])
             }
         })
 
+        //获取文章推荐列表
+        $scope.passageRec={
+            list:[],
+            count:0
+        }
+        $http({
+            url: baseUrl + 'ym/news/list.api',
+            method: 'POST',
+            params: {
+                pageNumber: 1,
+                pageSize: 10,
+                extstr2:1
+            }
+        }).success(function (data) {
+            console.log(data);
+            if(data.result==1){
+                $scope.passageRec.list=$scope.passageRec.list.concat(data.newsList);
+                $scope.passageRec.count=data.totalPage;
+            }
+        })
+
         $scope.toDetailPage=function(val){
             $location.path('/detail/list/'+val.rootId+'/'+val.id);
         }
@@ -64,17 +88,21 @@ angular.module('app.info', [])
     .controller('passageDetail',['$rootScope','$scope','$location','$routeParams','$http','$sce','$window','userService',function($rootScope,$scope,$location,$routeParams,$http,$sce,$window,userService){
         console.log($routeParams.rootId);
         console.log($routeParams.id);
+        $scope.passageId=$routeParams.id;
         var infoWindow = angular.element($window);
         $scope.getWindowDimensions = function () {
             return {'h': infoWindow.height(), 'w': infoWindow.width()};
         };
-        $scope.PassageDetailWidth = {}
-        $scope.$watchCollection($scope.getWindowDimensions, function (newValue) {
+        $scope.PassageDetailWidth = {
+            height:$scope.getWindowDimensions().h-100
+        }
+        window.onresize = function(){
             $scope.PassageDetailWidth = {
                 //left:((newValue.w < 1366 ? 1366:newValue.w)-1129)/2
-                height: newValue.h - 100
+                height: $scope.getWindowDimensions().h - 100
             }
-        })
+            $scope.$digest();
+        }
         $http({
             url:baseUrl+'ym/news/field.api',
             method:'POST',
@@ -112,6 +140,26 @@ angular.module('app.info', [])
                 }
                 $scope.userComment.list=$scope.userComment.list.concat(res.comments);
                 $scope.userComment.total=res.totalPage;
+            }
+        })
+        //获取文章推荐列表
+        $scope.passageRec={
+            list:[],
+            count:0
+        }
+        $http({
+            url: baseUrl + 'ym/news/list.api',
+            method: 'POST',
+            params: {
+                pageNumber: 1,
+                pageSize: 10,
+                extstr2:1
+            }
+        }).success(function (data) {
+            console.log(data);
+            if(data.result==1){
+                $scope.passageRec.list=$scope.passageRec.list.concat(data.newsList);
+                $scope.passageRec.count=data.totalPage;
             }
         })
 
