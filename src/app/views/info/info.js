@@ -1,17 +1,15 @@
 'use strict'
 angular.module('app.info', [])
     .controller('appPassage', ['$scope', '$http', '$window','$location', function ($scope, $http, $window,$location) {
-        var infoWindow = angular.element($window);
-        $scope.getWindowDimensions = function () {
-            return {'h': infoWindow.height(), 'w': infoWindow.width()};
-        };
         $scope.panelPassageWidth = {
-            height:$scope.getWindowDimensions().height-100
+            height:document.body.clientHeight-100
         }
         window.onresize = function(){
+            var realHeight=document.body.clientHeight;
+            console.log(realHeight);
             $scope.panelPassageWidth = {
                 //left:((newValue.w < 1366 ? 1366:newValue.w)-1129)/2
-                height: $scope.getWindowDimensions().h - 100
+                height:  realHeight- 100
             }
             $scope.$digest();
         }
@@ -89,17 +87,15 @@ angular.module('app.info', [])
         console.log($routeParams.rootId);
         console.log($routeParams.id);
         $scope.passageId=$routeParams.id;
-        var infoWindow = angular.element($window);
-        $scope.getWindowDimensions = function () {
-            return {'h': infoWindow.height(), 'w': infoWindow.width()};
-        };
+
         $scope.PassageDetailWidth = {
-            height:$scope.getWindowDimensions().h-100
+            height:document.body.clientHeight-100
         }
         window.onresize = function(){
+            var detailHeight=document.body.clientHeight;
             $scope.PassageDetailWidth = {
                 //left:((newValue.w < 1366 ? 1366:newValue.w)-1129)/2
-                height: $scope.getWindowDimensions().h - 100
+                height: detailHeight - 100
             }
             $scope.$digest();
         }
