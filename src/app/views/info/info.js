@@ -120,12 +120,17 @@ angular.module('app.info', [])
         }
         $scope.submitComment=function(){
             if(userService.userMsg&&userService.userMsg.accountId){
-
+                $scope.toSubmitComment();
             }else{
                 $rootScope.login('comment',function(){
                     $scope.$emit('user.nav.img', userService.userMsg.smallImg);
+                    $scope.toSubmitComment();
                 });
             }
+        }
+        //去提交评论
+        $scope.toSubmitComment=function(){
+
         }
     }])
     .controller('videoList', ['$scope', function ($scope) {

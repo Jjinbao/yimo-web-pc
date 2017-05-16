@@ -19,8 +19,10 @@
                 <div class="comment-title">
                     热门评论
                 </div>
-                <div class="comment-detail" ng-repeat="comment in userComment.list">
-                    {{comment.content}}
+                <div class="comment-detail" ng-repeat="comment in userComment.list" ng-class="{'none-border':$last}">
+                    <h5>总有刁民想害朕</h5>
+                    <div>{{comment.content}}</div>
+                    <div>{{comment.pushTime}}</div>
                 </div>
             </div>
         </div>
