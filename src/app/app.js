@@ -46,6 +46,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'angularFileUploa
         }
 
         $scope.$on('user.nav.img', function (evt, data) {
+            console.log('----------------modify----------------');
             console.log(data);
             if(data){
                 $scope.userImg = data;
@@ -99,6 +100,8 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'angularFileUploa
                         }).success(function (data) {
 
                             if (data.result == 1) {
+                                console.log('----------touxiang------------');
+                                console.log(data.smallImg);
                                 $scope.$emit('user.nav.img', data.smallImg)
                                 userService.userMsg = data;
                                 if (callback) {

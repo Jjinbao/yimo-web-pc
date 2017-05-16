@@ -4,11 +4,24 @@
             <div class="back-btn" ng-click="backToPre()">
                 <a href="#">返回</a>
             </div>
-            <div>
-                {{detailMsg.title}}
+            <div class="">
+                <h3>{{detailMsg.title}}</h3>
+                <div>{{detailMsg.formateDate}}</div>
             </div>
             <div class="passage-detail-info" ng-bind-html="detailMsg.detail">
 
+            </div>
+            <div class="passage-comment-text">
+                <textarea placeholder="请输入评论."></textarea>
+                <div class="btn btn-success btn-default comment-btn" ng-click="submitComment()">提交评论</div>
+            </div>
+            <div class="passage-hot-comment">
+                <div class="comment-title">
+                    热门评论
+                </div>
+                <div class="comment-detail" ng-repeat="comment in userComment.list">
+                    {{comment.content}}
+                </div>
             </div>
         </div>
         <div class="passage-right-content">

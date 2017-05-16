@@ -61,7 +61,7 @@ angular.module('app.info', [])
             // }
         });
     }])
-    .controller('passageDetail',['$scope','$location','$routeParams','$http','$sce','$window',function($scope,$location,$routeParams,$http,$sce,$window){
+    .controller('passageDetail',['$rootScope','$scope','$location','$routeParams','$http','$sce','$window','userService',function($rootScope,$scope,$location,$routeParams,$http,$sce,$window,userService){
         console.log($routeParams.rootId);
         console.log($routeParams.id);
         var infoWindow = angular.element($window);
@@ -90,8 +90,42 @@ angular.module('app.info', [])
             }
         })
 
+        //获取评论列表
+        $scope.userComment={
+            list:[],
+            total:0
+        }
+        $http({
+            url:baseUrl+'ym/comment/list.api',
+            method:'POST',
+            params:{
+                categoryRootId:$routeParams.rootId,
+                categoryItemId:$routeParams.id
+            }
+        }).success(function(res){
+            console.log(res);
+            if(res.result==1){
+                if(res.comments.length>0){
+                    res.comments.forEach(function(val){
+                        val.pushTime=new Date(val.createTime*1000).format('yyyy-MM-dd');
+                    })
+                }
+                $scope.userComment.list=$scope.userComment.list.concat(res.comments);
+                $scope.userComment.total=res.totalPage;
+            }
+        })
+
         $scope.backToPre=function(){
             window.history.back();
+        }
+        $scope.submitComment=function(){
+            if(userService.userMsg&&userService.userMsg.accountId){
+
+            }else{
+                $rootScope.login('comment',function(){
+                    $scope.$emit('user.nav.img', userService.userMsg.smallImg);
+                });
+            }
         }
     }])
     .controller('videoList', ['$scope', function ($scope) {
