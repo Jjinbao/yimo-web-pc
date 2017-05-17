@@ -1,20 +1,18 @@
 <div class="main-container">
   <div class="video-left-menu" ng-style="style()" resize>
-    <div class="video-item-list" style="border-top: 1px solid #ccc" ng-class="{true:'video-active-list'}[nowActive=='myApp']" ng-click="changeItem('myApp')">
-      学科门类
-    </div>
-    <div class="video-item-list" ng-class="{true:'video-active-list'}[nowActive=='recApp']" ng-click="changeItem('recApp')">
-      学校
-    </div>
-    <div class="video-item-list" ng-class="{true:'video-active-list'}[nowActive=='recApp']" ng-click="changeItem('recApp')">
-      其他
+    <div class="video-item-list" ng-repeat="firstItem in categoryList" ng-class="{true:'video-active-list'}[activeCategory.first==firstItem.id]" ng-click="changeFirstCategory(firstItem)">
+      {{firstItem.categoryName}}
     </div>
   </div>
   <div class="video-center-menu" ng-style="style()" resize>
-    <div>二级分类</div>
+    <div ng-repeat="secondList in secondCategoryList">
+      <div class="video-second-title">{{secondList.groupName}}</div>
+      <div class="video-third-list" ng-repeat="thirdCate in secondList.childrenList">
+        <div class="category-name">{{thirdCate.groupName}}</div>
+      </div>
+    </div>
   </div>
   <div class="video-right-content" ng-style="videoListWidth">
     <div>视频列表</div>
-
   </div>
 </div>

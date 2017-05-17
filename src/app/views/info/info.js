@@ -177,18 +177,53 @@ angular.module('app.info', [])
 
         }
     }])
-    .controller('videoList', ['$scope', function ($scope) {
+    .controller('videoList', ['$scope','$http', function ($scope,$http) {
         $scope.videoListWidth = {
             height:document.body.clientHeight-100,
-            width:(document.body.clientWidth-370)<910?910:document.body.clientWidth-370
+            width:(document.body.clientWidth-480)<800?800:document.body.clientWidth-480
         }
         window.onresize = function(){
             var detailWidth=document.body.clientWidth;
             var detailHeight=document.body.clientHeight;
             $scope.videoListWidth = {
                 height: detailHeight - 100,
-                width:detailWidth-370<910?910:detailWidth-370
+                width:detailWidth-480<800?800:detailWidth-480
             }
             $scope.$digest();
         }
+
+        //获取视频分类列表
+        $scope.categoryList=[];
+        //二级分类和三级分类
+        $scope.secondCategoryList='';
+        $scope.activeCategory={
+            first:'',
+            second:'',
+            third:''
+        }
+        $http({
+            url:baseUrl+'ym/category/list.api',
+            method:'POST'
+        }).success(function(data){
+            if(data.result==1){
+                $scope.categoryList=data.list;
+                console.log($scope.categoryList);
+                //初始化数据
+                $scope.activeCategory.first=$scope.categoryList[0].id;
+                $scope.secondCategoryList=$scope.categoryList[0].categoryList;
+
+            }
+        });
+
+        //更改以及分类
+        $scope.changeFirstCategory=function(value){
+            $scope.nowActiveCategory=value.id;
+            $scope.secondCategoryList=value.categoryList;
+        }
+
+        //更改三级分类
+        $scope.changeThirdCategory=function(val){
+
+        }
+
     }])

@@ -24,20 +24,43 @@
 }
 
 .video-center-menu{
-  width: 250px;
+  width: 360px;
   overflow-y: auto;
   border-right: 1px solid gainsboro;
   position: fixed;
   box-sizing: border-box;
   overflow-y: auto;
+  padding-left: 10px;
+  padding-right: 10px;
   left: 120px;
   top: 100px;
+  .video-second-title{
+    font-size: 16px;
+    padding: 10px 0;
+    color: #999;
+    cursor: default;
+  }
+  .video-third-list{
+    width: 50%;
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+    clear: both;
+    .category-name{
+      color: #333333;
+      float: left;
+    }
+    .category-name:hover{
+      background-color: @main-color;
+      color: white;
+    }
+  }
 }
 
 .video-right-content{
   position: fixed;
   top: 100px;
-  left: 370px;
+  left: 480px;
   overflow-y: auto;
   overflow-x: hidden;
 }
