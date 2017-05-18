@@ -231,7 +231,9 @@ angular.module('app.info', [])
         }
 
         //更改三级分类
+        $scope.thirdCategoryId='';
         $scope.changeThirdCategory=function(val){
+            $scope.thirdCategoryId=val.categoryId;
             console.log(val);
             $http({
                 url:baseUrl+'ym/album/list.api',

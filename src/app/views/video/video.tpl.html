@@ -8,7 +8,7 @@
     <div ng-repeat="secondList in secondCategoryList">
       <div class="video-second-title">{{secondList.groupName}}</div>
       <div class="video-third-list" ng-repeat="thirdCate in secondList.childrenList">
-        <div class="category-name" ng-click="changeThirdCategory(thirdCate)">{{thirdCate.groupName}}</div>
+        <div class="category-name" ng-class="{'category-name-active':thirdCategoryId==thirdCate.categoryId}" ng-click="changeThirdCategory(thirdCate)">{{thirdCate.groupName}}</div>
       </div>
     </div>
   </div>
