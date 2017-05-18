@@ -1,37 +1,33 @@
 .mine-left-menu{
-  width: 250px;
+  width: 200px;
   overflow-y: auto;
-  border-right: 1px solid gainsboro;
   position: fixed;
   left: 0;
-  top: 100px;
+  top: 60px;
+  background-color: #f9f9f9;
   .mine-portrait-img{
     width: 100%;
-    height: 200px;
+    height: 214px;
     border-bottom: 1px solid gainsboro;
     .mine-portrait{
-      width: 100px;
-      height: 100px;
-      background: url(../app/img/touxiang@2x.png) left center no-repeat;
-      background-size: 100px 100px;
+      width: 76px;
+      height: 76px;
+      background: url(../app/img/touxiang.png) left center no-repeat;
+      background-size: 76px 76px;
       display: block;
-      margin: 50px auto 20px;
+      margin: 30px auto 16px;
       img{
-        width: 100px;
-        height: 100px;
-        border-radius: 50px;
+        width: 76px;
+        height: 76px;
+        border-radius: 38px;
       }
     }
     .login-btn{
       text-align: center;
-      width: 100px;
-      height: 40px;
-      line-height: 39px;
-      font-size: 20px;
-      color: white;
-      margin-left: 75px;
-      border-radius: 6px;
-      background-color: @main-color;
+      font-size: 14px;
+      line-height: 1;
+      margin-top: 16px;
+      color: #333333;
       cursor: pointer;
     }
     .user-name{
@@ -54,6 +50,11 @@
     border-bottom: 1px solid gainsboro;
     cursor: pointer;
   }
+  .mine-quit-login{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+  }
   .active-list{
     color: #ffffff !important;
     background-color: @main-color;
@@ -66,8 +67,8 @@
 .mine-right-panel{
   position: absolute;
   padding: 10px;
-  left: 250px;
-  top: 100px;
+  left: 200px;
+  top: 60px;
   overflow-x: auto;
 }
 .modal-dialog{

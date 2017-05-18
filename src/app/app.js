@@ -584,7 +584,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'angularFileUploa
 
                 scope.style = function () {
                     return {
-                        'height': (newValue.h - 100) + 'px'
+                        'height': (newValue.h - 60) + 'px'
                     };
                 };
             }, true);

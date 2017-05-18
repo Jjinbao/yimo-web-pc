@@ -17,7 +17,7 @@
   font-style: normal;
 }
 
-@header-tab-height:100px;
+@header-tab-height:60px;
 //@app-min-width:1366px;
 @app-min-width:1280px;
 @main-color:#9e62df;
@@ -54,6 +54,7 @@ html,body{
   width: 100%;
   overflow-y: hidden;
   overflow-x: auto;
+  background-color: #f2f2f2;
   padding: 0;
   margin: 0;
   -webkit-user-select:none;
@@ -78,7 +79,7 @@ html,body{
   position: absolute;
   top: 0;
   left: 0;
-  background-color: @main-color;
+  background-color: #fff;
   min-width: @app-min-width;
   overflow-y: hidden;
   .nav-bar-content{
@@ -91,47 +92,50 @@ html,body{
       img{
         margin-top: 21px;
         margin-left: 40px;
-        width: 140px;
+        width: 60px;
         vertical-align: top;
       }
     }
     .nav-right-tab{
       height: @header-tab-height;
       position: absolute;
-      margin-left: 30%;
+      margin-left: 200px;
       top: 0;
+      font-size: 0;
       .yimo-tab{
         display: inline-block;
-        width: @header-tab-height;
+        width: 72px;
         height: @header-tab-height;
         text-decoration: none;
-        color: #cccccc;
-        font-size: 18px;
+        color: #333;
+        font-size: 16px;
         text-align: center;
         cursor: pointer;
         font-family: "Microsoft YaHei Regular","Microsoft YaHei";
       }
       .yimo-tab:hover{
         color:white;
+        background-color: #913aef;
       }
       .yimo-tab-active{
         color: white;
+        background-color: #913aef;
       }
     }
   }
   .mine-img-tab{
     position: absolute;
     right: 60px;
-    top: 20px;
-    width: 60px;
-    height: 60px;
+    top: 11px;
+    width: 38px;
+    height: 38px;
     cursor: pointer;
-    background: url('../app/img/touxiang@2x.png') left center no-repeat;
-    background-size: 60px 60px;
+    background: url('../app/img/touxiangxiao.png') left center no-repeat;
+    background-size: 38px 38px;
     img{
-      width: 60px;
-      height: 60px;
-      border-radius: 30px;
+      width: 38px;
+      height: 38px;
+      border-radius: 19px;
     }
   }
 }
