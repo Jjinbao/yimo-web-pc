@@ -6,7 +6,6 @@ angular.module('app.info', [])
         }
         window.onresize = function(){
             var realHeight=document.body.clientHeight;
-            console.log(realHeight);
             $scope.panelPassageWidth = {
                 //left:((newValue.w < 1366 ? 1366:newValue.w)-1129)/2
                 height:  realHeight- 100
@@ -39,7 +38,6 @@ angular.module('app.info', [])
                 pageSize: 10
             }
         }).success(function (data) {
-            console.log(data);
             if(data.result==1){
                 $scope.passageList.list=$scope.passageList.list.concat(data.newsList);
                 $scope.passageList.count=data.totalPage;
@@ -60,7 +58,6 @@ angular.module('app.info', [])
                 extstr2:1
             }
         }).success(function (data) {
-            console.log(data);
             if(data.result==1){
                 $scope.passageRec.list=$scope.passageRec.list.concat(data.newsList);
                 $scope.passageRec.count=data.totalPage;
@@ -70,22 +67,9 @@ angular.module('app.info', [])
         $scope.toDetailPage=function(val){
             $location.path('/detail/list/'+val.rootId+'/'+val.id);
         }
-
-        $('#contain').on('scroll',function(){
-            // console.log('滚动了滚动了------');
-            // console.log($('#contain').scrollTop());
-            // console.log($scope.getWindowDimensions().h-100);
-            // console.log($('#passagelist').height());
-            // console.log($('#passagelist').height()-$scope.getWindowDimensions().h+100);
-            // if ($('#contain').scrollTop() >= $('#passagelist').height()-$scope.getWindowDimensions().h+50) {
-                // 滚动到底部了
-                // alert('滚动到底部了');
-            // }
-        });
     }])
     .controller('passageDetail',['$rootScope','$scope','$location','$routeParams','$http','$sce','$window','userService',function($rootScope,$scope,$location,$routeParams,$http,$sce,$window,userService){
-        console.log($routeParams.rootId);
-        console.log($routeParams.id);
+
         $scope.passageId=$routeParams.id;
 
         $scope.PassageDetailWidth = {
@@ -106,7 +90,7 @@ angular.module('app.info', [])
                 id:$routeParams.id
             }
         }).success(function(res){
-            console.log(res);
+
             if(res.result==1){
                 $scope.detailMsg=res;
                 $scope.detailMsg.detail=$sce.trustAsHtml(res.text);
@@ -119,25 +103,28 @@ angular.module('app.info', [])
             list:[],
             total:0
         }
-        $http({
-            url:baseUrl+'ym/comment/list.api',
-            method:'POST',
-            params:{
-                categoryRootId:$routeParams.rootId,
-                categoryItemId:$routeParams.id
-            }
-        }).success(function(res){
-            console.log(res);
-            if(res.result==1){
-                if(res.comments.length>0){
-                    res.comments.forEach(function(val){
-                        val.pushTime=new Date(val.createTime*1000).format('yyyy-MM-dd');
-                    })
+        $scope.getNewComments=function(){
+            $http({
+                url:baseUrl+'ym/comment/list.api',
+                method:'POST',
+                params:{
+                    categoryRootId:$routeParams.rootId,
+                    categoryItemId:$routeParams.id
                 }
-                $scope.userComment.list=$scope.userComment.list.concat(res.comments);
-                $scope.userComment.total=res.totalPage;
-            }
-        })
+            }).success(function(res){
+
+                if(res.result==1){
+                    if(res.comments.length>0){
+                        res.comments.forEach(function(val){
+                            val.pushTime=new Date(val.createTime*1000).format('yyyy-MM-dd');
+                        })
+                    }
+                    $scope.userComment.list=res.comments;
+                    $scope.userComment.total=res.totalPage;
+                }
+            })
+        }
+        $scope.getNewComments();
         //获取文章推荐列表
         $scope.passageRec={
             list:[],
@@ -152,9 +139,9 @@ angular.module('app.info', [])
                 extstr2:1
             }
         }).success(function (data) {
-            console.log(data);
+
             if(data.result==1){
-                $scope.passageRec.list=$scope.passageRec.list.concat(data.newsList);
+                $scope.passageRec.list=data.newsList;
                 $scope.passageRec.count=data.totalPage;
             }
         })
@@ -173,8 +160,31 @@ angular.module('app.info', [])
             }
         }
         //去提交评论
+        $scope.commentContent='';
         $scope.toSubmitComment=function(){
+            if(!$scope.commentContent){
+                $rootScope.successAlter('请填写评论！');
+                return;
+            }
+            $http({
+                url:baseUrl+'ym/comment/add.api',
+                method:'POST',
+                params:{
+                    uid:userService.userMsg.accountId,
+                    categoryRootId:9,
+                    categoryItemId:$routeParams.id,
+                    content:encodeURI($scope.commentContent),
+                    device:'pc'
+                }
+            }).success(function(data){
+                if(data.result==1){
+                    $scope.commentContent='';
+                    $rootScope.successAlter('评论成功！');
+                    $scope.getNewComments();
+                }else{
 
+                }
+            })
         }
     }])
     .controller('videoList', ['$scope','$http', function ($scope,$http) {
@@ -207,7 +217,6 @@ angular.module('app.info', [])
         }).success(function(data){
             if(data.result==1){
                 $scope.categoryList=data.list;
-                console.log($scope.categoryList);
                 //初始化数据
                 $scope.activeCategory.first=$scope.categoryList[0].id;
                 $scope.secondCategoryList=$scope.categoryList[0].categoryList;
@@ -217,13 +226,39 @@ angular.module('app.info', [])
 
         //更改以及分类
         $scope.changeFirstCategory=function(value){
-            $scope.nowActiveCategory=value.id;
+            $scope.activeCategory.first=value.id;
             $scope.secondCategoryList=value.categoryList;
         }
 
         //更改三级分类
         $scope.changeThirdCategory=function(val){
-
+            console.log(val);
+            $http({
+                url:baseUrl+'ym/album/list.api',
+                method:'POST',
+                params:{
+                    rootId:val.rootId,
+                    catIdLev2:val.parentId,
+                    catIdLev3:val.categoryId
+                }
+            }).success(function(res){
+                console.log(res);
+            })
         }
+
+        function getVideoList(val){
+            $http({
+                url:baseUrl+'ym/album/list.api'
+            })
+        }
+
+        //获取热门专辑推荐列表
+        $scope.recVideoList=[];
+        $http({
+            url:baseUrl+'ym/album/list.api',
+            method:'POST'
+        }).success(function(res){
+            console.log(res);
+        })
 
     }])

@@ -12,7 +12,7 @@
 
             </div>
             <div class="passage-comment-text">
-                <textarea placeholder="请输入评论."></textarea>
+                <textarea placeholder="请输入评论." ng-model="commentContent"></textarea>
                 <div class="btn btn-success btn-default comment-btn" ng-click="submitComment()">提交评论</div>
             </div>
             <div class="passage-hot-comment">
@@ -20,7 +20,7 @@
                     热门评论
                 </div>
                 <div class="comment-detail" ng-repeat="comment in userComment.list" ng-class="{'none-border':$last}">
-                    <h5>总有刁民想害朕</h5>
+                    <h5>{{comment.userName}}</h5>
                     <div>{{comment.content}}</div>
                     <div>{{comment.pushTime}}</div>
                 </div>
