@@ -106,10 +106,25 @@
 
   }
   .login-body{
-    padding-top: 74px;
     position: relative;
     .login-user-name{
       width: 300px;
+      margin-top:74px;
+      margin-left: 50px;
+      input{
+        height: 36px;
+        line-height: 36px;
+        padding-left: 5px;
+        width: 100%;
+        border: 1px solid gainsboro;
+      }
+    }
+    .modify-password{
+      margin-top: 22px;
+    }
+    .register-user-name{
+      width: 300px;
+      margin-top:38px;
       margin-left: 50px;
       input{
         height: 36px;
@@ -121,44 +136,44 @@
     }
     .register-code{
       position: relative;
-      height: 50px;
+      margin-top: 14px;
       input{
-        height: 40px;
-        line-height: 40px;
+        height: 36px;
+        line-height: 36px;
         padding-left: 5px;
         margin-left: 50px;
         width: 180px;
-        border-radius: 5px;
         border: 1px solid gainsboro;
       }
       .yanzheng-code-btn{
-        height: 40px;
+        height: 36px;
         position: absolute;
         right: 50px;
-        width: 110px;
+        width: 108px;
         text-align: center;
         border:1px solid gainsboro;
-        border-radius: 6px;
         cursor: pointer;
+        color: white;
+        background-color: @main-color;
         top: 0;
-        line-height: 39px;
+        line-height: 35px;
       }
     }
     .register-img-code{
-      height: 50px;
+      margin-top: 14px;
       position: relative;
       input{
-        height: 40px;
-        line-height: 40px;
+        height: 36px;
+        line-height: 36px;
         padding-left: 5px;
         margin-left: 50px;
         width: 180px;
-        border-radius: 5px;
         border: 1px solid gainsboro;
       }
       img{
         position: absolute;
-        height: 40px;
+        width: 70px;
+        height: 36px;
         top: 0;
         left: 240px;
       }
@@ -173,6 +188,9 @@
         border: 1px solid gainsboro;
         width: 100%;
       }
+    }
+    .register-password{
+      margin-top: 14px;
     }
     .login-reg-find{
       position: relative;
@@ -228,9 +246,10 @@
       background-color: @main-color;
       border: none;
       width: 300px;
-      height: 45px;
+      height: 36px;
+      font-size: 16px;
       margin-left: 50px;
-      font-size: 20px;
+      border-radius: 2px;
     }
 
   }

@@ -1,11 +1,11 @@
 <div class="login-panel">
-    <div class="close-btn" ng-click="closeRegisterModal()">&times;</div>
+    <div class="close-btn" ng-click="closeRegisterModal()"></div>
     <div class="login-header">
         <!--<img src="./app/img/u10.png">-->
         注册医模云ID
     </div>
     <div class="login-body">
-        <div class="login-user-name">
+        <div class="register-user-name">
             <input type="text" class="input-small" placeholder="手机号" ng-model="registerUser.phone" required>
         </div>
         <div class="register-code">
@@ -16,13 +16,13 @@
             <input type="text" class="input-small" placeholder="图形验证码" ng-model="registerUser.imgcode" required>
             <img ng-src="{{imgCode.img}}" ng-click="getImgCode()">
         </div>
-        <div class="login-password">
-            <input type="text" placeholder="请输入用户名" maxlength="12" ng-model="registerUser.name" required>
-        </div>
-        <div class="login-password">
+        <!--<div class="login-password">-->
+            <!--<input type="text" placeholder="请输入用户名" maxlength="12" ng-model="registerUser.name" required>-->
+        <!--</div>-->
+        <div class="login-password register-password">
             <input type="password" placeholder="请输入密码" maxlength="12" ng-model="registerUser.password" required>
         </div>
-        <div class="login-password">
+        <div class="login-password register-password">
             <input type="password" placeholder="请重复密码" maxlength="12" ng-model="registerUser.rePassword" required>
         </div>
         <div class="login-info-tip" ng-show="registerTip">

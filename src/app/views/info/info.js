@@ -2,13 +2,13 @@
 angular.module('app.info', [])
     .controller('appPassage', ['$scope', '$http', '$window','$location', function ($scope, $http, $window,$location) {
         $scope.panelPassageWidth = {
-            height:document.body.clientHeight-100
+            height:document.body.clientHeight-60
         }
         window.onresize = function(){
             var realHeight=document.body.clientHeight;
             $scope.panelPassageWidth = {
                 //left:((newValue.w < 1366 ? 1366:newValue.w)-1129)/2
-                height:  realHeight- 100
+                height:  realHeight- 60
             }
             $scope.$digest();
         }
@@ -73,13 +73,13 @@ angular.module('app.info', [])
         $scope.passageId=$routeParams.id;
 
         $scope.PassageDetailWidth = {
-            height:document.body.clientHeight-100
+            height:document.body.clientHeight-60
         }
         window.onresize = function(){
             var detailHeight=document.body.clientHeight;
             $scope.PassageDetailWidth = {
                 //left:((newValue.w < 1366 ? 1366:newValue.w)-1129)/2
-                height: detailHeight - 100
+                height: detailHeight - 60
             }
             $scope.$digest();
         }
@@ -196,7 +196,7 @@ angular.module('app.info', [])
             var detailWidth=document.body.clientWidth;
             var detailHeight=document.body.clientHeight;
             $scope.videoListWidth = {
-                height: detailHeight - 100,
+                height: detailHeight - 60,
                 width:detailWidth-480<800?800:detailWidth-480
             }
             $scope.$digest();
