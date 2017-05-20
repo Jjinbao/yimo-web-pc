@@ -7,16 +7,16 @@
             <div class="login-btn" ng-show="!haveLoginuser.accountId" ng-click="mineLogin()">登录</div>
             <div class="user-name" ng-show="haveLoginuser.accountId">{{haveLoginuser.userName}}</div>
         </div>
-        <div class="mine-item-list" ng-class="{true:'active-list'}[nowActivePanel=='history'||nowActivePanel=='appRecord'||nowActivePanel=='videoRecord'||nowActivePanel=='passageRecord']" ng-click="application('history')">
+        <div class="mine-item-list application-icon" ng-class="{true:'active-list active-list-app'}[nowActivePanel=='history'||nowActivePanel=='appRecord'||nowActivePanel=='videoRecord'||nowActivePanel=='passageRecord']" ng-click="application('history')">
             历史记录
         </div>
-        <div class="mine-item-list" ng-class="{true:'active-list'}[nowActivePanel=='feed'||nowActivePanel=='helpFeedApp']" ng-click="helpFeedApp('feed')">
+        <div class="mine-item-list help-feed-icon" ng-class="{true:'active-list active-list-bangzhu'}[nowActivePanel=='feed'||nowActivePanel=='helpFeedApp']" ng-click="helpFeedApp('feed')">
             帮助与反馈
         </div>
-        <div class="mine-item-list" ng-class="{true:'active-list'}[nowActivePanel=='record'||nowActivePanel=='feedDetail']" ng-click="feedRecord('record')">
+        <div class="mine-item-list feed-record-icon" ng-class="{true:'active-list active-list-fankui'}[nowActivePanel=='record'||nowActivePanel=='feedDetail']" ng-click="feedRecord('record')">
             反馈记录
         </div>
-        <div class="mine-item-list" ng-show="haveLoginuser.accountId" ng-class="{true:'active-list'}[nowActivePanel=='user']" ng-click="userInfo()">
+        <div class="mine-item-list user-message-icon" ng-show="haveLoginuser.accountId" ng-class="{true:'active-list active-list-ziliao'}[nowActivePanel=='user']" ng-click="userInfo()">
             用户资料
         </div>
         <div class="mine-item-list mine-quit-login" ng-show="haveLoginuser.accountId" ng-click="quitLogin()">

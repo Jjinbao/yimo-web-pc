@@ -8,7 +8,6 @@
   .mine-portrait-img{
     width: 100%;
     height: 214px;
-    border-bottom: 1px solid gainsboro;
     .mine-portrait{
       width: 76px;
       height: 76px;
@@ -42,25 +41,53 @@
 
 
   .mine-item-list{
-    width: 100%;
-    height: 60px;
-    line-height: 60px;
-    text-align: center;
-    font-size: 18px;
-    border-bottom: 1px solid gainsboro;
+    width: 158px;
+    height: 36px;
+    line-height: 36px;
+    text-align: left;
+    font-size: 16px;
     cursor: pointer;
+    margin-left: 21px;
+    margin-top: 20px;
+    padding-left: 35px;
+    border-radius: 2px;
+  }
+  .mine-item-list:hover{
+    background-color: #eeecec;
+  }
+  .application-icon{
+    background: url(../app/img/lishijilu.png) 8px center no-repeat;
+  }
+  .help-feed-icon{
+    background: url(../app/img/bangzhu.png) 8px center no-repeat;
+  }
+  .feed-record-icon{
+    background: url(../app/img/fankui.png) 8px center no-repeat;
+  }
+  .user-message-icon{
+    background: url(../app/img/yonghuziliao.png) 8px center no-repeat;
   }
   .mine-quit-login{
     position: absolute;
     left: 0;
-    bottom: 0;
+    bottom: 5px;
+    background: url(../app/img/tuichu.png) 7px center no-repeat;
   }
   .active-list{
     color: #ffffff !important;
-    background-color: @main-color;
+    background-color: @main-color !important;
   }
-  .mine-item-list:hover{
-    color: @main-color;
+  .active-list-app{
+    background: url(../app/img/lishijilu02.png) 8px center no-repeat;
+  }
+  .active-list-bangzhu{
+    background: url(../app/img/bangzhu02.png) 8px center no-repeat;
+  }
+  .active-list-fankui{
+    background: url(../app/img/fankui02.png) 8px center no-repeat;
+  }
+  .active-list-ziliao{
+    background: url(../app/img/yonghuziliao02.png) 8px center no-repeat;
   }
 }
 
