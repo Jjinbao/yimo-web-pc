@@ -678,6 +678,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'angularFileUploa
                         method: 'POST',
                         params: $scope.reqDate
                     }).success(function (data) {
+                        console.log(data);
                         if (data.result == 1) {
                             $scope.resData.totalPage = data.totalPage;
                             $scope.resData.list = data.categoryQuestionList;
@@ -887,6 +888,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'angularFileUploa
                     method: 'POST',
                     params: $scope.reqParams
                 }).success(function (data) {
+                    console.log(data);
                     if (data.result == 1) {
                         $scope.resData.list = $scope.resData.list.concat(data.categoryQuestionList);
                         $scope.resData.totalNum = data.totalPage;

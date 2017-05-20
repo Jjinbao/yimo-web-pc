@@ -1,8 +1,8 @@
 <div class="panel panel-default">
-    <div class="panel-heading">
-        <h2 class="panel-title">反馈记录</h2>
+    <div class="panel-heading-reset panel-heading">
+        <div>反馈记录</div>
     </div>
-    <div class="panel-body" style="padding-left: 20px;padding-right: 20px;">
+    <div class="panel-body" style="padding-left: 40px;padding-right: 40px;">
         <div class="feed-record-item" ng-repeat="que in resData.list" ng-click="toOneFeedQuestion(que)">
             <div class="feed-question">
                 {{que.question}}
@@ -15,6 +15,13 @@
             </div>
             <div class="deal-status" ng-class="{'no-deal':que.status==1,'have-deal':que.status==2,'deal-ing':que.status==3}">
                 {{que.statusWord}}
+            </div>
+            <div class="deal-right-arrow">
+                <img ng-show="true" src="../app/img/zhankai01@2x.png">
+                <img ng-show="false" src="../app/img/zhankai02@2x.png">
+            </div>
+            <div class="feed-answer">
+                {{que.answer}}
             </div>
         </div>
     </div>
