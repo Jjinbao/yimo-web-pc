@@ -15,6 +15,9 @@
         <div class="register-img-code">
             <input type="text" class="input-small" placeholder="图形验证码" ng-model="registerUser.imgcode" required>
             <img ng-src="{{imgCode.img}}" ng-click="getImgCode()">
+            <div class="refrash-img-code" ng-click="getImgCode()">
+                看不清换一张
+            </div>
         </div>
         <!--<div class="login-password">-->
             <!--<input type="text" placeholder="请输入用户名" maxlength="12" ng-model="registerUser.name" required>-->

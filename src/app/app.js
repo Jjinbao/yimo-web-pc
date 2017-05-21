@@ -164,6 +164,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'angularFileUploa
                         if($scope.regImgDoubleClick){
                             return;
                         }
+                        $scope.imgCode='';
                         $scope.regImgDoubleClick=true;
                         $http({
                             url: baseUrl + 'ym/randCodeImage.api',
@@ -201,7 +202,6 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'angularFileUploa
                                 sign: md5('ymy' + '1' + $scope.registerUser.phone)
                             }
                         }).success(function (data) {
-
                             if (data.result == 1) {
                                 $scope.registerUser.identifier = data.identifier;
                                 $scope.intervalId = $interval(function () {
