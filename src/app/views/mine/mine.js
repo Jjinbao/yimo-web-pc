@@ -62,7 +62,6 @@ angular.module('app.mine', [])
         })
 
         $scope.$on('help.feed.type', function (evt, data) {
-
             $scope.helpFeedData = data;
             $scope.nowActivePanel = 'helpFeedApp'
         })
