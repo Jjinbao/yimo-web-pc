@@ -908,8 +908,16 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'angularFileUploa
                 }).error(function () {
                     //$scope.alertTab('网络异常,请检查网络!', $scope.netBreakBack);
                 })
+
+                $scope.showDealResult='';
                 $scope.toOneFeedQuestion=function(val){
-                    $scope.$emit('my.feed.question',val);
+                    console.log(val);
+                    if($scope.showDealResult==val){
+                        $scope.showDealResult=''
+                    }else{
+                        $scope.showDealResult=val
+                    }
+                    //$scope.$emit('my.feed.question',val);
                 }
                 //})
             },

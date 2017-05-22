@@ -12,6 +12,9 @@ angular.module('app.mine', [])
                 width: newVal.w - 200
                 //width: newVal.w < 1366 ? 1116 : newVal.w - 250
             }
+            //$scope.answerWidth={
+            //    width: newVal.w - 200
+            //}
         })
 
         $rootScope.regOrLogin=function(){

@@ -3,7 +3,7 @@
         <div>反馈记录</div>
     </div>
     <div class="panel-body" style="padding-left: 40px;padding-right: 40px;">
-        <div class="feed-record-item" ng-repeat="que in resData.list" ng-click="toOneFeedQuestion(que)">
+        <div class="feed-record-item" ng-class="{'feed-item-no-border':showDealResult==que.id}" ng-repeat="que in resData.list" ng-click="toOneFeedQuestion(que.id)">
             <div class="feed-question">
                 {{que.question}}
             </div>
@@ -17,11 +17,21 @@
                 {{que.statusWord}}
             </div>
             <div class="deal-right-arrow">
-                <img ng-show="true" src="../app/img/zhankai01@2x.png">
-                <img ng-show="false" src="../app/img/zhankai02@2x.png">
+                <img ng-show="showDealResult!=que.id" src="../app/img/zhankai01@2x.png">
+                <img ng-show="showDealResult==que.id" src="../app/img/zhankai02@2x.png">
             </div>
-            <div class="feed-answer">
-                {{que.answer}}
+            <div class="feed-answer" ng-show="showDealResult==que.id">
+                <img class="back-img" src="./app/img/zhankaibeijing@2x.png">
+                <div class="feed-answer-title">尊敬的医模用户:</div>
+                <div class="feed-answer-body" ng-show="que.status==1">
+                    您反馈的问题我们已经收到，我们会尽快处理，感谢您的反馈。
+                </div>
+                <div class="feed-answer-body" ng-show="que.status==3">
+                    您反馈的问题我们正在处理，请您耐心等待。
+                </div>
+                <div class="feed-answer-body" ng-show="que.status==2">
+                    {{que.answer}}
+                </div>
             </div>
         </div>
     </div>
