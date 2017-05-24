@@ -16,17 +16,18 @@ angular.module('app.home', [])
         $scope.panelWidth = {}
         $scope.$watchCollection($scope.getWindowDimensions, function (newVal) {
             $scope.panelWidth = {
-                height: newVal.h - 100,
+                height: newVal.h - 60,
                 //width: newVal.w < 1366 ? 1116: newVal.w - 250
                 width: newVal.w - 200
             }
         })
 
+        $scope.myAppList=[];
         $http({
             url:baseUrl+'ym/app/list.api',
             method:'POST'
         }).success(function(data){
-            console.log(data);
+            $scope.myAppList=data.list;
         })
 
 

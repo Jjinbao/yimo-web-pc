@@ -2,10 +2,18 @@
     <div class="panel-heading-reset panel-heading">
         <div>帮助与反馈</div>
     </div>
-    <div class="panel-body" style="padding-left: 40px;padding-right: 40px;">
-        <div class="one-app-item" ng-repeat="pro in appProList" ng-click="appFeedRecord(pro)">
-            <img ng-src="{{pro.smallImage}}">
-            <span>{{pro.appName}}</span>
+    <div style="padding-left: 20px;padding-right: 20px;padding-top: 51px;">
+
+        <div class="one-app-item" style="margin-bottom: 59px;" ng-click="appFeedRecord(pro)"  ng-repeat="pro in appProList">
+            <div class="app-help-feed">
+                <img ng-src="{{pro.smallImage}}">
+                <div class="app">{{pro.appName}}</div>
+            </div>
         </div>
+
+        <!--<div class="one-app-item" ng-repeat="pro in appProList" ng-click="appFeedRecord(pro)">-->
+            <!--<img ng-src="{{pro.smallImage}}">-->
+            <!--<span>{{pro.appName}}</span>-->
+        <!--</div>-->
     </div>
 </div>

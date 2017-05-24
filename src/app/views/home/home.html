@@ -1,17 +1,25 @@
 <div class="main-container">
-    <div class="mine-left-menu" ng-style="style()" resize>
-        <br>
-        <div class="mine-item-list" style="border-top: 1px solid #ccc" ng-class="{true:'active-list'}[nowActive=='myApp']" ng-click="changeItem('myApp')">
+    <div class="mine-left-menu" style="padding-top: 20px;" ng-style="style()" resize>
+        <div class="mine-item-list mine-application" ng-class="{true:'active-list mine-application-active'}[nowActive=='myApp']" ng-click="changeItem('myApp')">
             我的应用
         </div>
-        <div class="mine-item-list" ng-class="{true:'active-list'}[nowActive=='recApp']" ng-click="changeItem('recApp')">
+        <div class="mine-item-list app-recomand" ng-class="{true:'active-list app-recomand-active'}[nowActive=='recApp']" ng-click="changeItem('recApp')">
             应用推荐
         </div>
     </div>
     <div class="mine-right-panel" ng-style="panelWidth">
         <div ng-switch="nowActive">
-            <div ng-switch-when="myApp">我的应用</div>
-            <div ng-switch-when="recApp">推荐应用</div>
+            <div ng-switch-when="myApp" style="padding-top: 44px">
+                <div class="one-app-item" style="margin-bottom: 59px;" ng-click="appFeedRecord(pro)"  ng-repeat="pro in myAppList">
+                    <div class="app-help-feed">
+                        <img ng-src="{{pro.smallImage}}">
+                        <div class="app">{{pro.appName}}</div>
+                    </div>
+                </div>
+            </div>
+            <div ng-switch-when="recApp">
+                推荐应用
+            </div>
         </div>
     </div>
 </div>
