@@ -1,35 +1,43 @@
 <div class="panel panel-default">
-    <div class="panel-heading">
-        <h2 class="panel-title">我的资料</h2>
+    <div class="panel-heading-reset panel-heading">
+        <div>我的资料</div>
     </div>
-    <div class="panel-body" style="padding-left: 20px;padding-right: 20px;">
-        <div class="user-info-portrait">
-            <div class="portrait">
-                <img ng-show="haveLoginuser.smallImg" ng-src="{{haveLoginuser.smallImg}}">
-            </div>
-            <div class="change-portrait">
-                <!--<button class="btn btn-default" ng-click="modifyPortrait()">修改头像</button>-->
-                <button class="btn btn-default">修改头像</button>
-            </div>
-        </div>
+    <div class="panel-body" style="padding-left: 40px;padding-right: 40px;">
+        <!--<div class="user-info-portrait">-->
+            <!--<div class="portrait">-->
+                <!--<img ng-show="haveLoginuser.smallImg" ng-src="{{haveLoginuser.smallImg}}">-->
+            <!--</div>-->
+            <!--<div class="change-portrait">-->
+                <!--&lt;!&ndash;<button class="btn btn-default" ng-click="modifyPortrait()">修改头像</button>&ndash;&gt;-->
+                <!--<button class="btn btn-default">修改头像</button>-->
+            <!--</div>-->
+        <!--</div>-->
         <div class="user-message-item">
-            <div>姓名</div>
-            <span>{{haveLoginuser.userName}}</span>
+            <div class="user-name-title">
+                <span>姓名</span>
+            </div>
+            <div class="user-name">{{haveLoginuser.userName}}</div>
             <div class="user-right-button">
                 <span ng-click="modifyName()">修改</span>
             </div>
         </div>
         <div class="user-message-item">
-            <div>账号</div>
-            <span>{{haveLoginuser.randCode}}</span>
+            <div class="user-code-title">
+                <span>账号</span>
+            </div>
+            <div class="user-name">{{haveLoginuser.randCode}}</div>
         </div>
         <div class="user-message-item">
-            <div>手机号</div>
-            <span>{{haveLoginuser.phone | ellipsisPhone}}</span>
+            <div class="user-phone-title">
+                <span>手机号</span>
+            </div>
+            <div class="user-name">{{haveLoginuser.phone | ellipsisPhone}}</div>
         </div>
         <div class="user-message-item">
-            <div>修改密码</div>
-            <span>为了您的账号安全，我们建议您定期修改密码！</span>
+            <div class="user-password-title">
+                <span>修改密码</span>
+            </div>
+            <div class="user-name">为了您的账号安全，我们建议您定期修改密码！</div>
             <div class="user-right-button">
                 <span ng-click="modifyPassword()">修改</span>
             </div>

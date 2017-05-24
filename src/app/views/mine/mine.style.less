@@ -439,21 +439,77 @@
 }
 
 .user-message-item{
-  height: 100px;
+  height: 115px;
   border-bottom: 1px solid gainsboro;
   position: relative;
-  padding-top: 20px;
-  font-size: 19px;
-  span{
+  padding: 36px 190px;
+  .user-name-title{
+    position: absolute;
+    left: 0;
+    background: url('../app/img/xingmin@2x.png') left center no-repeat;
+    background-size: 40px 40px;
+    padding-left: 50px;
+    margin-top: 5px;
+    span{
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+    }
+  }
+  .user-code-title{
+    position: absolute;
+    left: 0;
+    background: url('../app/img/zhanghao@2x.png') left center no-repeat;
+    background-size: 40px 40px;
+    padding-left: 50px;
+    margin-top: 5px;
+    span{
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+    }
+  }
+  .user-phone-title{
+    position: absolute;
+    left: 0;
+    background: url('../app/img/shouji@2x.png') left center no-repeat;
+    background-size: 40px 40px;
+    padding-left: 50px;
+    margin-top: 5px;
+    span{
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+    }
+  }
+  .user-password-title{
+    position: absolute;
+    left: 0;
+    background: url('../app/img/mima@2x.png') left center no-repeat;
+    background-size: 40px 40px;
+    padding-left: 50px;
+    margin-top: 5px;
+    span{
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+    }
+  }
+  .user-name{
+    height: 43px;
+    line-height: 43px;
+    box-sizing: border-box;
+    border-left: 1px solid @border-color;
     font-size: 14px;
+    padding-left: 38px;
     color: #999;
   }
   .user-right-button{
     position: absolute;
     top: 0;
     right: 40px;
-    height: 100px;
-    line-height: 100px;
+    height: 115px;
+    line-height: 115px;
     span{
       cursor: pointer;
       color: @main-color;
