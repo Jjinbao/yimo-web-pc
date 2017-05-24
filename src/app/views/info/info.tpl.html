@@ -1,5 +1,5 @@
-<div class="passage-container" ng-style="panelPassageWidth" id="contain">
-    <div class="passage-content-panel" id="passagelist">
+<div class="passage-container" ng-style="panelPassageHeight" id="contain">
+    <div class="passage-content-panel" id="passagelist" ng-style="panelPassageWidth">
         <div class="passage-left-content">
             <div class="row passage-list">
                 <div class="media list-repeat" style="width: 100%" ng-class="{'none-border':$last}" ng-repeat="news in passageList.list">
@@ -7,16 +7,22 @@
                         <img ng-src="{{news.imgSrc}}"  ng-click="toDetailPage(news)" width="150"/>
                     </a>
                     <div class="media-body">
-                        <h4 class="media-heading"  ng-click="toDetailPage(news)">{{news.title}}</h4>
-                        <p style="cursor: pointer"  ng-click="toDetailPage(news)">{{news.extstr1}}{{news.extstr1}}</p>
+                        <div class="media-heading"  ng-click="toDetailPage(news)">{{news.title}}</div>
+                        <div class="media-create-date">
+                            发表于{{news.formateDate}}
+                        </div>
+                        <p class="media-subheader"  ng-click="toDetailPage(news)">{{news.extstr1}}{{news.extstr1}}</p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="passage-right-content">
-            <img class="rec-img" ng-repeat="rec in passageRec.list" ng-src="{{rec.imgSrc}}" ng-click="toDetailPage(rec)">
-        </div>
 
+    </div>
+    <div class="passage-right-content">
+        <div class="hot-passage">
+            热门文章
+        </div>
+        <img class="rec-img" ng-repeat="rec in passageRec.list" ng-src="{{rec.imgSrc}}" ng-click="toDetailPage(rec)">
     </div>
 </div>
 

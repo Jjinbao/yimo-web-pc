@@ -2,13 +2,20 @@
 angular.module('app.info', [])
     .controller('appPassage', ['$scope', '$http', '$window','$location', function ($scope, $http, $window,$location) {
         $scope.panelPassageWidth = {
+            width:document.body.clientWidth-279
+        }
+        $scope.panelPassageHeight = {
             height:document.body.clientHeight-60
         }
         window.onresize = function(){
+            var realWidth=document.body.clientWidth;
             var realHeight=document.body.clientHeight;
             $scope.panelPassageWidth = {
                 //left:((newValue.w < 1366 ? 1366:newValue.w)-1129)/2
-                height:  realHeight- 60
+                width:realWidth- 279
+            }
+            $scope.panelPassageHeight = {
+                height:realHeight-60
             }
             $scope.$digest();
         }
@@ -38,10 +45,14 @@ angular.module('app.info', [])
                 pageSize: 10
             }
         }).success(function (data) {
+            console.log(data);
             if(data.result==1){
                 $scope.passageList.list=$scope.passageList.list.concat(data.newsList);
                 $scope.passageList.count=data.totalPage;
             }
+            $scope.passageList.list.forEach(function(val){
+                val.formateDate=new Date(val.pubTime*1000).format('yyyy-MM-dd');
+            })
         })
 
         //获取文章推荐列表
@@ -62,6 +73,7 @@ angular.module('app.info', [])
                 $scope.passageRec.list=$scope.passageRec.list.concat(data.newsList);
                 $scope.passageRec.count=data.totalPage;
             }
+
         })
 
         $scope.toDetailPage=function(val){
@@ -73,13 +85,20 @@ angular.module('app.info', [])
         $scope.passageId=$routeParams.id;
 
         $scope.PassageDetailWidth = {
+            width:document.body.clientWidth-279
+        }
+        $scope.PassageDetailHeight = {
             height:document.body.clientHeight-60
         }
         window.onresize = function(){
-            var detailHeight=document.body.clientHeight;
+            var detailWidth=document.body.clientWidth;
+            var detailHeight=document.body.clientWidth;
             $scope.PassageDetailWidth = {
                 //left:((newValue.w < 1366 ? 1366:newValue.w)-1129)/2
-                height: detailHeight - 60
+                width: detailWidth - 279
+            }
+            $scope.PassageDetailHeight = {
+                height:detailHeight-60
             }
             $scope.$digest();
         }

@@ -1,26 +1,55 @@
 .passage-container{
   overflow-y: auto;
   margin-top: 60px;
+  position: relative;
+  background-color: #f2f2f2;
   .passage-content-panel{
-    width: 1129px;
-    margin: 10px auto;
+    background-color: #f9f9f9;
     position: relative;
+    padding-left: 40px;
+    padding-right: 40px;
     .passage-left-content{
-      width: 790px;
       padding-left: 20px;
-      padding-top: 10px;
       padding-right: 20px;
       border-radius: 8px;
-      border: 1px solid gainsboro;
       .passage-list{
         .list-repeat{
           margin-top: 5px;
-          padding-top: 5px;
-          padding-bottom: 5px;
+          padding-top: 28px;
+          padding-bottom: 28px;
+          height: 198px;
           border-bottom: 1px solid gainsboro;
           .media-body{
+            padding-top: 10px;
+            .media-heading{
+              font-size: 24px;
+              font-weight: bold;
+              color: #333;
+              line-height: 1;
+            }
             .media-heading:hover{
+              font-size: 24px;
+              font-weight: bold;
               cursor: pointer;
+              color: @main-color;
+            }
+            .media-create-date{
+              margin-top: 16px;
+              color: #999;
+              font-size: 14px;
+              line-height: 1;
+            }
+            .media-subheader{
+              cursor: pointer;
+              margin-top: 35px;
+              font-size: 14px;
+              color: #333;
+            }
+          }
+          .media-left{
+            img{
+              width: 224px;
+              height: 142px;
             }
           }
         }
@@ -29,6 +58,7 @@
         }
       }
       .passage-detail-info{
+        margin-top: 30px;
         img{
           width: 100%;
         }
@@ -67,20 +97,41 @@
           border: none;
         }
       }
+      .passage-title{
+        line-height: 1;
+        font-size: 24px;
+        padding-top: 49px;
+        padding-bottom: 14px;
+      }
+      .passage-create-time{
+        font-size: 14px;
+        color: #999;
+        padding-bottom: 25px;
+        border-bottom: 1px solid @border-color;
+      }
     }
-    .passage-right-content{
-      position: absolute;
-      top: 0;
-      right: 10px;
-      padding: 5px;
-      width: 318px;
-      .rec-img{
-        width: 100%;
-        margin-bottom: 10px;
-      }
-      .rec-img:hover{
-        cursor: pointer;
-      }
+  }
+  .passage-right-content{
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0 30px;
+    width: 262px;
+    .hot-passage{
+      margin-top: 48px;
+      line-height: 1;
+      font-size: 20px;
+      color: #333;
+      padding-bottom: 8px;
+      border-bottom: 1px solid @border-color;
+    }
+    .rec-img{
+      width: 100%;
+      margin-top: 23px;
+      vertical-align: top;
+    }
+    .rec-img:hover{
+      cursor: pointer;
     }
   }
 }

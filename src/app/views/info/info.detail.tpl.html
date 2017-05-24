@@ -1,13 +1,11 @@
-<div class="passage-container" ng-style="PassageDetailWidth" id="contain">
-    <div class="passage-content-panel" id="passagelist">
+<div class="passage-container" id="contain" ng-style="PassageDetailHeight">
+    <div class="passage-content-panel" id="passagelist" ng-style="PassageDetailWidth">
         <div class="passage-left-content">
-            <div class="back-btn" ng-click="backToPre()">
-                <a href="#">返回</a>
-            </div>
-            <div class="">
-                <h3>{{detailMsg.title}}</h3>
-                <div>{{detailMsg.formateDate}}</div>
-            </div>
+            <!--<div class="back-btn" ng-click="backToPre()">-->
+                <!--<a href="#">返回</a>-->
+            <!--</div>-->
+            <div class="passage-title">{{detailMsg.title}}</div>
+            <div class="passage-create-time">发布于{{detailMsg.formateDate}}</div>
             <div class="passage-detail-info" ng-bind-html="detailMsg.detail">
 
             </div>
@@ -29,9 +27,13 @@
                 </div>
             </div>
         </div>
-        <div class="passage-right-content">
-            <img class="rec-img" ng-hide="rec.id==passageId" ng-repeat="rec in passageRec.list" ng-src="{{rec.imgSrc}}">
-        </div>
 
+
+    </div>
+    <div class="passage-right-content">
+        <div class="hot-passage">
+            热门文章
+        </div>
+        <img class="rec-img" ng-hide="rec.id==passageId" ng-repeat="rec in passageRec.list" ng-src="{{rec.imgSrc}}">
     </div>
 </div>
