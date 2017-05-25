@@ -1,5 +1,5 @@
 angular.module('app.mine', [])
-    .controller('mine', ['$rootScope', '$scope', '$window', '$http', '$modal', 'userService', function ($rootScope, $scope, $window, $http, $modal, userService) {
+    .controller('mine', ['$rootScope', '$scope', '$window', '$http', '$modal', 'userService','config', function ($rootScope, $scope, $window, $http, $modal, userService,config) {
         $scope.nowActivePanel = '';
         var w = angular.element($window);
         $scope.getWindowDimensions = function () {
@@ -127,5 +127,111 @@ angular.module('app.mine', [])
         //获取反馈的应用列表
         $scope.helpFeedApp = function () {
             $scope.nowActivePanel = 'feed';
+        }
+
+        $scope.modifyPortrait=function(){
+            console.log(userService.userMsg);
+            $rootScope.uploadAvatar=$modal.open({
+                templateUrl: "app/views/mine/upload.avatar.tpl.html",
+                backdrop: true,
+                keyboard: false,
+                size:'modify',
+                controller: function ($scope,$http,userService,FileUploader) {
+                    $scope.closeAvatarModal=function(){
+                        $rootScope.uploadAvatar.close();
+                    }
+                    $scope.modifyNameCan=true;
+
+                    var uploader = $scope.uploader1 = new FileUploader({
+                        url: baseUrl + "ym/upload/uploadImage",
+                        method:'POST'
+                    });
+                    console.log('----------------uploader---------------');
+                    console.log($scope.uploader1.queue.length);
+                    uploader.filters.push({
+                        name: 'imageFilter',
+                        fn: function(item /*{File|FileLikeObject}*/, options) {
+                            var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
+                            return config.imageFilterType.indexOf(type) !== -1;
+                        }
+                    },{
+                        name: 'sizeFilter',
+                        fn: function(item){
+                            return item.size <= config.imageSize;
+                        }
+                    });
+
+                    uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
+                        if(filter.name == 'imageFilter'){
+                            console.log('数据格式不正确，只能上传')
+                        }else if(filter.name == 'sizeFilter'){
+                            var mb = config.imageSize / 1048576;
+                            console.log("单张图片不能超过"+ mb +"M");
+                        }
+                    };
+                    uploader.onAfterAddingFile = function (fileItem) {
+                        console.log($scope.uploader1.queue);
+                        $scope.oldPicShow1 = false;
+                        //var addedItems = [fileItem];
+                        //var param = {
+                        //    items: addedItems,
+                        //    queue: scope.uploader1.queue,
+                        //    imgWidth: 750,
+                        //    imgHeight: 406
+                        //};
+                        //aspectRatio.query(param);
+                        if($scope.uploader1.queue.length > 1){
+                            uploader.queue.splice(0, 1);
+                        }
+                        $scope.fileitem = '';
+                        fileItem.isPro = '未上传';
+
+                    };
+
+                    uploader.onBeforeUploadItem = function (item) {
+                        console.log(item);
+                        item.formData.push({
+                            accountId:userService.userMsg.accountId,
+                            sign:md5('ymy'+userService.userMsg.accountId)
+                        })
+                        // item.formData.push({
+                        //     place: $scope.picObj.place,
+                        //     linkedPath: $scope.picObj.linkedPath,
+                        //     name: $scope.picObj.name,
+                        //     openEnable: $scope.picObj.openEnable,
+                        //     priority: $scope.picObj.priority,
+                        //     firstPicId: $scope.picObj.firstPicId || null,
+                        //     picId: $scope.picObj.picId || null
+                        // });
+                    };
+                    uploader.onProgressItem = function (fileItem, progress) {
+                        console.log('00000000000');
+                        fileItem.isPro = '正在上传';
+                    };
+                    uploader.onSuccessItem = function (fileItem, response, status, headers) {
+                        fileItem.isPro = '上传成功';
+                        console.log('上传成功');
+                        // scope.holdDoubleClick = false;
+                        // scope.loadingModel();
+                        // alertOrConfirm.successAlert("成功");
+                        // $rootScope.modal.close();
+                        // load();
+                    };
+                    uploader.onErrorItem = function (fileItem, response, status, headers) {
+                        fileItem.isPro = '上传失败';
+                        console.log('上传失败');
+                        //scope.loadingModel();
+                    };
+                    uploader.onCancelItem = function (fileItem, response, status, headers) {
+                    };
+                    uploader.onCompleteItem = function (fileItem, response, status, headers) {
+                    };
+                    $scope.uploaderFile=function(){
+                        if($scope.uploader1.queue.length>0){
+                            $scope.uploader1.queue[0].upload();
+                        }
+                    }
+                }
+            })
         }
     }])
