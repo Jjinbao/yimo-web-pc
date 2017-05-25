@@ -92,13 +92,73 @@
       border-radius: 2px;
       padding-left: 10px;
     }
+    input::-webkit-input-placeholder {
+      color: #c0c0c0;
+    }
+    input:-moz-placeholder {
+      color: #c0c0c0;
+    }
+    input::-moz-placeholder {
+      color: #c0c0c0;
+    }
+    input:-ms-input-placeholder {
+      color: #c0c0c0;
+    }
     .search-btn{
       position: absolute;
-      right: 0px;
+      right: 13px;
       width: 34px;
       height: 34px;
       cursor: pointer;
       background: url(../app/img/sousuo.png) 8px center no-repeat;
+    }
+  }
+  .video-result-list{
+    margin-top: 52px;
+    .video-item{
+      display: inline-block;
+      vertical-align: top;
+      text-align: center;
+      cursor: pointer;
+      margin-bottom: 20px;
+      @media screen and(min-width: 1280px) and (max-width: 1600px) {
+        width: 33.33%;
+      }
+      @media screen and(min-width: 1601px) and (max-width: 1920px) {
+        width: 25%;
+      }
+      @media screen and(min-width: 1921px) and (max-width: 2500px) {
+        width: 20%;
+      }
+      font-size: 0;
+      img{
+        width:248px;
+        vertical-align: top;
+      }
+      .video-title{
+        width: 248px;
+        margin: 18px auto 0;
+        text-align: left;
+        line-height: 1;
+        font-size: 16px;
+        color: #333;
+        cursor: pointer;
+      }
+      .video-title:hover{
+        color: @main-color;
+      }
+      .video-author{
+        width: 248px;
+        clear: both;
+        margin: 10px auto 0;
+        text-align: left;
+        line-height: 1;
+        font-size: 12px;
+        color: #999;
+        .video-count{
+          float: right;
+        }
+      }
     }
   }
 }

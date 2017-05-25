@@ -262,6 +262,7 @@ angular.module('app.info', [])
                     catIdLev3:val.categoryId
                 }
             }).success(function(res){
+                $scope.albumList=res.albumList;
                 console.log(res);
             })
         }
@@ -273,12 +274,14 @@ angular.module('app.info', [])
         }
 
         //获取热门专辑推荐列表
+        $scope.albumList=[];
         $scope.recVideoList=[];
         $http({
             url:baseUrl+'ym/album/list.api',
             method:'POST'
         }).success(function(res){
             console.log(res);
+            $scope.albumList=res.albumList;
         })
 
     }])
