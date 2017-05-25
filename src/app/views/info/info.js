@@ -315,6 +315,128 @@ angular.module('app.info', [])
         }
 
     }])
-    .controller('albumDetail',['$scope',function($scope){
+    .controller('albumDetail',['$scope','$routeParams','$http',function($scope,$routeParams,$http){
         console.log('0000000000000000000');
+        $scope.albumListHeight = {
+            height:document.body.clientHeight-60
+        }
+        $scope.albumDetailHeight={
+
+        }
+        window.onresize = function(){
+            var detailWidth=document.body.clientWidth;
+            var detailHeight=document.body.clientHeight;
+            $scope.albumListHeight = {
+                height: detailHeight - 60
+            }
+            $scope.$digest();
+        }
+
+        //var myVideo=document.getElementById('detailVideo');
+        $scope.albumDetail;
+        $http({
+            url:baseUrl+'ym/album/field.api',
+            method:'POST',
+            params:{
+                id:$routeParams.id
+            }
+        }).success(function(res){
+            console.log('------------详情列表----------------------');
+            console.log(res);
+            $scope.albumDetail=res;
+            getAlbumList(res.id);
+
+        })
+        $scope.videoList={
+            nowActiveVideo:'',
+            nowActiveVideoId:'',
+            list:[]
+        };
+        function getAlbumList(val){
+            $http({
+                url:baseUrl+'ym/teach/list.api',
+                method:'POST',
+                params:{
+                    albumId:val,
+                    categoryId:1,
+                    pageNumber:1,
+                    pageSize:10
+                }
+            }).success(function(res){
+                console.log('-------------专辑列表----------------');
+                console.log(res);
+                if(res.result==1){
+                    $scope.videoList.list=res.teachList;
+                    if(res.teachList[0]&&res.teachList[0].videoSrc){
+                        $scope.videoList.nowActiveVideo=res.teachList[0].videoSrc;
+                        $scope.videoList.nowActiveVideoId=res.teachList[0].id;
+                    }
+
+                }
+            })
+        }
+        $scope.changeActiveVideo=function(val){
+            $scope.videoList.nowActiveVideo=val.videoSrc;
+            $scope.videoList.nowActiveVideoId=val.id;
+        }
+        $scope.trustUrl=function(value){
+            return $sce.trustAsResourceUrl(value);
+        }
+        $scope.$on('$ionicView.beforeEnter', function(){
+            console.log('-------121212------');
+        });
+        /*myVideo.addEventListener('ended',function(){
+            console.log('end');
+        })
+
+        myVideo.addEventListener('play',function(){
+            console.log('开始播放');
+            //screen.orientation.lock('landscape');
+        })
+        document.addEventListener('webkitfullscreenchange',function(e){
+            screen.orientation.lock('landscape');
+            console.log('1full screen');
+        })
+        document.addEventListener('mozfullscreenchange ',function(e){
+            screen.orientation.lock('landscape');
+            console.log('2full screen');
+        })
+        document.addEventListener('fullscreenchange',function(e){
+            screen.orientation.lock('landscape');
+            console.log('3full screen');
+        })*/
+        $scope.goBackToList=function(){
+            window.history.back();
+        }
+
+        $scope.toSubmitComment=function(){
+
+        }
+        //获取评论列表
+        $scope.userComment={
+            list:[],
+            total:0
+        }
+        $http({
+            url:baseUrl+'ym/comment/list.api',
+            method:'POST',
+            params:{
+                categoryRootId:$routeParams.rootId,
+                categoryItemId:$routeParams.id
+            }
+        }).success(function(res){
+            console.log('-------------另论列表----------------');
+            console.log(res);
+            if(res.result==1){
+                if(res.comments.length>0){
+                    res.comments.forEach(function(val){
+                        val.pushTime=new Date(val.createTime*1000).format('yyyy-MM-dd');
+                    })
+                }
+                $scope.userComment.list=$scope.userComment.list.concat(res.comments);
+                $scope.userComment.total=res.totalPage;
+            }
+        }).error(function(){
+
+        })
     }])

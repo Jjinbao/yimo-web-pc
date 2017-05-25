@@ -1,3 +1,26 @@
-<div>
-    111111
+<div class="album-detail-container" ng-style="albumListHeight">
+    <div class="album-list-menu" ng-style="albumListHeight">
+        <div class="album-list-title">
+            专辑列表
+            <div class="back-btn" ng-click="goBackToList()">
+                &lt;返回
+            </div>
+        </div>
+        <div class="album-list-panel">
+            <div class="album-list-item" ng-repeat="album in videoList.list">
+                {{album.title}}
+            </div>
+        </div>
+
+    </div>
+    <div class="album-comment-detail" ng-style="albumListHeight">
+        <div class="album-detail-intro">
+            <img ng-src="{{albumDetail.smallImage}}">
+            <div class="title-desc">
+                {{albumDetail.albumTitle}}
+                <div class="desc">{{albumDetail.albumAuthor}}</div>
+                <div class="create-time">{{albumDetail.createTime}}</div>
+            </div>
+        </div>
+    </div>
 </div>
