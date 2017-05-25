@@ -1,62 +1,74 @@
 .video-left-menu {
-  width: 120px;
+  width: 200px;
   overflow-y: auto;
-  border-right: 1px solid gainsboro;
   position: fixed;
   left: 0;
   top: 60px;
   .video-item-list{
-    width: 100%;
-    height: 60px;
-    line-height: 60px;
-    text-align: center;
-    font-size: 18px;
-    border-bottom: 1px solid gainsboro;
+    width: 158px;
+    height: 36px;
+    line-height: 36px;
+    text-align: left;
+    font-size: 16px;
     cursor: pointer;
+    margin-left: 21px;
+    margin-top: 20px;
+    padding-left: 35px;
+    border-radius: 2px;
+
+  }
+  .video-item-list:hover{
+    background-color: #eeecec;
+  }
+  .subject-icon{
+    background: url(../app/img/kexue@2x.png) 8px center no-repeat;
   }
   .video-item-list:hover{
     color: @main-color;
   }
   .video-active-list{
     color: #ffffff !important;
-    background-color: @main-color;
+    background-color: @main-color !important;
   }
 }
 
 .video-center-menu{
-  width: 360px;
+  width: 345px;
   overflow-y: auto;
-  border-right: 1px solid @border-color;
+  border: 1px solid #e5e5e5;
   position: fixed;
   box-sizing: border-box;
   overflow-y: auto;
-  padding-left: 10px;
+  padding-left: 22px;
   padding-right: 10px;
-  left: 120px;
+  padding-top: 5px;
+  left: 200px;
   top: 60px;
   .video-second-title{
-    font-size: 16px;
-    padding: 10px 0;
+    margin-top: 33px;
+    font-size: 18px;
+    padding-bottom: 11px;
     color: #999;
     cursor: default;
+    line-height: 1;
   }
   .video-third-list{
     width: 50%;
     display: inline-block;
     cursor: pointer;
     position: relative;
+    padding-top: 9px;
     clear: both;
     .category-name{
+      line-height: 1;
       color: #333333;
       float: left;
     }
     .category-name:hover{
-      background-color: @main-color;
-      color: white;
+      color: @main-color;
     }
     .category-name-active{
-      background-color: @main-color;
-      color: white;
+      color: @main-color;
     }
   }
 }
@@ -64,7 +76,29 @@
 .video-right-content{
   position: fixed;
   top: 60px;
-  left: 480px;
+  left: 545px;
   overflow-y: auto;
   overflow-x: hidden;
+  background-color: #f2f2f2;
+  padding: 14px 20px;
+  .video-list-search{
+    position: relative;
+    input{
+      float: right;
+      height: 34px;
+      border: none;
+      width: 361px;
+      background-color: #eaeaea;
+      border-radius: 2px;
+      padding-left: 10px;
+    }
+    .search-btn{
+      position: absolute;
+      right: 0px;
+      width: 34px;
+      height: 34px;
+      cursor: pointer;
+      background: url(../app/img/sousuo.png) 8px center no-repeat;
+    }
+  }
 }

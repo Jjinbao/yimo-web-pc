@@ -208,14 +208,14 @@ angular.module('app.info', [])
     .controller('videoList', ['$scope','$http', function ($scope,$http) {
         $scope.videoListWidth = {
             height:document.body.clientHeight-60,
-            width:(document.body.clientWidth-480)<800?800:document.body.clientWidth-480
+            width:(document.body.clientWidth-545)<800?800:document.body.clientWidth-545
         }
         window.onresize = function(){
             var detailWidth=document.body.clientWidth;
             var detailHeight=document.body.clientHeight;
             $scope.videoListWidth = {
                 height: detailHeight - 60,
-                width:detailWidth-480<800?800:detailWidth-480
+                width:detailWidth-545<800?800:detailWidth-545
             }
             $scope.$digest();
         }
