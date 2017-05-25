@@ -19,107 +19,11 @@
     </div>
     <div class="video-result-list">
       <div class="video-item" ng-repeat="album in albumList">
-        <img ng-src="{{album.smallImage}}">
-        <div class="video-title">
+        <img ng-src="{{album.smallImage}}" ng-click="toAlbumDetail(album)">
+        <div class="video-title" ng-click="toAlbumDetail(album)">
           {{album.albumTitle}}
         </div>
-        <div class="video-author">
-          {{album.albumAuthor}}
-          <div class="video-count">
-            {{album.videoCount}}个视频
-          </div>
-        </div>
-      </div>
-      <div class="video-item" ng-repeat="album in albumList">
-        <img ng-src="{{album.smallImage}}">
-        <div class="video-title">
-          {{album.albumTitle}}
-        </div>
-        <div class="video-author">
-          {{album.albumAuthor}}
-          <div class="video-count">
-            {{album.videoCount}}个视频
-          </div>
-        </div>
-      </div>
-      <div class="video-item" ng-repeat="album in albumList">
-        <img ng-src="{{album.smallImage}}">
-        <div class="video-title">
-          {{album.albumTitle}}
-        </div>
-        <div class="video-author">
-          {{album.albumAuthor}}
-          <div class="video-count">
-            {{album.videoCount}}个视频
-          </div>
-        </div>
-      </div>
-      <div class="video-item" ng-repeat="album in albumList">
-        <img ng-src="{{album.smallImage}}">
-        <div class="video-title">
-          {{album.albumTitle}}
-        </div>
-        <div class="video-author">
-          {{album.albumAuthor}}
-          <div class="video-count">
-            {{album.videoCount}}个视频
-          </div>
-        </div>
-      </div>
-      <div class="video-item" ng-repeat="album in albumList">
-        <img ng-src="{{album.smallImage}}">
-        <div class="video-title">
-          {{album.albumTitle}}
-        </div>
-        <div class="video-author">
-          {{album.albumAuthor}}
-          <div class="video-count">
-            {{album.videoCount}}个视频
-          </div>
-        </div>
-      </div>
-      <div class="video-item" ng-repeat="album in albumList">
-        <img ng-src="{{album.smallImage}}">
-        <div class="video-title">
-          {{album.albumTitle}}
-        </div>
-        <div class="video-author">
-          {{album.albumAuthor}}
-          <div class="video-count">
-            {{album.videoCount}}个视频
-          </div>
-        </div>
-      </div>
-      <div class="video-item" ng-repeat="album in albumList">
-        <img ng-src="{{album.smallImage}}">
-        <div class="video-title">
-          {{album.albumTitle}}
-        </div>
-        <div class="video-author">
-          {{album.albumAuthor}}
-          <div class="video-count">
-            {{album.videoCount}}个视频
-          </div>
-        </div>
-      </div>
-      <div class="video-item" ng-repeat="album in albumList">
-        <img ng-src="{{album.smallImage}}">
-        <div class="video-title">
-          {{album.albumTitle}}
-        </div>
-        <div class="video-author">
-          {{album.albumAuthor}}
-          <div class="video-count">
-            {{album.videoCount}}个视频
-          </div>
-        </div>
-      </div>
-      <div class="video-item" ng-repeat="album in albumList">
-        <img ng-src="{{album.smallImage}}">
-        <div class="video-title">
-          {{album.albumTitle}}
-        </div>
-        <div class="video-author">
+        <div class="video-author" ng-click="toAlbumDetail(album)">
           {{album.albumAuthor}}
           <div class="video-count">
             {{album.videoCount}}个视频

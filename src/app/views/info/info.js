@@ -205,7 +205,7 @@ angular.module('app.info', [])
             })
         }
     }])
-    .controller('videoList', ['$scope','$http', function ($scope,$http) {
+    .controller('videoList', ['$scope','$http','$location', function ($scope,$http,$location) {
         $scope.videoListWidth = {
             height:document.body.clientHeight-60,
             width:(document.body.clientWidth-545)<800?800:document.body.clientWidth-545
@@ -284,4 +284,11 @@ angular.module('app.info', [])
             $scope.albumList=res.albumList;
         })
 
+        $scope.toAlbumDetail=function(val){
+            $location.path('/album/list/1/'+val.id);
+        }
+
+    }])
+    .controller('albumDetail',['$scope',function($scope){
+        console.log('0000000000000000000');
     }])

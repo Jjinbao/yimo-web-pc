@@ -24,6 +24,10 @@ angular.module('app.router', [])
                 controller: 'videoList',
                 templateUrl: 'app/views/video/video.tpl.html'
             })
+            .when('/album/:from/:rootId/:id',{
+                controller:'albumDetail',
+                templateUrl:'app/views/info/album.detail.tpl.html'
+            })
             .when('/mine', {
                 controller: 'mine',
                 templateUrl: 'app/views/mine/mine.tpl.html'
