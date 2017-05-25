@@ -14,8 +14,8 @@
   </div>
   <div class="video-right-content" ng-style="videoListWidth">
     <div class="video-list-search">
-      <input type="text" placeholder="搜索">
-      <div class="search-btn"></div>
+      <input type="text" placeholder="搜索" ng-model="searchInfo">
+      <div class="search-btn" ng-click="searchVideo()"></div>
     </div>
     <div class="video-result-list">
       <div class="video-item" ng-repeat="album in albumList">

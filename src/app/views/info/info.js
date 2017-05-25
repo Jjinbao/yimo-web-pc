@@ -288,6 +288,32 @@ angular.module('app.info', [])
             $location.path('/album/list/1/'+val.id);
         }
 
+        //搜索框
+        $scope.searchInfo='';
+        $scope.doubleHold=false;
+        $scope.searchVideo=function(){
+            if(!$scope.searchInfo){
+                return;
+            }
+            if($scope.doubleHold){
+                return;
+            }
+            $scope.doubleHold=true;
+            $http({
+                url: baseUrl + 'ym/album/list.api',
+                method: 'POST',
+                params:{
+                    albumTitle:encodeURI($scope.searchInfo)
+                }
+            }).success(function (res) {
+                console.log(res);
+                if (res.result == 1) {
+                    $scope.albumList = res.albumList;
+                }
+                $scope.doubleHold=false;
+            })
+        }
+
     }])
     .controller('albumDetail',['$scope',function($scope){
         console.log('0000000000000000000');
