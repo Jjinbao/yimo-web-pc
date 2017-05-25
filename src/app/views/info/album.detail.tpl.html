@@ -22,5 +22,30 @@
                 <div class="create-time">{{albumDetail.createTime}}</div>
             </div>
         </div>
+        <div class="album-desc">
+            {{albumDetail.albumDesc}}
+        </div>
+        <div class="album-comments">
+            <div class="comments-title">
+                热门评论
+            </div>
+            <div class="one-comment-item" ng-repeat="comm in userComment.list">
+                <div class="commen-user">
+                    {{comm.userName}}
+                </div>
+                <div class="commen-message">
+                    {{comm.content}}
+                </div>
+                <div class="comment-titme">
+                    {{comm.pushTime}}
+                </div>
+            </div>
+        </div>
+        <div class="submit-comment">
+            <input placeholder="评论">
+            <div class="sub-btn">
+                评论
+            </div>
+        </div>
     </div>
 </div>

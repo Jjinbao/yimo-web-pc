@@ -182,11 +182,10 @@
 
   }
   .album-comment-detail{
-    padding: 20px;
+    padding: 20px 20px 35px 20px;
     width: 337px;
     overflow-y: auto;
     background-color: #f2f2f2;
-    border: 1px solid @main-color;
     position: fixed;
     right: 0;
     top: 60px;
@@ -201,16 +200,90 @@
         position: absolute;
         left: 150px;
         font-size: 16px;
+        padding-top: 5px;
         color: #333;
         top: 0;
         .desc{
+          margin-top: 30px;
           font-size: 12px;
           color: #666;
+          line-height: 1;
         }
         .create-time{
+          margin-top: 10px;
+          line-height: 1;
           font-size: 12px;
-          color: #666;
+          color: #999;
         }
+      }
+    }
+    .album-desc{
+      margin-top: 18px;
+      line-height: 1.5;
+      word-wrap:break-word;
+      font-size: 12px;
+      color: #333;
+    }
+    .album-comments{
+      margin-top: 38px;
+      .comments-title{
+        line-height: 1;
+        font-size: 16px;
+        color: #333;
+        padding-bottom: 9px;
+        border-bottom: 1px solid @border-color;
+      }
+      .one-comment-item{
+        padding: 20px 0;
+        border-bottom: 1px solid @border-color;
+        position: relative;
+        .commen-user{
+          font-size: 14px;
+          color: #fb9f00;
+          line-height: 1;
+        }
+        .commen-message{
+          word-wrap:break-word;
+          margin-top: 11px;
+          font-size: 12px;
+          line-height: 1;
+          color: #999;
+        }
+        .comment-titme{
+          position: absolute;
+          top: 20px;
+          right: 0;
+          font-size: 12px;
+          color: #999;
+        }
+
+      }
+
+    }
+    .submit-comment{
+      position: fixed;
+      bottom: 0;
+      right: 20px;
+      width: 297px;
+      height: 35px;
+      input{
+        padding-left: 15px;
+        width: 230px;
+        border: none;
+        background-color: #e9e9e9;
+        height: 35px;
+      }
+      .sub-btn{
+        position: absolute;
+        right: 0;
+        top: 0;
+        background-color: @main-color;
+        height: 35px;
+        width: 60px;
+        border-radius: 2px;
+        text-align: center;
+        line-height: 35px;
+        color: white;
       }
     }
   }
