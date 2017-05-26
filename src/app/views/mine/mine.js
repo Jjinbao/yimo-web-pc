@@ -145,13 +145,11 @@ angular.module('app.mine', [])
                         $rootScope.uploadAvatar.close();
                     }
                     $scope.modifyNameCan=true;
-
+                    $scope.uploadImgTip='';
                     var uploader = $scope.uploader1 = new FileUploader({
                         url: baseUrl + "ym/upload/uploadImage",
                         method:'POST'
                     });
-                    console.log('----------------uploader---------------');
-                    console.log($scope.uploader1.queue.length);
                     uploader.filters.push({
                         name: 'imageFilter',
                         fn: function(item /*{File|FileLikeObject}*/, options) {
@@ -167,14 +165,14 @@ angular.module('app.mine', [])
 
                     uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
                         if(filter.name == 'imageFilter'){
-                            console.log('数据格式不正确，只能上传')
+                            $scope.uploadImgTip='数据格式不正确，只能上传jpg,png,jpeg格式的图片';
                         }else if(filter.name == 'sizeFilter'){
                             var mb = config.imageSize / 1048576;
-                            console.log("单张图片不能超过"+ mb +"M");
+                            $scope.uploadImgTip="单张图片不能超过"+ mb +"M";
                         }
                     };
                     uploader.onAfterAddingFile = function (fileItem) {
-                        console.log($scope.uploader1.queue);
+                        $scope.uploadImgTip='';
                         $scope.oldPicShow1 = false;
                         //var addedItems = [fileItem];
                         //var param = {
@@ -227,7 +225,7 @@ angular.module('app.mine', [])
                     };
                     uploader.onErrorItem = function (fileItem, response, status, headers) {
                         fileItem.isPro = '上传失败';
-                        console.log('上传失败');
+                        $scope.uploadImgTip='上传失败';
                         //scope.loadingModel();
                     };
                     uploader.onCancelItem = function (fileItem, response, status, headers) {
@@ -237,6 +235,8 @@ angular.module('app.mine', [])
                     $scope.uploaderFile=function(){
                         if($scope.uploader1.queue.length>0){
                             $scope.uploader1.queue[0].upload();
+                        }else{
+                            $scope.uploadImgTip='请选择要上传的图片!'
                         }
                     }
                 }

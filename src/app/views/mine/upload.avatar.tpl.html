@@ -9,8 +9,8 @@
                 <div class="upload-img-btn">上传图片</div>
                 <input type="file" nv-file-select="" uploader="uploader1"/><br/>
             </div>
-            <div class="wrong-warning">
-                图片格式不正确
+            <div class="wrong-warning" ng-show="uploadImgTip">
+                {{uploadImgTip}}
             </div>
 
         </div>
