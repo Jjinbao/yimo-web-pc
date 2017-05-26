@@ -129,7 +129,11 @@ angular.module('app.mine', [])
             $scope.nowActivePanel = 'feed';
         }
 
-        $scope.modifyPortrait=function(){
+        $scope.modifyImg=function(){
+            $scope.modifyPortrait($scope.changeUserInfo);
+        }
+
+        $scope.modifyPortrait=function(fatherScope){
             console.log(userService.userMsg);
             $rootScope.uploadAvatar=$modal.open({
                 templateUrl: "app/views/mine/upload.avatar.tpl.html",
@@ -209,8 +213,12 @@ angular.module('app.mine', [])
                         fileItem.isPro = '正在上传';
                     };
                     uploader.onSuccessItem = function (fileItem, response, status, headers) {
+                        console.log(response);
                         fileItem.isPro = '上传成功';
                         console.log('上传成功');
+                        userService.userMsg.smallImg=response.imgsrc;
+                        fatherScope();
+                        $rootScope.uploadAvatar.close();
                         // scope.holdDoubleClick = false;
                         // scope.loadingModel();
                         // alertOrConfirm.successAlert("成功");

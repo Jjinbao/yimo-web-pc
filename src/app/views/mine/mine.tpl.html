@@ -6,7 +6,7 @@
             </div>
             <div class="login-btn" ng-show="!haveLoginuser.accountId" ng-click="mineLogin()">医模科技 <span style="color: #e5e5e5">|</span> <span style="color: #984beb">登录</span></div>
             <div class="user-name" ng-show="haveLoginuser.accountId">{{haveLoginuser.userName}}</div>
-            <div class="change-pic" ng-show="haveLoginuser.accountId" ng-click="modifyPortrait()">修改头像</div>
+            <div class="change-pic" ng-show="haveLoginuser.accountId" ng-click="modifyImg()">修改头像</div>
         </div>
         <div class="mine-item-list application-icon" ng-class="{true:'active-list active-list-app'}[nowActivePanel=='history'||nowActivePanel=='appRecord'||nowActivePanel=='videoRecord'||nowActivePanel=='passageRecord']" ng-click="application('history')">
             历史记录

@@ -315,8 +315,7 @@ angular.module('app.info', [])
         }
 
     }])
-    .controller('albumDetail',['$scope','$routeParams','$http',function($scope,$routeParams,$http){
-        console.log('0000000000000000000');
+    .controller('albumDetail',['$rootScope','$scope','$routeParams','$http','userService',function($rootScope,$scope,$routeParams,$http,userService){
         $scope.albumListHeight = {
             height:document.body.clientHeight-60
         }
@@ -417,26 +416,76 @@ angular.module('app.info', [])
             list:[],
             total:0
         }
-        $http({
-            url:baseUrl+'ym/comment/list.api',
-            method:'POST',
-            params:{
-                categoryRootId:$routeParams.rootId,
-                categoryItemId:$routeParams.id
-            }
-        }).success(function(res){
-            console.log('-------------另论列表----------------');
-            console.log(res);
-            if(res.result==1){
-                if(res.comments.length>0){
-                    res.comments.forEach(function(val){
-                        val.pushTime=new Date(val.createTime*1000).format('yyyy-MM-dd');
-                    })
+        $scope.getVideoComents=function(){
+            $http({
+                url:baseUrl+'ym/comment/list.api',
+                method:'POST',
+                params:{
+                    categoryRootId:$routeParams.rootId,
+                    categoryItemId:$routeParams.id
                 }
-                $scope.userComment.list=$scope.userComment.list.concat(res.comments);
-                $scope.userComment.total=res.totalPage;
-            }
-        }).error(function(){
+            }).success(function(res){
+                console.log('-------------另论列表----------------');
+                console.log(res);
+                if(res.result==1){
+                    if(res.comments.length>0){
+                        res.comments.forEach(function(val){
+                            val.pushTime=new Date(val.createTime*1000).format('yyyy-MM-dd');
+                        })
+                    }
+                    $scope.userComment.list=res.comments;
+                    $scope.userComment.total=res.totalPage;
+                }
+            }).error(function(){
 
-        })
+            })
+        }
+        $scope.getVideoComents();
+
+
+        $scope.submitComment=function(){
+            if(userService.userMsg&&userService.userMsg.accountId){
+                $scope.toSubmitComment();
+            }else{
+                $rootScope.login('comment',function(){
+                    $scope.$emit('user.nav.img', userService.userMsg.smallImg);
+                    $scope.toSubmitComment();
+                });
+            }
+        }
+        //去提交评论
+        $scope.commentContent='';
+        $scope.holdDoubleClick=false;
+        $scope.toSubmitComment=function(){
+            if($scope.holdDoubleClick){
+                return;
+            }
+            if(!$scope.commentContent){
+                $rootScope.successAlter('请填写评论！');
+                return;
+            }
+            $scope.holdDoubleClick=true;
+            $http({
+                url:baseUrl+'ym/comment/add.api',
+                method:'POST',
+                params:{
+                    uid:userService.userMsg.accountId,
+                    categoryRootId:1,
+                    categoryItemId:$routeParams.id,
+                    content:encodeURI($scope.commentContent),
+                    device:'pc'
+                }
+            }).success(function(data){
+                if(data.result==1){
+                    $scope.commentContent='';
+                    $rootScope.successAlter('评论成功！');
+                    $scope.getVideoComents();
+                }else{
+
+                }
+                $scope.holdDoubleClick=false;
+            }).error(function(data){
+                $scope.holdDoubleClick=false;
+            })
+        }
     }])

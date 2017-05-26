@@ -1017,18 +1017,15 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'angularFileUploa
                                 fileItem.isPro = '正在上传';
                             };
                             uploader.onSuccessItem = function (fileItem, response, status, headers) {
+                                console.log(response);
                                 fileItem.isPro = '上传成功';
                                 console.log('上传成功');
-                                // scope.holdDoubleClick = false;
-                                // scope.loadingModel();
-                                // alertOrConfirm.successAlert("成功");
-                                // $rootScope.modal.close();
-                                // load();
+
                             };
                             uploader.onErrorItem = function (fileItem, response, status, headers) {
                                 fileItem.isPro = '上传失败';
                                 console.log('上传失败');
-                                //scope.loadingModel();
+
                             };
                             uploader.onCancelItem = function (fileItem, response, status, headers) {
                             };

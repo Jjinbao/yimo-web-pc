@@ -1,27 +1,37 @@
 <div class="common-panel" style="height: 458px;">
     <div class="close-btn" ng-click="closeAvatarModal()">&times;</div>
     <div class="common-panel-header">
-        上传头像
+        修改头像
     </div>
-    <div class="common-panel-body">
+    <div class="common-panel-body" style="padding-left: 32px;">
         <div class="upload-preview">
             <div class="file-group">
-                <!--<div class="portrait-preview">-->
-                <!--</div>-->
-                <button class="btn btn-success">上传图片</button>
-                <!--<span style="color: red">图片尺寸为750*406</span>-->
+                <div class="upload-img-btn">上传图片</div>
                 <input type="file" nv-file-select="" uploader="uploader1"/><br/>
             </div>
         </div>
         <div class="upload-show-img">
             <div ng-repeat="item in uploader1.queue">
                 <div class="downloaded-img">
-                    <div ng-show="uploader1.isHTML5" ng-thumb="{ file: item._file, height: 100 }"></div>
+                    <div ng-show="uploader1.isHTML5" ng-thumb="{ file: item._file, width:215}"></div>
                 </div>
             </div>
         </div>
+        <div class="upload-img-preview">
+            <div ng-repeat="item in uploader1.queue">
+                <div class="downloaded-img">
+                    <div ng-show="uploader1.isHTML5" ng-thumb="{ file: item._file, width:120,height:120}"></div>
+                </div>
+            </div>
+            <div class="preview-title">
+                头像预览
+            </div>
+        </div>
+        <div class="submit-img-btn" ng-click="uploaderFile()">
+            保存
+        </div>
     </div>
     <div class="common-panel-footer">
-        <button class="btn btn-primary feed-btn" ng-click="uploaderFile()">确认上传</button>
+        <!--<button class="btn btn-primary feed-btn" ng-click="uploaderFile()">确认上传</button>-->
     </div>
 </div>
