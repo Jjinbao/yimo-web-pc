@@ -89,6 +89,7 @@ html,body{
     height: @header-tab-height;
     line-height: @header-tab-height;
     margin: 0 auto;
+    overflow-y: hidden;
     position: relative;
     .nav-left-logo{
       height: @header-tab-height;
@@ -104,16 +105,20 @@ html,body{
       position: absolute;
       margin-left: 200px;
       top: 0;
+      overflow-y: hidden;
       font-size: 0;
       .yimo-tab{
         display: inline-block;
         width: 72px;
         height: @header-tab-height;
+        line-height: @header-tab-height;
+        padding-top: 0px;
         text-decoration: none;
         color: #333;
         font-size: 16px;
         text-align: center;
         cursor: pointer;
+        overflow-y: hidden;
         font-family: "Microsoft YaHei Regular","Microsoft YaHei";
       }
       .yimo-tab:hover{
