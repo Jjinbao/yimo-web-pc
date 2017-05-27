@@ -7,18 +7,42 @@
             应用推荐
         </div>
     </div>
-    <div class="mine-right-panel" ng-style="panelWidth">
+    <div class="mine-right-panel" ng-style="panelWidth" style="background-color: #f2f2f2">
         <div ng-switch="nowActive">
             <div ng-switch-when="myApp" style="padding-top: 44px">
-                <div class="one-app-item" style="margin-bottom: 59px;" ng-click="appFeedRecord(pro)"  ng-repeat="pro in myAppList">
+                <div class="one-app-item" style="margin-bottom: 40px;" ng-click="appFeedRecord(pro)"  ng-repeat="pro in myAppList">
                     <div class="app-help-feed">
                         <img ng-src="{{pro.smallImage}}">
                         <div class="app">{{pro.appName}}</div>
                     </div>
                 </div>
             </div>
-            <div ng-switch-when="recApp">
-                推荐应用
+            <div ng-switch-when="recApp" style="padding: 48px 22px;font-size: 0">
+                <!--<div class="one-app-item" style="margin-bottom: 40px;" ng-click="appFeedRecord(pro)"  ng-repeat="pro in myAppList">-->
+                    <!--<div class="app-help-feed">-->
+                        <!--<img ng-src="{{pro.smallImage}}">-->
+                        <!--<div class="app">{{pro.appName}}</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <div class="app-recomand-panel" ng-repeat="pro in myAppList">
+                    <div class="app-detail">
+                        <img ng-src="{{pro.smallImage}}"/>
+                        <div class="add-btn">
+                            添加
+                        </div>
+                        <div class="app-detail-desc">
+                            <div class="desc-title">
+                                {{pro.appName}}
+                            </div>
+                            <div class="desc-version">
+                                版本V3.3
+                            </div>
+                            <div class="desc-info">
+                                E.V.W. Jones在1950年最先提及百慕大三角的失踪事件，作为美联社有线服务的花边新闻，是关于近来船只的失踪情况的，
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

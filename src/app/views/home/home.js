@@ -28,6 +28,7 @@ angular.module('app.home', [])
             method:'POST'
         }).success(function(data){
             $scope.myAppList=data.list;
+            console.log($scope.myAppList);
         })
 
 

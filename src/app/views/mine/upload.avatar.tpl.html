@@ -46,7 +46,7 @@
             <input type="file" accept="image/png,image/gif,image/jpg,image/jpeg" id="fileInput"/>
         </div>
         <div class="cropArea">
-            <img-crop image="myImage" result-image="myCroppedImage" on-load-done="uplpadsuccess()"></img-crop>
+            <img-crop image="myImage" change-on-fly="true" result-image="myCroppedImage" on-load-done="uplpadsuccess()"></img-crop>
         </div>
         <div class="upload-img-preview">
             <img ng-src="{{myCroppedImage}}"/>
