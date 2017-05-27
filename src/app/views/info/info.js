@@ -315,18 +315,26 @@ angular.module('app.info', [])
         }
 
     }])
-    .controller('albumDetail',['$rootScope','$scope','$routeParams','$http','userService',function($rootScope,$scope,$routeParams,$http,userService){
+    .controller('albumDetail',['$rootScope','$scope','$routeParams','$http','userService','$sce',function($rootScope,$scope,$routeParams,$http,userService,$sce){
         $scope.albumListHeight = {
             height:document.body.clientHeight-60
         }
         $scope.albumDetailHeight={
 
         }
+        $scope.albumVideoContainer = {
+            height: document.body.clientHeight - 60,
+            width:document.body.clientWidth - 537
+        }
         window.onresize = function(){
             var detailWidth=document.body.clientWidth;
             var detailHeight=document.body.clientHeight;
             $scope.albumListHeight = {
                 height: detailHeight - 60
+            }
+            $scope.albumVideoContainer = {
+                height: detailHeight - 60,
+                width:detailWidth - 537
             }
             $scope.$digest();
         }

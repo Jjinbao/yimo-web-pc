@@ -7,12 +7,16 @@
             </div>
         </div>
         <div class="album-list-panel">
-            <div class="album-list-item" ng-repeat="album in videoList.list">
+            <div class="album-list-item" ng-repeat="album in videoList.list" ng-click="changeActiveVideo(album)">
                 {{album.title}}
             </div>
         </div>
 
     </div>
+    <div class="album-video-content" ng-style="albumVideoContainer">
+        <video id="detailVideo" ng-src="{{trustUrl(videoList.nowActiveVideo)}}" width="100%" height="100%" autoplay controls></video>
+    </div>
+
     <div class="album-comment-detail" ng-style="albumListHeight">
         <div class="album-detail-intro">
             <img ng-src="{{albumDetail.smallImage}}">
