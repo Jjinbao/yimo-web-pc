@@ -20,7 +20,7 @@ Date.prototype.format =function(format)
     return format;
 }
 // angular.module('swalk', ['ngRoute','ngAnimate', 'ui.bootstrap', 'app.router', 'app.login', 'app.home', 'app.info', 'app.teach', 'app.mine'])
-angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'angularFileUpload', 'ympc.services', 'app.router', 'app.home', 'app.login', 'app.info','app.mine'])
+angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap','ngImgCrop','angularFileUpload', 'ympc.services', 'app.router', 'app.home', 'app.login', 'app.info','app.mine'])
 /*所有控制器的父控制器*/
     .controller('rootTabCtrl', ['$rootScope', '$scope', '$location', '$modal', function ($rootScope, $scope, $location, $modal) {
         $scope.activeTab = 'YY'

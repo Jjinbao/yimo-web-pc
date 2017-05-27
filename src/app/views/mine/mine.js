@@ -134,7 +134,6 @@ angular.module('app.mine', [])
         }
 
         $scope.modifyPortrait=function(fatherScope){
-            console.log(userService.userMsg);
             $rootScope.uploadAvatar=$modal.open({
                 templateUrl: "app/views/mine/upload.avatar.tpl.html",
                 backdrop: true,
@@ -144,101 +143,119 @@ angular.module('app.mine', [])
                     $scope.closeAvatarModal=function(){
                         $rootScope.uploadAvatar.close();
                     }
-                    $scope.modifyNameCan=true;
-                    $scope.uploadImgTip='';
-                    var uploader = $scope.uploader1 = new FileUploader({
-                        url: baseUrl + "ym/upload/uploadImage",
-                        method:'POST'
-                    });
-                    uploader.filters.push({
-                        name: 'imageFilter',
-                        fn: function(item /*{File|FileLikeObject}*/, options) {
-                            var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
-                            return config.imageFilterType.indexOf(type) !== -1;
-                        }
-                    },{
-                        name: 'sizeFilter',
-                        fn: function(item){
-                            return item.size <= config.imageSize;
-                        }
-                    });
-
-                    uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
-                        if(filter.name == 'imageFilter'){
-                            $scope.uploadImgTip='数据格式不正确，只能上传jpg,png,jpeg格式的图片';
-                        }else if(filter.name == 'sizeFilter'){
-                            var mb = config.imageSize / 1048576;
-                            $scope.uploadImgTip="单张图片不能超过"+ mb +"M";
-                        }
-                    };
-                    uploader.onAfterAddingFile = function (fileItem) {
-                        $scope.uploadImgTip='';
-                        $scope.oldPicShow1 = false;
-                        //var addedItems = [fileItem];
-                        //var param = {
-                        //    items: addedItems,
-                        //    queue: scope.uploader1.queue,
-                        //    imgWidth: 750,
-                        //    imgHeight: 406
-                        //};
-                        //aspectRatio.query(param);
-                        if($scope.uploader1.queue.length > 1){
-                            uploader.queue.splice(0, 1);
-                        }
-                        $scope.fileitem = '';
-                        fileItem.isPro = '未上传';
-
-                    };
-
-                    uploader.onBeforeUploadItem = function (item) {
-                        console.log(item);
-                        item.formData.push({
-                            accountId:userService.userMsg.accountId,
-                            sign:md5('ymy'+userService.userMsg.accountId)
-                        })
-                        // item.formData.push({
-                        //     place: $scope.picObj.place,
-                        //     linkedPath: $scope.picObj.linkedPath,
-                        //     name: $scope.picObj.name,
-                        //     openEnable: $scope.picObj.openEnable,
-                        //     priority: $scope.picObj.priority,
-                        //     firstPicId: $scope.picObj.firstPicId || null,
-                        //     picId: $scope.picObj.picId || null
-                        // });
-                    };
-                    uploader.onProgressItem = function (fileItem, progress) {
-                        console.log('00000000000');
-                        fileItem.isPro = '正在上传';
-                    };
-                    uploader.onSuccessItem = function (fileItem, response, status, headers) {
-                        console.log(response);
-                        fileItem.isPro = '上传成功';
-                        console.log('上传成功');
-                        userService.userMsg.smallImg=response.imgsrc;
-                        fatherScope();
-                        $rootScope.uploadAvatar.close();
-                        // scope.holdDoubleClick = false;
-                        // scope.loadingModel();
-                        // alertOrConfirm.successAlert("成功");
-                        // $rootScope.modal.close();
-                        // load();
-                    };
-                    uploader.onErrorItem = function (fileItem, response, status, headers) {
-                        fileItem.isPro = '上传失败';
-                        $scope.uploadImgTip='上传失败';
-                        //scope.loadingModel();
-                    };
-                    uploader.onCancelItem = function (fileItem, response, status, headers) {
-                    };
-                    uploader.onCompleteItem = function (fileItem, response, status, headers) {
-                    };
-                    $scope.uploaderFile=function(){
-                        if($scope.uploader1.queue.length>0){
-                            $scope.uploader1.queue[0].upload();
-                        }else{
-                            $scope.uploadImgTip='请选择要上传的图片!'
-                        }
+                    console.log('---------xiugaitouxiang--------------');
+                    // $scope.modifyNameCan=true;
+                    // $scope.uploadImgTip='';
+                    // var uploader = $scope.uploader1 = new FileUploader({
+                    //     url: baseUrl + "ym/upload/uploadImage",
+                    //     method:'POST'
+                    // });
+                    // uploader.filters.push({
+                    //     name: 'imageFilter',
+                    //     fn: function(item /*{File|FileLikeObject}*/, options) {
+                    //         var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
+                    //         return config.imageFilterType.indexOf(type) !== -1;
+                    //     }
+                    // },{
+                    //     name: 'sizeFilter',
+                    //     fn: function(item){
+                    //         return item.size <= config.imageSize;
+                    //     }
+                    // });
+                    //
+                    // uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
+                    //     if(filter.name == 'imageFilter'){
+                    //         $scope.uploadImgTip='数据格式不正确，只能上传jpg,png,jpeg格式的图片';
+                    //     }else if(filter.name == 'sizeFilter'){
+                    //         var mb = config.imageSize / 1048576;
+                    //         $scope.uploadImgTip="单张图片不能超过"+ mb +"M";
+                    //     }
+                    // };
+                    // uploader.onAfterAddingFile = function (fileItem) {
+                    //     $scope.uploadImgTip='';
+                    //     $scope.oldPicShow1 = false;
+                    //     //var addedItems = [fileItem];
+                    //     //var param = {
+                    //     //    items: addedItems,
+                    //     //    queue: scope.uploader1.queue,
+                    //     //    imgWidth: 750,
+                    //     //    imgHeight: 406
+                    //     //};
+                    //     //aspectRatio.query(param);
+                    //     if($scope.uploader1.queue.length > 1){
+                    //         uploader.queue.splice(0, 1);
+                    //     }
+                    //     $scope.fileitem = '';
+                    //     fileItem.isPro = '未上传';
+                    //
+                    // };
+                    //
+                    // uploader.onBeforeUploadItem = function (item) {
+                    //     console.log(item);
+                    //     item.formData.push({
+                    //         accountId:userService.userMsg.accountId,
+                    //         sign:md5('ymy'+userService.userMsg.accountId)
+                    //     })
+                    //     // item.formData.push({
+                    //     //     place: $scope.picObj.place,
+                    //     //     linkedPath: $scope.picObj.linkedPath,
+                    //     //     name: $scope.picObj.name,
+                    //     //     openEnable: $scope.picObj.openEnable,
+                    //     //     priority: $scope.picObj.priority,
+                    //     //     firstPicId: $scope.picObj.firstPicId || null,
+                    //     //     picId: $scope.picObj.picId || null
+                    //     // });
+                    // };
+                    // uploader.onProgressItem = function (fileItem, progress) {
+                    //     console.log('00000000000');
+                    //     fileItem.isPro = '正在上传';
+                    // };
+                    // uploader.onSuccessItem = function (fileItem, response, status, headers) {
+                    //     console.log(response);
+                    //     fileItem.isPro = '上传成功';
+                    //     console.log('上传成功');
+                    //     userService.userMsg.smallImg=response.imgsrc;
+                    //     fatherScope();
+                    //     $rootScope.uploadAvatar.close();
+                    //     // scope.holdDoubleClick = false;
+                    //     // scope.loadingModel();
+                    //     // alertOrConfirm.successAlert("成功");
+                    //     // $rootScope.modal.close();
+                    //     // load();
+                    // };
+                    // uploader.onErrorItem = function (fileItem, response, status, headers) {
+                    //     fileItem.isPro = '上传失败';
+                    //     $scope.uploadImgTip='上传失败';
+                    //     //scope.loadingModel();
+                    // };
+                    // uploader.onCancelItem = function (fileItem, response, status, headers) {
+                    // };
+                    // uploader.onCompleteItem = function (fileItem, response, status, headers) {
+                    // };
+                    // $scope.uploaderFile=function(){
+                    //     if($scope.uploader1.queue.length>0){
+                    //         $scope.uploader1.queue[0].upload();
+                    //     }else{
+                    //         $scope.uploadImgTip='请选择要上传的图片!'
+                    //     }
+                    // }
+                    $scope.randerFinish=function(){
+                        $scope.myImage='';
+                        $scope.myCroppedImage='111';
+                        var handleFileSelect=function(evt) {
+                            var file=evt.currentTarget.files[0];
+                            var reader = new FileReader();
+                            reader.onload = function (evt) {
+                                $scope.$apply(function($scope){
+                                    $scope.myImage=evt.target.result;
+                                });
+                            };
+                            reader.readAsDataURL(file);
+                        };
+                        console.log(document.querySelector('fileInput'));
+                        angular.element($('#fileInput')).on('change',handleFileSelect);
                     }
+
                 }
             })
         }
