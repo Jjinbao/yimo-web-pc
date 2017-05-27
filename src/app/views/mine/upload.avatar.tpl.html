@@ -5,53 +5,55 @@
     </div>
     <div class="common-panel-body" style="padding-left: 32px;" ng-init="randerFinish()">
         <!--<div class="upload-preview">-->
-            <!--<div class="file-group">-->
-                <!--<div class="upload-img-btn">上传图片</div>-->
-                <!--<input type="file" nv-file-select="" uploader="uploader1"/><br/>-->
-            <!--</div>-->
-            <!--<div class="wrong-warning" ng-show="uploadImgTip">-->
-                <!--{{uploadImgTip}}-->
-            <!--</div>-->
+        <!--<div class="file-group">-->
+        <!--<div class="upload-img-btn">上传图片</div>-->
+        <!--<input type="file" nv-file-select="" uploader="uploader1"/><br/>-->
+        <!--</div>-->
+
 
         <!--</div>-->
         <!--<div class="upload-show-img">-->
-            <!--<div ng-repeat="item in uploader1.queue">-->
-                <!--<div class="downloaded-img">-->
-                    <!--<div ng-show="uploader1.isHTML5" ng-thumb="{ file: item._file, width:215}"></div>-->
-                <!--</div>-->
-            <!--</div>-->
+        <!--<div ng-repeat="item in uploader1.queue">-->
+        <!--<div class="downloaded-img">-->
+        <!--<div ng-show="uploader1.isHTML5" ng-thumb="{ file: item._file, width:215}"></div>-->
+        <!--</div>-->
+        <!--</div>-->
         <!--</div>-->
         <!--<div class="upload-img-preview">-->
-            <!--<div ng-repeat="item in uploader1.queue">-->
-                <!--<div class="downloaded-img">-->
-                    <!--<div ng-show="uploader1.isHTML5" ng-thumb="{ file: item._file, width:120,height:120}"></div>-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--<div class="preview-title">-->
-                <!--头像预览-->
-            <!--</div>-->
+        <!--<div ng-repeat="item in uploader1.queue">-->
+        <!--<div class="downloaded-img">-->
+        <!--<div ng-show="uploader1.isHTML5" ng-thumb="{ file: item._file, width:120,height:120}"></div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="preview-title">-->
+        <!--头像预览-->
+        <!--</div>-->
         <!--</div>-->
         <!--<div class="submit-img-btn" ng-click="uploaderFile()">-->
-            <!--保存-->
+        <!--保存-->
         <!--</div>-->
-    <!--</div>-->
-    <!--<div class="common-panel-footer">-->
+        <!--</div>-->
+        <!--<div class="common-panel-footer">-->
         <!--&lt;!&ndash;<button class="btn btn-primary feed-btn" ng-click="uploaderFile()">确认上传</button>&ndash;&gt;-->
-    <!--</div>-->
-    <div class="file-group">
-        <div class="upload-img-btn">
-            重新上传
+        <!--</div>-->
+        <div class="wrong-warning" ng-show="uploadImgTip">
+            {{uploadImgTip}}
         </div>
-        <input type="file" id="fileInput" />
-    </div>
-    <div class="cropArea">
-        <img-crop image="myImage" result-image="myCroppedImage"></img-crop>
-    </div>
-    <div class="upload-img-preview">
-        <img ng-src="{{myCroppedImage}}" />
-    </div>
+        <div class="file-group">
+            <div class="upload-img-btn">
+                重新上传
+            </div>
+            <input type="file" accept="image/png,image/gif,image/jpg,image/jpeg" id="fileInput"/>
+        </div>
+        <div class="cropArea">
+            <img-crop image="myImage" result-image="myCroppedImage" on-load-done="uplpadsuccess()"></img-crop>
+        </div>
+        <div class="upload-img-preview">
+            <img ng-src="{{myCroppedImage}}"/>
+        </div>
+        <div class="preview-title">头像预览</div>
     </div>
     <div class="submit-img-btn" ng-click="uploaderFile()">
-    保存
+        保存
     </div>
 </div>

@@ -145,11 +145,31 @@ angular.module('app.mine', [])
                     }
                     console.log('---------xiugaitouxiang--------------');
                     // $scope.modifyNameCan=true;
-                    // $scope.uploadImgTip='';
-                    // var uploader = $scope.uploader1 = new FileUploader({
-                    //     url: baseUrl + "ym/upload/uploadImage",
-                    //     method:'POST'
-                    // });
+                    $scope.uploadImgTip='';
+                    var uploader = $scope.uploader1 = new FileUploader({
+                        url: baseUrl + "ym/upload/uploadImage",
+                        method:'POST'
+                    });
+                    function base64ToBlob(base64Data, contentType) {
+                        contentType = contentType || '';
+                        var sliceSize = 1024;
+                        var byteCharacters = atob(base64Data);
+                        var bytesLength = byteCharacters.length;
+                        var slicesCount = Math.ceil(bytesLength / sliceSize);
+                        var byteArrays = new Array(slicesCount);
+
+                        for (var sliceIndex = 0; sliceIndex < slicesCount; ++sliceIndex) {
+                            var begin = sliceIndex * sliceSize;
+                            var end = Math.min(begin + sliceSize, bytesLength);
+
+                            var bytes = new Array(end - begin);
+                            for (var offset = begin, i = 0 ; offset < end; ++i, ++offset) {
+                                bytes[i] = byteCharacters[offset].charCodeAt(0);
+                            }
+                            byteArrays[sliceIndex] = new Uint8Array(bytes);
+                        }
+                        return new Blob(byteArrays, { type: contentType });
+                    }
                     // uploader.filters.push({
                     //     name: 'imageFilter',
                     //     fn: function(item /*{File|FileLikeObject}*/, options) {
@@ -210,24 +230,24 @@ angular.module('app.mine', [])
                     //     console.log('00000000000');
                     //     fileItem.isPro = '正在上传';
                     // };
-                    // uploader.onSuccessItem = function (fileItem, response, status, headers) {
-                    //     console.log(response);
-                    //     fileItem.isPro = '上传成功';
-                    //     console.log('上传成功');
-                    //     userService.userMsg.smallImg=response.imgsrc;
-                    //     fatherScope();
-                    //     $rootScope.uploadAvatar.close();
-                    //     // scope.holdDoubleClick = false;
-                    //     // scope.loadingModel();
-                    //     // alertOrConfirm.successAlert("成功");
-                    //     // $rootScope.modal.close();
-                    //     // load();
-                    // };
-                    // uploader.onErrorItem = function (fileItem, response, status, headers) {
-                    //     fileItem.isPro = '上传失败';
-                    //     $scope.uploadImgTip='上传失败';
-                    //     //scope.loadingModel();
-                    // };
+                    uploader.onSuccessItem = function (fileItem, response, status, headers) {
+                        console.log(response);
+                        fileItem.isPro = '上传成功';
+                        console.log('上传成功');
+                        userService.userMsg.smallImg=response.imgsrc;
+                        fatherScope();
+                        $rootScope.uploadAvatar.close();
+                        // scope.holdDoubleClick = false;
+                        // scope.loadingModel();
+                        // alertOrConfirm.successAlert("成功");
+                        // $rootScope.modal.close();
+                        // load();
+                    };
+                    uploader.onErrorItem = function (fileItem, response, status, headers) {
+                        fileItem.isPro = '上传失败';
+                        $scope.uploadImgTip='上传失败';
+                        //scope.loadingModel();
+                    };
                     // uploader.onCancelItem = function (fileItem, response, status, headers) {
                     // };
                     // uploader.onCompleteItem = function (fileItem, response, status, headers) {
@@ -239,9 +259,13 @@ angular.module('app.mine', [])
                     //         $scope.uploadImgTip='请选择要上传的图片!'
                     //     }
                     // }
+                    $scope.myImage='';
+                    $scope.myCroppedImage='';
+                    $scope.uplpadsuccess=function(){
+                        console.log('上传成功')
+                    }
                     $scope.randerFinish=function(){
-                        $scope.myImage='';
-                        $scope.myCroppedImage='111';
+
                         var handleFileSelect=function(evt) {
                             var file=evt.currentTarget.files[0];
                             var reader = new FileReader();
@@ -255,6 +279,17 @@ angular.module('app.mine', [])
                         console.log(document.querySelector('fileInput'));
                         angular.element($('#fileInput')).on('change',handleFileSelect);
                     }
+
+                    $scope.uploaderFile = function () {
+                        if(!$scope.myImage){
+                            console.log('请选择图片');
+                            $scope.uploadImgTip='请选择要上传的图片!'
+                            return;
+                        }
+                        var file = base64ToBlob($scope.myCroppedImage.replace('data:image/png;base64,',''), 'image/jpeg');
+                        uploader.addToQueue(file);
+                        uploader.uploadAll();
+                    };
 
                 }
             })
