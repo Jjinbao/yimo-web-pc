@@ -19,10 +19,28 @@ Date.prototype.format =function(format)
                 ("00"+ o[k]).substr((""+ o[k]).length));
     return format;
 }
+
+function giveLoginInfo(data){
+    var countSecond=function(){
+        console.log('------pc端给我返回来的参数值是-------------');
+        console.log(pcBack);
+    }
+    try{
+        var jsonStr=JSON.stringify(data);
+        var pcBack=window.external.userLoginInfo(jsonStr);
+        console.log('------pc端给我返回来的参数值是-------------');
+        console.log(pcBack);
+
+        setTimeout('countSecond()',3000);
+    }catch(e){
+        console.log('调用失败了,js调用的是userLoginInfo函数，传递的是json格式数据');
+
+    }
+}
 // angular.module('swalk', ['ngRoute','ngAnimate', 'ui.bootstrap', 'app.router', 'app.login', 'app.home', 'app.info', 'app.teach', 'app.mine'])
 angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap','ngImgCrop','angularFileUpload', 'ympc.services', 'app.router', 'app.home', 'app.login', 'app.info','app.mine'])
 /*所有控制器的父控制器*/
-    .controller('rootTabCtrl', ['$rootScope', '$scope', '$location', '$modal', function ($rootScope, $scope, $location, $modal) {
+    .controller('rootTabCtrl', ['$rootScope', '$scope', '$location', '$modal','userService', function ($rootScope, $scope, $location, $modal,userService) {
         $scope.activeTab = 'YY'
         $scope.size = 600;
         $scope.clickTab = function (val) {
@@ -55,6 +73,17 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap','ngImgCrop','angul
             }
 
         })
+        //获取用户登录信息
+        try{
+            var pcUserInfo=window.external.getUserInfo();
+            if(pcUserInfo){
+                userService.userMsg=JSON.parse(pcUserInfo);
+                $scope.userImg=userService.userMsg.smallImg;
+            }
+        }catch (e){
+            console.log('从pc端获取用户登录信息报错了');
+        }
+
 
         $rootScope.login = function (backParams, callback) {
             $rootScope.loginModal = $modal.open({
@@ -107,7 +136,16 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap','ngImgCrop','angul
                                 if (callback) {
                                     callback(backParams)
                                 }
+                                try{
+                                    var jsonStr=JSON.stringify(data);
+                                    var pcBack=window.external.userLoginInfo(jsonStr);
+                                    console.log('pc端传递过来的数据---------');
+                                    console.log(pcBack);
+                                }catch(e){
+                                    console.log('调用失败了,js调用的是userLoginInfo函数，传递的是json格式数据');
+                                }
                                 $scope.closeModal();
+
                                 //$scope.back();
                             } else if (data.result == 102) {
                                 $scope.messageTip = '手机号输入错误';
@@ -558,16 +596,28 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap','ngImgCrop','angul
         }
 
         $scope.windwoClose=function(){
-            console.log('close');
-            window.external.OnbtnClose();
+            try{
+                window.external.OnbtnClose();
+            }catch (e){
+
+            }
+
         }
         $scope.windwoMax=function(){
-            console.log('max');
-            window.external.OnbtnMax();
+            try{
+                window.external.OnbtnMax();
+            }catch (e){
+
+            }
+
         }
         $scope.windwoMin=function(){
-            console.log('min');
-            window.external.OnbtnMin();
+            try{
+                window.external.OnbtnMin();
+            }catch (e){
+
+            }
+
         }
     }])
     .directive('renderFinish', function ($timeout) {//监听dom渲染完毕

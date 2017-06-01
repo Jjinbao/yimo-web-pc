@@ -31,5 +31,18 @@ angular.module('app.home', [])
             console.log($scope.myAppList);
         })
 
+        // //获取用户已经添加的应用
+        // try{
+        //
+        // }
+        $scope.addApps=function(val){
+            var appStr=JSON.stringify(val);
+            console.log(appStr)
+            try{
+                window.external.addApp(appStr);
+            }catch (e){
+
+            }
+        }
 
     }])

@@ -27,7 +27,7 @@
                 <div class="app-recomand-panel" ng-repeat="pro in myAppList">
                     <div class="app-detail">
                         <img ng-src="{{pro.smallImage}}"/>
-                        <div class="add-btn">
+                        <div class="add-btn" ng-click="addApps(pro)">
                             添加
                         </div>
                         <div class="app-detail-desc">
