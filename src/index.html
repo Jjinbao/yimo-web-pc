@@ -41,8 +41,20 @@
         </div>
       </div>
       <div class="mine-img-tab" ng-click="clickTab('WD')">
-        <!--<img src="./app/img/touxiang@2x.png">-->
         <img ng-show="userImg" ng-src="{{userImg}}">
+      </div>
+      <div class="index-control-btns">
+        <div class="control-close" ng-click="windwoClose()">
+
+        </div>
+        <div class="control-max" ng-click="windwoMax()">
+
+        </div>
+        <div class="control-min" ng-click="windwoMin()">
+          111
+        </div>
+
+
       </div>
     </div>
     <div style="height: 100%;width: 100%" ng-view></div>

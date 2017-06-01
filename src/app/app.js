@@ -556,8 +556,19 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap','ngImgCrop','angul
                 }
             });
         }
-        //})
 
+        $scope.windwoClose=function(){
+            console.log('close');
+            window.external.OnbtnClose();
+        }
+        $scope.windwoMax=function(){
+            console.log('max');
+            window.external.OnbtnMax();
+        }
+        $scope.windwoMin=function(){
+            console.log('min');
+            window.external.OnbtnMin();
+        }
     }])
     .directive('renderFinish', function ($timeout) {//监听dom渲染完毕
         return {

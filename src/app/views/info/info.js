@@ -92,7 +92,7 @@ angular.module('app.info', [])
         }
         window.onresize = function(){
             var detailWidth=document.body.clientWidth;
-            var detailHeight=document.body.clientWidth;
+            var detailHeight=document.body.clientHeight;
             $scope.PassageDetailWidth = {
                 //left:((newValue.w < 1366 ? 1366:newValue.w)-1129)/2
                 width: detailWidth - 279
