@@ -138,11 +138,9 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap','ngImgCrop','angul
                                 }
                                 try{
                                     var jsonStr=JSON.stringify(data);
-                                    var pcBack=window.external.userLoginInfo(jsonStr);
-                                    console.log('pc端传递过来的数据---------');
-                                    console.log(pcBack);
+                                    window.external.userLoginInfo(jsonStr);
                                 }catch(e){
-                                    console.log('调用失败了,js调用的是userLoginInfo函数，传递的是json格式数据');
+
                                 }
                                 $scope.closeModal();
 
@@ -332,6 +330,12 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap','ngImgCrop','angul
                                 userService.userMsg = data;
                                 if (callback) {
                                     callback(backParams)
+                                }
+                                try{
+                                    var jsonStr=JSON.stringify(data);
+                                    window.external.userLoginInfo(jsonStr);
+                                }catch(e){
+
                                 }
                                 $rootScope.registerModal.close();
                                 //$scope.back();
@@ -1136,6 +1140,12 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap','ngImgCrop','angul
                                         $rootScope.successAlter('修改成功');
                                         //$scope.$emit('alter.confirm.window','修改成功');
                                         userService.userMsg.userName=$scope.user.name;
+                                        try{
+                                            var jsonStr=JSON.stringify(userService.userMsg);
+                                            window.external.userLoginInfo(jsonStr);
+                                        }catch(e){
+
+                                        }
                                     }else{
 
                                     }

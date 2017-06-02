@@ -10,7 +10,7 @@
     <div class="mine-right-panel" ng-style="panelWidth" style="background-color: #f2f2f2">
         <div ng-switch="nowActive">
             <div ng-switch-when="myApp" style="padding-top: 44px">
-                <div class="one-app-item" style="margin-bottom: 40px;" ng-click="appFeedRecord(pro)"  ng-repeat="pro in myAppList">
+                <div class="one-app-item" style="margin-bottom: 40px;" ng-click="openOneApp(pro)"  ng-repeat="pro in myAddAppList">
                     <div class="app-help-feed">
                         <img ng-src="{{pro.smallImage}}">
                         <div class="app">{{pro.appName}}</div>

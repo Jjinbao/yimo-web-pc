@@ -31,17 +31,44 @@ angular.module('app.home', [])
             console.log($scope.myAppList);
         })
 
-        // //获取用户已经添加的应用
-        // try{
-        //
-        // }
+        //获取用户已经添加的应用
+        $scope.myAddAppList=[];
+        try{
+            var appList=window.external.addedApp();
+            if(appList){
+                $scope.myAddAppList=[];
+            }else{
+                $scope.myAddAppList=JSON.parse(appList);
+            }
+
+        }catch (e){
+            console.log('返回错误')
+        }
         $scope.addApps=function(val){
-            var appStr=JSON.stringify(val);
-            console.log(appStr)
+
+            for(var i=0;i<$scope.myAddAppList.length;i++){
+                if($scope.myAddAppList[i].appId==val.appId){
+                    return;
+                }
+            }
+            $scope.myAddAppList.push(val);
+            $rootScope.successAlter('添加成功');
+            var appStr=JSON.stringify($scope.myAddAppList);
+            console.log(appStr);
             try{
                 window.external.addApp(appStr);
             }catch (e){
 
+            }
+        }
+
+        $scope.openOneApp=function(val){
+            try{
+                var appInfo=JSON.stringify(val);
+                console.log(appInfo);
+                window.external.openApp(appInfo);
+            }catch (e){
+                console.log('--------');
             }
         }
 

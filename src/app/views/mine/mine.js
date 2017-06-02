@@ -143,7 +143,6 @@ angular.module('app.mine', [])
                     $scope.closeAvatarModal=function(){
                         $rootScope.uploadAvatar.close();
                     }
-                    console.log('---------xiugaitouxiang--------------');
                     // $scope.modifyNameCan=true;
                     $scope.uploadImgTip='';
                     var uploader = $scope.uploader1 = new FileUploader({
@@ -233,9 +232,14 @@ angular.module('app.mine', [])
                     uploader.onSuccessItem = function (fileItem, response, status, headers) {
                         console.log(response);
                         fileItem.isPro = '上传成功';
-                        console.log('上传成功');
                         userService.userMsg.smallImg=response.imgsrc;
                         fatherScope();
+                        try{
+                            var jsonStr=JSON.stringify(userService.userMsg);
+                            window.external.userLoginInfo(jsonStr);
+                        }catch(e){
+
+                        }
                         $rootScope.uploadAvatar.close();
                         // scope.holdDoubleClick = false;
                         // scope.loadingModel();
