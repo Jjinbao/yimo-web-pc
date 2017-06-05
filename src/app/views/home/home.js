@@ -36,9 +36,9 @@ angular.module('app.home', [])
         try{
             var appList=window.external.addedApp();
             if(appList){
-                $scope.myAddAppList=[];
-            }else{
                 $scope.myAddAppList=JSON.parse(appList);
+            }else{
+                $scope.myAddAppList=[];
             }
 
         }catch (e){
