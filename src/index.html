@@ -1,9 +1,9 @@
 <!doctype html>
 <html ng-app="app">
-  <head>
-  	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="renderer" content="webkit">
-  	<meta http-equiv="X-UA-Compatible" content="IE=edge" >
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
     <base href="/">
     <title>医模云平台</title>
@@ -11,44 +11,63 @@
     <meta name="description" content="">
     <script src="config.js"></script>
     <script>
-        function stop(){
+        var scrollFunc=function(e){
+            e=e || window.event;
+            if(e.wheelDelta && event.ctrlKey){//IE/Opera/Chrome
+                e.preventDefault();
+                event.returnValue=false;
+            }else if(e.detail){//Firefox
+                event.returnValue=false;
+            }
+        }
+
+        /*注册事件*/
+        if(document.addEventListener){
+            document.addEventListener('DOMMouseScroll',scrollFunc,false);
+        }//W3C
+        window.onmousewheel=document.onmousewheel=scrollFunc;//IE/Opera/Chrome/Safari
+        function stop() {
             return false;
         }
-        document.oncontextmenu=stop;
+        document.oncontextmenu = stop;
     </script>
     <!-- build:css({.tmp/serve,src}) styles/vendor.css -->
-	<!-- bower:css -->
-	<!-- run `gulp inject` to automatically populate bower styles dependencies -->
-	<!-- endbower -->
-	<!-- endbuild -->
+    <!-- bower:css -->
+    <!-- run `gulp inject` to automatically populate bower styles dependencies -->
+    <!-- endbower -->
+    <!-- endbuild -->
 
-	<!-- build:css({.tmp/serve,src}) styles/app.css -->
-	<!-- inject:css -->
-	<!-- css files will be automatically insert here -->
-	<!-- endinject -->
-	<!-- endbuild -->
+    <!-- build:css({.tmp/serve,src}) styles/app.css -->
+    <!-- inject:css -->
+    <!-- css files will be automatically insert here -->
+    <!-- endinject -->
+    <!-- endbuild -->
 
-  </head>
-  <body ng-controller="rootTabCtrl">
-    <!--[if lt IE 10]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
-    <div class="nav-tab-bar">
-      <div class="nav-bar-content">
+</head>
+<body ng-controller="rootTabCtrl">
+<!--[if lt IE 10]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+    your browser</a> to improve your experience.</p>
+<![endif]-->
+<div class="nav-tab-bar">
+    <div class="nav-bar-content">
         <div class="nav-left-logo">
-          <img src="./app/img/logo.png">
+            <img src="./app/img/logo.png">
         </div>
         <div class="nav-right-tab">
-          <a class="yimo-tab" ng-click="clickTab('YY')" ng-class="{true:'yimo-tab-active'}[activeTab=='YY']" ng-href="/app">应用</a>
-          <a class="yimo-tab" ng-click="clickTab('ZX')" ng-class="{true:'yimo-tab-active'}[activeTab=='ZX']" ng-href="/passage">文章</a>
-          <a class="yimo-tab" ng-click="clickTab('JX')" ng-class="{true:'yimo-tab-active'}[activeTab=='JX']" ng-href="/video">视频</a>
-          <!--<a class="yimo-tab" ng-click="clickTab('WD')" ng-class="{true:'yimo-tab-active'}[activeTab=='WD']" ng-href="/mine">我</a>-->
+            <a class="yimo-tab" ng-click="clickTab('YY')" ng-class="{true:'yimo-tab-active'}[activeTab=='YY']"
+               ng-href="/app">应用</a>
+            <a class="yimo-tab" ng-click="clickTab('ZX')" ng-class="{true:'yimo-tab-active'}[activeTab=='ZX']"
+               ng-href="/passage">文章</a>
+            <a class="yimo-tab" ng-click="clickTab('JX')" ng-class="{true:'yimo-tab-active'}[activeTab=='JX']"
+               ng-href="/video">视频</a>
+            <!--<a class="yimo-tab" ng-click="clickTab('WD')" ng-class="{true:'yimo-tab-active'}[activeTab=='WD']" ng-href="/mine">我</a>-->
         </div>
-      </div>
-      <div class="mine-img-tab" ng-click="clickTab('WD')">
+    </div>
+    <div class="mine-img-tab" ng-click="clickTab('WD')">
         <img ng-show="userImg" ng-src="{{userImg}}">
-      </div>
-      <div class="index-control-btns">
+    </div>
+    <div class="index-control-btns">
         <div class="control-close" ng-click="windwoClose()">
 
         </div>
@@ -56,29 +75,29 @@
 
         </div>
         <div class="control-min" ng-click="windwoMin()">
-          111
+
         </div>
 
 
-      </div>
     </div>
-    <div style="height: 100%;width: 100%" ng-view></div>
-    <!--<swalk-footer></swalk-footer>-->
-    <!-- build:js(src) scripts/vendor.js -->
-    <!-- bower:js -->
-    <!-- run `gulp inject` to automatically populate bower script dependencies -->
-    <!-- endbower -->
-    <!-- endbuild -->
-    <!--<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>-->
-    <!-- build:js({.tmp/serve,.tmp/partials,src}) scripts/app.js -->
-    <!-- inject:js -->
+</div>
+<div style="height: 100%;width: 100%" ng-view></div>
+<!--<swalk-footer></swalk-footer>-->
+<!-- build:js(src) scripts/vendor.js -->
+<!-- bower:js -->
+<!-- run `gulp inject` to automatically populate bower script dependencies -->
+<!-- endbower -->
+<!-- endbuild -->
+<!--<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>-->
+<!-- build:js({.tmp/serve,.tmp/partials,src}) scripts/app.js -->
+<!-- inject:js -->
 
-    <!-- js files will be automatically insert here -->
-    <!-- endinject -->
+<!-- js files will be automatically insert here -->
+<!-- endinject -->
 
-    <!-- inject:partials -->
-    <!-- angular templates will be automatically converted in js and inserted here -->
-    <!-- endinject -->
-    <!-- endbuild -->
-  </body>
+<!-- inject:partials -->
+<!-- angular templates will be automatically converted in js and inserted here -->
+<!-- endinject -->
+<!-- endbuild -->
+</body>
 </html>
