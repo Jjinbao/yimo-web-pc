@@ -10,8 +10,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="">
     <script src="config.js"></script>
-
-	<!-- build:css({.tmp/serve,src}) styles/vendor.css -->
+    <script>
+        function stop(){
+            return false;
+        }
+        document.oncontextmenu=stop;
+    </script>
+    <!-- build:css({.tmp/serve,src}) styles/vendor.css -->
 	<!-- bower:css -->
 	<!-- run `gulp inject` to automatically populate bower styles dependencies -->
 	<!-- endbower -->
