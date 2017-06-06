@@ -569,6 +569,18 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap','ngImgCrop','angul
             });
         }
 
+        $rootScope.existLogin=function(callback){
+            $rootScope.alterSureModal=$modal.open({
+                templateUrl: "app/views/mine/exist.login.tpl.html",
+                backdrop: true,
+                keyboard: false,
+                size: 'exist',
+                controller: function ($scope, $http, $interval, userService) {
+
+                }
+            })
+        }
+
         //$scope.$on('alter.confirm.window',function(evt,data){
         $rootScope.successAlter = function (data) {
             $rootScope.alterModal = $modal.open({

@@ -115,10 +115,10 @@ gulp.task('clean', function (done) {
     $.del([path.join(conf.paths.dist, '/'), path.join(conf.paths.tmp, '/')], done);
 });
 
-gulp.task('clean-console', function () {
-    return gulp.src('src/app/app.js')
-        .pipe(stripDebug())
-        .pipe(gulp.dest('dist'))
-})
+// gulp.task('clean-console', function () {
+//     return gulp.src('src/app/app.js')
+//         .pipe(stripDebug())
+//         .pipe(gulp.dest('dist'))
+// })
 
 gulp.task('build', ['html', 'fonts','configjs', 'other', 'printHtml']);

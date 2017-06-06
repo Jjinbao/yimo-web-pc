@@ -118,12 +118,21 @@ angular.module('app.mine', [])
             }
         }
         //退出登录
-        $scope.quitLogin = function () {
+        $scope.callbackFun=function(){
             $scope.haveLoginuser = userService.userMsg = {};
             $scope.haveLoginuser = '';
             $scope.nowActivePanel = 'noLogin'
             $scope.$emit('user.nav.img', '');
         }
+        $scope.quitLogin = function () {
+            // $scope.haveLoginuser = userService.userMsg = {};
+            // $scope.haveLoginuser = '';
+            // $scope.nowActivePanel = 'noLogin'
+            // $scope.$emit('user.nav.img', '');
+            $rootScope.existLogin($scope.callbackFun);
+        }
+
+
         //获取反馈的应用列表
         $scope.helpFeedApp = function () {
             $scope.nowActivePanel = 'feed';
