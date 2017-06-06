@@ -808,3 +808,44 @@
   cursor: pointer;
 
 }
+
+.exist-modal{
+  height: 209px;
+  background-color: white;
+  .exist-title{
+    padding-top: 72px;
+    line-height: 1;
+    text-align: center;
+    font-size: 20px;
+    color: #333;
+  }
+  .exist-btns{
+    margin-top: 55px;
+    padding: 0 15px;
+    font-size: 0;
+    width: 100%;
+    .exist-btn{
+      width: 50%;
+      display: inline-block;
+      padding: 0 5px;
+      .my-btn{
+        width: 100%;
+        text-align: center;
+        border:1px solid @main-color;
+        height: 36px;
+        line-height: 35px;
+        box-sizing: border-box;
+        font-size: 18px;
+        border-radius: 2px;
+        cursor: pointer;
+      }
+      .my-btn-cancle{
+        color: @main-color;
+      }
+      .my-btn-sure{
+        background-color: @main-color;
+        color: white;
+      }
+    }
+  }
+}

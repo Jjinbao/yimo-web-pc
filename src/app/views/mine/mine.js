@@ -123,6 +123,11 @@ angular.module('app.mine', [])
             $scope.haveLoginuser = '';
             $scope.nowActivePanel = 'noLogin'
             $scope.$emit('user.nav.img', '');
+            try{
+                window.external.userLoginInfo("");
+            }catch(e){
+
+            }
         }
         $scope.quitLogin = function () {
             // $scope.haveLoginuser = userService.userMsg = {};

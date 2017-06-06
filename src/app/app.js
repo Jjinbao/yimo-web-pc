@@ -576,7 +576,13 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap','ngImgCrop','angul
                 keyboard: false,
                 size: 'exist',
                 controller: function ($scope, $http, $interval, userService) {
-
+                    $scope.cancleQuit=function(){
+                        $rootScope.alterSureModal.close();
+                    }
+                    $scope.sureQuit=function(){
+                        callback();
+                        $rootScope.alterSureModal.close();
+                    }
                 }
             })
         }
