@@ -72,4 +72,9 @@ angular.module('app.home', [])
             }
         }
 
+        $scope.mouseRightClick=function(val){
+            console.log(val)
+        }
+
     }])
+

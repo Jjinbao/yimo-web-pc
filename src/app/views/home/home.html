@@ -11,11 +11,14 @@
         <div ng-switch="nowActive">
             <div ng-switch-when="myApp" style="padding-top: 44px">
                 <div class="one-app-item" style="margin-bottom: 40px;" ng-click="openOneApp(pro)"  ng-repeat="pro in myAddAppList">
-                    <div class="app-help-feed">
+                    <div class="app-help-feed" context-menu target='menulist'>
                         <img ng-src="{{pro.smallImage}}">
                         <div class="app">{{pro.appName}}</div>
                     </div>
                 </div>
+                <ul id='menulist' ng-show='opened' style="position: absolute;z-index:1000;height: 50px">
+                    <li ng-repeat='m in ms' ng-click='fn($event,m.name)'>{{m.name}}</li>
+                </ul>
             </div>
             <div ng-switch-when="recApp" style="padding: 48px 22px;font-size: 0">
                 <!--<div class="one-app-item" style="margin-bottom: 40px;" ng-click="appFeedRecord(pro)"  ng-repeat="pro in myAppList">-->
@@ -47,3 +50,4 @@
         </div>
     </div>
 </div>
+
