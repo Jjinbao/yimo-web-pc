@@ -65,30 +65,74 @@
       }
       .passage-comment-text{
         width: 100%;
-        padding: 10px;
+        margin-top: 20px;
+        position: relative;
+        //padding: 10px;
+        .passage-yimo-guandian{
+          font-size: 18px;
+          font-weight: bold;
+          line-height: 1;
+          color: #333;
+        }
         textarea{
+          margin-top: 12px;
           padding: 10px;
-          height: 100px;
+          height: 134px;
           width: 100%;
           resize: none;
-          border-radius: 5px;
+          border-radius: 0px;
+          color: #333;
           border: 1px solid gainsboro;
         }
+        ::-webkit-textarea-placeholder { /* WebKit browsers */
+          color: #c7c7c7;
+        }
         .comment-btn{
-          margin-top: 10px;
+          height: 35px;
+          width: 90px;
+          float: right;
+          margin-top: 11px;
+          text-align: center;
+          background-color: @main-color;
+          color: white;
+          line-height: 34px;
+          border-radius: 2px;
+          cursor: pointer;
         }
       }
       .passage-hot-comment{
-        padding-left: 15px;
-        padding-right: 15px;
+        margin-top: 50px;
         .comment-title{
-          height: 40px;
-          line-height: 40px;
-          border-bottom: 1px solid gainsboro;
+          //line-height: 1px;
+          font-size: 18px;
+          font-weight: bold;
+          padding-bottom: 12px;
+          color: #333;
+          border-bottom: 1px solid #e5e5e5;
         }
         .comment-detail{
-          padding-top: 15px;
-          border-bottom: 1px solid gainsboro;
+          padding-top: 20px;
+          padding-bottom: 20px;
+          position: relative;
+          border-bottom: 1px solid #e5e5e5;
+          .user-name{
+            line-height: 1;
+            color: #fb9f00;
+            font-size: 14px;
+          }
+          .comment-info{
+            margin-top: 12px;
+            font-size: 12px;
+            color: #333;
+          }
+          .comment-date{
+            position: absolute;
+            right: 0;
+            top: 23px;
+            font-size: 12px;
+            color: #999;
+          }
+
         }
         .no-comment{
           padding-top: 20px;

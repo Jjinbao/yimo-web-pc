@@ -10,17 +10,18 @@
 
             </div>
             <div class="passage-comment-text">
-                <textarea placeholder="请输入评论." ng-model="commentContent"></textarea>
-                <div class="btn btn-success btn-default comment-btn" ng-click="submitComment()">提交评论</div>
+                <div class="passage-yimo-guandian">医模观点论</div>
+                <textarea placeholder="我要发表评论." ng-model="commentContent"></textarea>
+                <div class="comment-btn" ng-click="submitComment()">评论</div>
             </div>
             <div class="passage-hot-comment">
                 <div class="comment-title">
                     热门评论
                 </div>
                 <div class="comment-detail" ng-repeat="comment in userComment.list" ng-class="{'none-border':$last}">
-                    <h5>{{comment.userName}}</h5>
-                    <div>{{comment.content}}</div>
-                    <div>{{comment.pushTime}}</div>
+                    <div class="user-name">{{comment.userName}}</div>
+                    <div class="comment-info">{{comment.content}}</div>
+                    <div class="comment-date">发布于{{comment.pushTime}}</div>
                 </div>
                 <div class="no-comment" ng-show="userComment.list.length==0">
                     暂无评论
