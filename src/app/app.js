@@ -22,18 +22,13 @@ Date.prototype.format =function(format)
 
 function giveLoginInfo(data){
     var countSecond=function(){
-        console.log('------pc端给我返回来的参数值是-------------');
-        console.log(pcBack);
     }
     try{
         var jsonStr=JSON.stringify(data);
         var pcBack=window.external.userLoginInfo(jsonStr);
-        console.log('------pc端给我返回来的参数值是-------------');
-        console.log(pcBack);
 
         setTimeout('countSecond()',3000);
     }catch(e){
-        console.log('调用失败了,js调用的是userLoginInfo函数，传递的是json格式数据');
 
     }
 }
@@ -52,7 +47,6 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap','ngImgCrop','angul
                 $location.path('/mine');
             }
         }
-        console.log($location.url());
         if($location.url().indexOf('mine')>-1){
             $scope.activeTab = 'WD';
         }else if($location.url().indexOf('app')>-1){
@@ -64,8 +58,6 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap','ngImgCrop','angul
         }
 
         $scope.$on('user.nav.img', function (evt, data) {
-            console.log('----------------modify----------------');
-            console.log(data);
             if(data){
                 $scope.userImg = data;
             }else{
@@ -81,7 +73,6 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap','ngImgCrop','angul
                 $scope.userImg=userService.userMsg.smallImg;
             }
         }catch (e){
-            console.log('从pc端获取用户登录信息报错了');
         }
 
 
@@ -129,8 +120,6 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap','ngImgCrop','angul
                         }).success(function (data) {
 
                             if (data.result == 1) {
-                                console.log('----------touxiang------------');
-                                console.log(data.smallImg);
                                 $scope.$emit('user.nav.img', data.smallImg)
                                 userService.userMsg = data;
                                 if (callback) {
@@ -761,7 +750,6 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap','ngImgCrop','angul
                         method: 'POST',
                         params: $scope.reqDate
                     }).success(function (data) {
-                        console.log(data);
                         if (data.result == 1) {
                             $scope.resData.totalPage = data.totalPage;
                             $scope.resData.list = data.categoryQuestionList;
@@ -971,7 +959,6 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap','ngImgCrop','angul
                     method: 'POST',
                     params: $scope.reqParams
                 }).success(function (data) {
-                    console.log(data);
                     if (data.result == 1) {
                         $scope.resData.list = $scope.resData.list.concat(data.categoryQuestionList);
                         $scope.resData.totalNum = data.totalPage;
@@ -994,7 +981,6 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap','ngImgCrop','angul
 
                 $scope.showDealResult='';
                 $scope.toOneFeedQuestion=function(val){
-                    console.log(val);
                     if($scope.showDealResult==val){
                         $scope.showDealResult=''
                     }else{
@@ -1021,7 +1007,6 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap','ngImgCrop','angul
             restrict: 'EA',
             link: function ($scope, element, attr) {
                 $scope.modifyPortrait=function(){
-                    console.log(userService.userMsg);
                     $rootScope.uploadAvatar=$modal.open({
                         templateUrl: "app/views/mine/upload.avatar.tpl.html",
                         backdrop: true,
@@ -1037,8 +1022,6 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap','ngImgCrop','angul
                                 url: baseUrl + "ym/upload/uploadImage",
                                 method:'POST'
                             });
-                            console.log('----------------uploader---------------');
-                            console.log($scope.uploader1.queue.length);
                             uploader.filters.push({
                                 name: 'imageFilter',
                                 fn: function(item /*{File|FileLikeObject}*/, options) {
@@ -1054,14 +1037,14 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap','ngImgCrop','angul
 
                             uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
                                 if(filter.name == 'imageFilter'){
-                                    console.log('数据格式不正确，只能上传')
+
                                 }else if(filter.name == 'sizeFilter'){
                                     var mb = config.imageSize / 1048576;
-                                    console.log("单张图片不能超过"+ mb +"M");
+
                                 }
                             };
                             uploader.onAfterAddingFile = function (fileItem) {
-                                console.log($scope.uploader1.queue);
+
                                 $scope.oldPicShow1 = false;
                                 //var addedItems = [fileItem];
                                 //var param = {
@@ -1080,7 +1063,6 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap','ngImgCrop','angul
                             };
 
                             uploader.onBeforeUploadItem = function (item) {
-                                console.log(item);
                                 item.formData.push({
                                     accountId:userService.userMsg.accountId,
                                     sign:md5('ymy'+userService.userMsg.accountId)
@@ -1096,18 +1078,18 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap','ngImgCrop','angul
                                 // });
                             };
                             uploader.onProgressItem = function (fileItem, progress) {
-                                console.log('00000000000');
+
                                 fileItem.isPro = '正在上传';
                             };
                             uploader.onSuccessItem = function (fileItem, response, status, headers) {
-                                console.log(response);
+
                                 fileItem.isPro = '上传成功';
-                                console.log('上传成功');
+
 
                             };
                             uploader.onErrorItem = function (fileItem, response, status, headers) {
                                 fileItem.isPro = '上传失败';
-                                console.log('上传失败');
+
 
                             };
                             uploader.onCancelItem = function (fileItem, response, status, headers) {

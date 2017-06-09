@@ -23,7 +23,6 @@ angular.module('app.mine', [])
 
         //修改用户头像和姓名
         $scope.changeUserInfo = function () {
-            console.log(userService.userMsg);
             $scope.haveLoginuser = userService.userMsg;
             $scope.$emit('user.nav.img', $scope.haveLoginuser.smallImg);
             if(!$scope.haveLoginuser.accountId){
@@ -223,28 +222,26 @@ angular.module('app.mine', [])
                     //
                     // };
                     //
-                    // uploader.onBeforeUploadItem = function (item) {
-                    //     console.log(item);
-                    //     item.formData.push({
-                    //         accountId:userService.userMsg.accountId,
-                    //         sign:md5('ymy'+userService.userMsg.accountId)
-                    //     })
-                    //     // item.formData.push({
-                    //     //     place: $scope.picObj.place,
-                    //     //     linkedPath: $scope.picObj.linkedPath,
-                    //     //     name: $scope.picObj.name,
-                    //     //     openEnable: $scope.picObj.openEnable,
-                    //     //     priority: $scope.picObj.priority,
-                    //     //     firstPicId: $scope.picObj.firstPicId || null,
-                    //     //     picId: $scope.picObj.picId || null
-                    //     // });
-                    // };
+                    uploader.onBeforeUploadItem = function (item) {
+                        item.formData.push({
+                            accountId:userService.userMsg.accountId,
+                            sign:md5('ymy'+userService.userMsg.accountId)
+                        })
+                        // item.formData.push({
+                        //     place: $scope.picObj.place,
+                        //     linkedPath: $scope.picObj.linkedPath,
+                        //     name: $scope.picObj.name,
+                        //     openEnable: $scope.picObj.openEnable,
+                        //     priority: $scope.picObj.priority,
+                        //     firstPicId: $scope.picObj.firstPicId || null,
+                        //     picId: $scope.picObj.picId || null
+                        // });
+                    };
                     // uploader.onProgressItem = function (fileItem, progress) {
                     //     console.log('00000000000');
                     //     fileItem.isPro = '正在上传';
                     // };
                     uploader.onSuccessItem = function (fileItem, response, status, headers) {
-                        console.log(response);
                         fileItem.isPro = '上传成功';
                         userService.userMsg.smallImg=response.imgsrc;
                         fatherScope();
@@ -294,13 +291,11 @@ angular.module('app.mine', [])
                             };
                             reader.readAsDataURL(file);
                         };
-                        console.log(document.querySelector('fileInput'));
                         angular.element($('#fileInput')).on('change',handleFileSelect);
                     }
 
                     $scope.uploaderFile = function () {
                         if(!$scope.myImage){
-                            console.log('请选择图片');
                             $scope.uploadImgTip='请选择要上传的图片!'
                             return;
                         }

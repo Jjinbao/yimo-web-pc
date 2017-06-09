@@ -28,7 +28,6 @@ angular.module('app.home', [])
             method:'POST'
         }).success(function(data){
             $scope.myAppList=data.list;
-            console.log($scope.myAppList);
         })
 
         //获取用户已经添加的应用
@@ -42,7 +41,7 @@ angular.module('app.home', [])
             }
 
         }catch (e){
-            console.log('返回错误')
+
         }
         $scope.addApps=function(val){
 
@@ -54,7 +53,6 @@ angular.module('app.home', [])
             $scope.myAddAppList.push(val);
             $rootScope.successAlter('添加成功');
             var appStr=JSON.stringify($scope.myAddAppList);
-            console.log(appStr);
             try{
                 window.external.addApp(appStr);
             }catch (e){
@@ -65,10 +63,9 @@ angular.module('app.home', [])
         $scope.openOneApp=function(val){
             try{
                 var appInfo=JSON.stringify(val);
-                console.log(appInfo);
                 window.external.openApp(appInfo);
             }catch (e){
-                console.log('--------');
+
             }
         }
 

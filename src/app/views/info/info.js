@@ -263,7 +263,6 @@ angular.module('app.info', [])
                 }
             }).success(function(res){
                 $scope.albumList=res.albumList;
-                console.log(res);
             })
         }
 
@@ -280,7 +279,6 @@ angular.module('app.info', [])
             url:baseUrl+'ym/album/list.api',
             method:'POST'
         }).success(function(res){
-            console.log(res);
             $scope.albumList=res.albumList;
         })
 
@@ -348,8 +346,6 @@ angular.module('app.info', [])
                 id:$routeParams.id
             }
         }).success(function(res){
-            console.log('------------详情列表----------------------');
-            console.log(res);
             $scope.albumDetail=res;
             getAlbumList(res.id);
 
@@ -370,8 +366,6 @@ angular.module('app.info', [])
                     pageSize:10
                 }
             }).success(function(res){
-                console.log('-------------专辑列表----------------');
-                console.log(res);
                 if(res.result==1){
                     $scope.videoList.list=res.teachList;
                     if(res.teachList[0]&&res.teachList[0].videoSrc){
@@ -390,7 +384,7 @@ angular.module('app.info', [])
             return $sce.trustAsResourceUrl(value);
         }
         $scope.$on('$ionicView.beforeEnter', function(){
-            console.log('-------121212------');
+
         });
         /*myVideo.addEventListener('ended',function(){
             console.log('end');
@@ -433,8 +427,7 @@ angular.module('app.info', [])
                     categoryItemId:$routeParams.id
                 }
             }).success(function(res){
-                console.log('-------------另论列表----------------');
-                console.log(res);
+
                 if(res.result==1){
                     if(res.comments.length>0){
                         res.comments.forEach(function(val){
