@@ -35,6 +35,6 @@
         <div class="hot-passage">
             热门文章
         </div>
-        <img class="rec-img" ng-hide="rec.id==passageId" ng-repeat="rec in passageRec.list" ng-src="{{rec.imgSrc}}">
+        <img class="rec-img" ng-hide="rec.id==passageId" ng-click="toInfoDetail(rec)" ng-repeat="rec in passageRec.list" ng-src="{{rec.imgSrc}}">
     </div>
 </div>

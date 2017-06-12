@@ -7,7 +7,7 @@
             </div>
         </div>
         <div class="album-list-panel">
-            <div class="album-list-item" ng-repeat="album in videoList.list" ng-click="changeActiveVideo(album)">
+            <div class="album-list-item" ng-class="{'album-list-item-active':videoList.nowActiveVideoId==album.id}" ng-repeat="album in videoList.list" ng-click="changeActiveVideo(album)">
                 {{album.title}}
             </div>
         </div>

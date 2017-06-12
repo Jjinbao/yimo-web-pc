@@ -39,6 +39,7 @@ angular.module('app.home', [])
                 for(var m=0;m<$scope.myAddAppList.length;m++){
                     for(var k=0;k<$scope.myAppList.length;k++){
                         if($scope.myAddAppList[m].id==$scope.myAppList[k].id){
+                            $scope.myAppList[k].status='已添加';
                             $scope.myAppList[k].enabled=false;
                         }
                     }
@@ -60,6 +61,7 @@ angular.module('app.home', [])
                 }
             }
             val.enabled=false;
+            val.status='已添加'
             $scope.myAddAppList.push(val);
             $rootScope.successAlter('添加成功');
             var appStr=JSON.stringify($scope.myAddAppList);
@@ -78,6 +80,7 @@ angular.module('app.home', [])
 
         $scope.deleteOneApp=function(val){
             val.enabled=true;
+            val.status='添加'
             var index=0;
             for(var i=0;i<$scope.myAddAppList.length;++i){
                 if(val.id==$scope.myAddAppList[i].id){

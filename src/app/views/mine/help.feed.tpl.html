@@ -6,8 +6,11 @@
 
         <div class="one-app-item" style="margin-bottom: 59px;" ng-click="appFeedRecord(pro)"  ng-repeat="pro in appProList">
             <div class="app-help-feed">
-                <img ng-src="{{pro.smallImage}}">
-                <div class="app">{{pro.appName}}</div>
+                <div class="app-panel">
+                    <img ng-src="{{pro.smallImage}}" style="width: 113px;height: 113px">
+                    <div class="app" style="font-size: 20px;">{{pro.appName}}</div>
+                </div>
+
             </div>
         </div>
 

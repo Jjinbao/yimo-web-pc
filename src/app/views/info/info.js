@@ -204,6 +204,11 @@ angular.module('app.info', [])
                 }
             })
         }
+
+        $scope.toInfoDetail=function(val){
+            $location.path('/detail/list/'+val.rootId+'/'+val.id);
+            console.log(val);
+        }
     }])
     .controller('videoList', ['$scope','$http','$location', function ($scope,$http,$location) {
         $scope.videoListWidth = {
@@ -229,6 +234,7 @@ angular.module('app.info', [])
             second:'',
             third:''
         }
+
         $http({
             url:baseUrl+'ym/category/list.api',
             method:'POST'
@@ -241,6 +247,8 @@ angular.module('app.info', [])
 
             }
         });
+
+
 
         //更改以及分类
         $scope.changeFirstCategory=function(value){
@@ -275,12 +283,27 @@ angular.module('app.info', [])
         //获取热门专辑推荐列表
         $scope.albumList=[];
         $scope.recVideoList=[];
-        $http({
-            url:baseUrl+'ym/album/list.api',
-            method:'POST'
-        }).success(function(res){
-            $scope.albumList=res.albumList;
-        })
+
+        $scope.holdDoubleClick=false;
+        $scope.getAllAlbum=function(){
+            if($scope.holdDoubleClick){
+                return;
+            }
+            $scope.thirdCategoryId='';
+            $scope.holdDoubleClick=true;
+            $http({
+                url:baseUrl+'ym/album/list.api',
+                method:'POST'
+            }).success(function(res){
+                console.log(res);
+                if(res.result==1){
+                    $scope.albumList=res.albumList;
+                }
+                $scope.holdDoubleClick=false;
+
+            })
+        }
+        $scope.getAllAlbum();
 
         $scope.toAlbumDetail=function(val){
             $location.path('/album/list/1/'+val.id);
@@ -337,7 +360,7 @@ angular.module('app.info', [])
             $scope.$digest();
         }
 
-        //var myVideo=document.getElementById('detailVideo');
+        var myVideo=document.getElementById('detailVideo');
         $scope.albumDetail;
         $http({
             url:baseUrl+'ym/album/field.api',
@@ -386,11 +409,23 @@ angular.module('app.info', [])
         $scope.$on('$ionicView.beforeEnter', function(){
 
         });
-        /*myVideo.addEventListener('ended',function(){
-            console.log('end');
+        myVideo.addEventListener('ended',function(){
+            for(var i=0;i<$scope.videoList.list.length;i++){
+                if($scope.videoList.nowActiveVideoId==$scope.videoList.list[i].id){
+                    break;
+                }
+            }
+            console.log(i);
+            if($scope.videoList.list.length>(i+1)){
+                console.log('345');
+                $scope.changeActiveVideo($scope.videoList.list[i+1]);
+                $scope.$digest();
+                //$scope.videoList.nowActiveVideoId=$scope.videoList.list[i+1].id;
+                //$scope.videoList.nowActiveVideo=$scope.videoList.list[i+1].videoSrc;
+            }
         })
 
-        myVideo.addEventListener('play',function(){
+        /*myVideo.addEventListener('play',function(){
             console.log('开始播放');
             //screen.orientation.lock('landscape');
         })

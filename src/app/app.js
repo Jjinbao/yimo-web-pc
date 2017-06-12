@@ -71,6 +71,10 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
             $scope.activeTab = 'JX';
         }
 
+        $scope.openYmWeb=function(){
+            console.log('打开一抹官网');
+        }
+
         $scope.$on('user.nav.img', function (evt, data) {
             if (data) {
                 $scope.userImg = data;
@@ -120,6 +124,14 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
                     $scope.doubleClick = false;
                     $scope.toLogin = function () {
                         if ($scope.doubleClick) {
+                            return;
+                        }
+                        if(!$scope.loginUser.phone){
+                            $scope.messageTip ='请输入手机号';
+                            return;
+                        }
+                        if(!$scope.loginUser.password){
+                            $scope.messageTip ='请输入密码';
                             return;
                         }
                         $scope.doubleClick = true;
@@ -750,6 +762,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
                     url: baseUrl + 'ym/app/list.api',
                     method: 'POST'
                 }).success(function (data) {
+                    console.log(data);
                     $scope.appProList = data.list;
                 }).error(function () {
 
