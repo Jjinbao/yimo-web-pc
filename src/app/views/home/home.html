@@ -11,14 +11,18 @@
         <div ng-switch="nowActive">
             <div ng-switch-when="myApp" style="padding-top: 44px">
                 <div class="one-app-item" style="margin-bottom: 40px;" ng-click="openOneApp(pro)"  ng-repeat="pro in myAddAppList">
-                    <div class="app-help-feed" context-menu target='menulist'>
-                        <img ng-src="{{pro.smallImage}}">
-                        <div class="app">{{pro.appName}}</div>
+                    <div class="app-help-feed" style="" context-menu target='menulist'>
+                        <div class="app-panel" ng-mouseenter="pro.delete=true" ng-mouseleave="pro.delete=false">
+                            <img ng-src="{{pro.imgSrc}}">
+                            <div class="app">{{pro.name}}</div>
+                            <div class="delete-app-btn" ng-show="pro.delete" ng-click="deleteApp(pro); $event.stopPropagation();"></div>
+                        </div>
+
                     </div>
                 </div>
-                <ul id='menulist' ng-show='opened' style="position: absolute;z-index:1000;height: 50px">
-                    <li ng-repeat='m in ms' ng-click='fn($event,m.name)'>{{m.name}}</li>
-                </ul>
+                <!--<ul id='menulist' ng-show='opened' style="position: absolute;z-index:1000;height: 50px">-->
+                    <!--<li ng-repeat='m in ms' ng-click='fn($event,m.name)'>{{m.name}}</li>-->
+                <!--</ul>-->
             </div>
             <div ng-switch-when="recApp" style="padding: 48px 22px;font-size: 0">
                 <!--<div class="one-app-item" style="margin-bottom: 40px;" ng-click="appFeedRecord(pro)"  ng-repeat="pro in myAppList">-->
@@ -29,19 +33,19 @@
                 <!--</div>-->
                 <div class="app-recomand-panel" ng-repeat="pro in myAppList">
                     <div class="app-detail">
-                        <img ng-src="{{pro.smallImage}}"/>
-                        <div class="add-btn" ng-click="addApps(pro)">
-                            添加
+                        <img ng-src="{{pro.imgSrc}}"/>
+                        <div class="add-btn" ng-class="{'add-btn-disabled':!pro.enabled}" ng-click="addApps(pro)">
+                            {{pro.status}}
                         </div>
                         <div class="app-detail-desc">
                             <div class="desc-title">
-                                {{pro.appName}}
+                                {{pro.name}}
                             </div>
                             <div class="desc-version">
-                                版本V3.3
+                                版本V{{pro.version}}
                             </div>
                             <div class="desc-info">
-                                E.V.W. Jones在1950年最先提及百慕大三角的失踪事件，作为美联社有线服务的花边新闻，是关于近来船只的失踪情况的，
+                                {{pro.intro}}
                             </div>
                         </div>
                     </div>

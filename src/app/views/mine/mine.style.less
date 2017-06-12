@@ -157,6 +157,10 @@
         color: white;
         margin-top: 10px;
       }
+      .add-btn-disabled{
+        cursor: default;
+        background-color: #666666;
+      }
       .app-detail-desc{
         position: absolute;
         left:140px;
@@ -479,15 +483,37 @@
   .app-help-feed{
     width: 100%;
     text-align: center;
-    img{
-      vertical-align: top;
+    position: relative;
+    .app-panel{
+      position: absolute;
+      min-width: 177px;
+      left: 50%;
+      -webkit-transform: translateX(-50%);
+      -moz-transform: translateX(-50%);
+      -ms-transform: translateX(-50%);
+      -o-transform: translateX(-50%);
+      transform: translateX(-50%);
+      img{
+        vertical-align: top;
+      }
+      .app{
+        font-size: 20px;
+        color: #333;
+        line-height: 1;
+        margin-top: 14px;
+      }
+      .delete-app-btn{
+        position: absolute;
+        top: 0;
+        right: 0px;
+        width: 20px;
+        height: 20px;
+        background: url('../app/img/guanbi02.png') center no-repeat;
+        background-size: 20px 20px;
+      }
     }
-    .app{
-      font-size: 20px;
-      color: #333;
-      line-height: 1;
-      margin-top: 14px;
-    }
+
+
   }
 
   .app-help-feed:hover{
