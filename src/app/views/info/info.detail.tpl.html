@@ -27,9 +27,9 @@
                     暂无评论
                 </div>
             </div>
+            <!--<uib-pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()"></uib-pagination>-->
+            <tm-pagination conf="paginationConf"></tm-pagination>
         </div>
-
-
     </div>
     <div class="passage-right-content">
         <div class="hot-passage">
@@ -37,4 +37,5 @@
         </div>
         <img class="rec-img" ng-hide="rec.id==passageId" ng-click="toInfoDetail(rec)" ng-repeat="rec in passageRec.list" ng-src="{{rec.imgSrc}}">
     </div>
+
 </div>

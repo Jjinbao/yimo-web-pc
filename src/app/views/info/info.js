@@ -84,6 +84,23 @@ angular.module('app.info', [])
 
         $scope.passageId=$routeParams.id;
 
+        if(userService.userMsg.accountId){
+            console.log('ymy' + userService.userMsg.accountId + 'news'+$scope.passageId);
+            $http({
+                url:baseUrl+'ym/history/add.api',
+                method:'POST',
+                params:{
+                    accountId:userService.userMsg.accountId,
+                    type:'news',
+                    typeId:$scope.passageId,
+                    sign:md5('ymy' + userService.userMsg.accountId + 'news'+$scope.passageId)
+                }
+            }).success(function(data){
+                console.log(data);
+            })
+        }
+
+
         $scope.PassageDetailWidth = {
             width:document.body.clientWidth-279
         }
@@ -209,6 +226,16 @@ angular.module('app.info', [])
             $location.path('/detail/list/'+val.rootId+'/'+val.id);
             console.log(val);
         }
+
+
+        //分页配置
+        $scope.paginationConf = {
+            itemsPerPage: 10,
+            totalItems: 2, //设置一个初始总条数，判断加载状态
+            onChange: function () {
+                $scope.getNewComments();
+            }
+        };
     }])
     .controller('videoList', ['$scope','$http','$location', function ($scope,$http,$location) {
         $scope.videoListWidth = {
@@ -361,6 +388,21 @@ angular.module('app.info', [])
         }
 
         var myVideo=document.getElementById('detailVideo');
+        //记录历史记录
+        if(userService.userMsg.accountId){
+            $http({
+                url:baseUrl+'ym/history/add.api',
+                method:'POST',
+                params:{
+                    accountId:userService.userMsg.accountId,
+                    type:'teach',
+                    typeId:$routeParams.id,
+                    sign:md5('ymy' + userService.userMsg.accountId + 'teach'+$routeParams.id)
+                }
+            }).success(function(data){
+                console.log(data);
+            })
+        }
         $scope.albumDetail;
         $http({
             url:baseUrl+'ym/album/field.api',

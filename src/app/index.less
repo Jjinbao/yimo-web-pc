@@ -404,3 +404,89 @@ html,body{
   line-height: 60px !important;
   border-bottom: navajowhite !important;
 }
+
+@page-border: #ddd;
+@page-font: #49abfc;
+@page-arrow: #1ac2ff;
+@page-disabled-bg: #f9f9f9;
+@page-disabled-font-color: #999;
+.page-list {
+  float: right;
+  .pagination {
+    float: left;
+    margin: 10px 0;
+    > li {
+      > a,
+      > span {
+        color: @page-font;
+        background-color: #fff;
+        border: 1px solid @page-border;
+        margin-left: 10px;
+      }
+      &:first-child {
+        > a,
+        > span {
+          //color: @page-arrow;
+        }
+      }
+      &:last-child {
+        > a,
+        > span {
+          //color: @page-arrow;
+        }
+      }
+    }
+
+
+    > .disabled ,
+    > .active {
+      > span,
+      > span:hover,
+      > span:focus,
+      > a,
+      > a:hover,
+      > a:focus {
+        color: @page-disabled-font-color;
+        background-color: @page-disabled-bg;
+        border-color: @page-border;
+      }
+    }
+  }
+}
+
+
+
+.page-list .pagination span {
+  float: left;
+  cursor: pointer;
+}
+
+.page-list .pagination .separate span {
+  cursor: default;
+  border-top: none;
+  border-bottom: none;
+  margin: 0 5px;
+}
+
+.page-list .pagination .separate span:hover {
+  background: none;
+}
+
+.page-list .page-total {
+  float: left;
+  margin: 15px 20px;
+}
+
+.page-list .page-total input, .page-list .page-total select {
+  height: 26px;
+  border: 1px solid #ddd;
+}
+
+.page-list .page-total input {
+  width: 40px;
+  padding-left: 3px;
+}
+
+.page-list .page-total select {
+  width: 50px;
+}

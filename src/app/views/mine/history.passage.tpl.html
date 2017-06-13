@@ -1,6 +1,17 @@
 <div class="panel panel-default">
   <div class="panel-heading-reset panel-title"><span style="color: #999">历史记录</span>>文章</div>
-  <div class="panel-body" style="padding-left: 20px;padding-right: 20px;">
-    文章
+  <div class="panel-body" style="padding: 20px;">
+    <div class="media list-repeat" style="min-width: 768px;max-width: 1024px" ng-class="{'none-border':$last}" ng-repeat="news in passageUseList">
+      <a href="#" class="media-left media-middle media-bottom">
+        <img ng-src="{{news.news.imgSrc}}"  ng-click="toDetailPage(news.news)" width="150"/>
+      </a>
+      <div class="media-body">
+        <div class="media-heading" ng-click="toDetailPage(news.news)" style="font-size: 24px;font-weight: bold;color: #333;margin-top: 5px;cursor: pointer;">{{news.news.title}}</div>
+        <div class="media-create-date" style="font-size: 14px;color: #999">
+          阅读时间 {{news.news.date}}
+        </div>
+        <p class="media-subheader" style="font-size: 14px;color: #333;margin-top: 30px;cursor: pointer" ng-click="toDetailPage(news.news)">{{news.news.extstr1}}{{news.news.extstr1}}</p>
+      </div>
+    </div>
   </div>
 </div>
