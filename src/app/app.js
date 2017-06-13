@@ -936,25 +936,26 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
         return {
             restrict: 'EA',
             link: function ($scope, element, attr) {
-                //$http({
-                //    url: baseUrl + 'ym/history/list.api',
-                //    method: 'POST',
-                //    params: {
-                //        accountId: userService.userMsg.accountId,
-                //        type: 'app',
-                //        sign: md5('ymy' + userService.userMsg.accountId + 'app')
-                //    }
-                //}).success(function (data) {
-                //
-                //    if (data.result == 1) {
-                //        $scope.appUseList = data.list;
-                //        $scope.appUseList.forEach(function (val) {
-                //            val.date = new Date(parseInt(val.readTime) * 1000).toLocaleString().replace(/:\d{1,2}$/, ' ');
-                //        })
-                //    }
-                //}).error(function () {
-                //    //$scope.alertTab('网络异常,请检查网络!',$scope.netBreakBack);
-                //})
+                $http({
+                    url: baseUrl + 'ym/history/list.api',
+                    method: 'POST',
+                    params: {
+                        accountId: userService.userMsg.accountId,
+                        type: 'teach',
+                        sign: md5('ymy' + userService.userMsg.accountId + 'teach'),
+                        categoryId:1
+                    }
+                }).success(function (data) {
+                    console.log(data);
+                    if (data.result == 1) {
+                        $scope.appUseList = data.list;
+                        $scope.appUseList.forEach(function (val) {
+                            val.date = new Date(parseInt(val.readTime) * 1000).toLocaleString().replace(/:\d{1,2}$/, ' ');
+                        })
+                    }
+                }).error(function () {
+                    //$scope.alertTab('网络异常,请检查网络!',$scope.netBreakBack);
+                })
             },
             templateUrl: 'app/views/mine/history.video.tpl.html'
         }
