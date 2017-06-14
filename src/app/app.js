@@ -1320,6 +1320,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
             link: function(scope, element, attrs){
                 // 变更当前页
                 scope.changeCurrentPage = function(item) {
+                    console.log(item);
                     if(item == '...'){
                         return;
                     }else{
@@ -1341,6 +1342,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
 
                 // pageList数组
                 function getPagination(newValue, oldValue) {
+                    console.log('000');
                     if (scope.conf.totalItems < 0) {
                         scope.dataText = "数据加载中";
                     } else if(scope.conf.totalItems == 0){
@@ -1442,6 +1444,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
 
                     }
                     scope.$parent.conf = scope.conf;
+                    console.log(scope.conf.currentPage);
                 }
 
                 // prevPage

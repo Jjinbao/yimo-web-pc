@@ -138,17 +138,24 @@ angular.module('app.info', [])
             list:[],
             total:0
         }
+        //获取评论参数
+        var getCommentParams={
+            categoryRootId:$routeParams.rootId,
+            categoryItemId:$routeParams.id,
+            pageNumber:1,
+            pageSize:10
+        }
         $scope.getNewComments=function(){
+            getCommentParams.pageNumber=$scope.paginationConf.currentPage;
             $http({
                 url:baseUrl+'ym/comment/list.api',
                 method:'POST',
-                params:{
-                    categoryRootId:$routeParams.rootId,
-                    categoryItemId:$routeParams.id
-                }
+                params:getCommentParams
             }).success(function(res){
-
+                //console.log(res);
                 if(res.result==1){
+                    $scope.paginationConf.totalItems=res.totalPage*10;
+                    //$scope.paginationConf.currentPage=1;
                     if(res.comments.length>0){
                         res.comments.forEach(function(val){
                             val.pushTime=new Date(val.createTime*1000).format('yyyy-MM-dd');
@@ -159,7 +166,17 @@ angular.module('app.info', [])
                 }
             })
         }
-        $scope.getNewComments();
+        //分页配置
+        $scope.paginationConf = {
+            itemsPerPage: 10,
+            totalItems: -1, //设置一个初始总条数，判断加载状态
+            onChange: function () {
+                // console.log($scope.paginationConf.currentPage);
+                // getCommentParams.pageNumber=$scope.paginationConf.currentPage;
+                $scope.getNewComments();
+            }
+        };
+        //$scope.getNewComments();
         //获取文章推荐列表
         $scope.passageRec={
             list:[],
@@ -215,6 +232,7 @@ angular.module('app.info', [])
                 if(data.result==1){
                     $scope.commentContent='';
                     $rootScope.successAlter('评论成功！');
+                    $scope.paginationConf.currentPage=getCommentParams.pageNumber=1;
                     $scope.getNewComments();
                 }else{
 
@@ -228,14 +246,7 @@ angular.module('app.info', [])
         }
 
 
-        //分页配置
-        $scope.paginationConf = {
-            itemsPerPage: 10,
-            totalItems: 2, //设置一个初始总条数，判断加载状态
-            onChange: function () {
-                $scope.getNewComments();
-            }
-        };
+
     }])
     .controller('videoList', ['$scope','$http','$location', function ($scope,$http,$location) {
         $scope.videoListWidth = {

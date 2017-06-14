@@ -1,6 +1,19 @@
 <div>
   <div class="panel-heading-reset panel-title"><span style="color: #999">历史记录</span>>视频</div>
-  <div class="panel-body" style="padding-left: 20px;padding-right: 20px;">
-    视频
+  <div class="panel-body" style="padding-left: 20px;padding-right: 20px;padding-top: 20px;">
+      <div class="video-result-list">
+          <div class="video-item" ng-repeat="album in albumList">
+              <img ng-src="{{album.smallImage}}" ng-click="toAlbumDetail(album)">
+              <div class="video-title" ng-click="toAlbumDetail(album)">
+                  {{album.albumTitle}}
+              </div>
+              <div class="video-author" ng-click="toAlbumDetail(album)">
+                  {{album.albumAuthor}}
+                  <div class="video-count">
+                      {{album.videoCount}}个视频
+                  </div>
+              </div>
+          </div>
+      </div>
   </div>
 </div>
