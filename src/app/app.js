@@ -1346,7 +1346,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
                     if (scope.conf.totalItems < 0) {
                         scope.dataText = "数据加载中";
                     } else if(scope.conf.totalItems == 0){
-                        scope.dataText = "暂无数据";
+                        scope.dataText = "暂无评论";
                         return false;
                     }
                     // conf.currentPage
