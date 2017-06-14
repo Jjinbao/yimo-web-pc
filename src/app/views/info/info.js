@@ -277,13 +277,21 @@ angular.module('app.info', [])
             url:baseUrl+'ym/category/list.api',
             method:'POST'
         }).success(function(data){
+            console.log(data);
             if(data.result==1){
+                window.localStorage.setItem('category',JSON.stringify(data.list));
                 $scope.categoryList=data.list;
                 //初始化数据
                 $scope.activeCategory.first=$scope.categoryList[0].id;
                 $scope.secondCategoryList=$scope.categoryList[0].categoryList;
 
             }
+        }).error(function(){
+            $scope.categoryList=JSON.parse(window.localStorage.getItem('category'));
+            //初始化数据
+            $scope.activeCategory.first=$scope.categoryList[0].id;
+            $scope.secondCategoryList=$scope.categoryList[0].categoryList;
+            //console.log(window.localStorage.getItem('category'));
         });
 
 
@@ -406,9 +414,9 @@ angular.module('app.info', [])
                 method:'POST',
                 params:{
                     accountId:userService.userMsg.accountId,
-                    type:'teach',
+                    type:'album',
                     typeId:$routeParams.id,
-                    sign:md5('ymy' + userService.userMsg.accountId + 'teach'+$routeParams.id)
+                    sign:md5('ymy' + userService.userMsg.accountId + 'album'+$routeParams.id)
                 }
             }).success(function(data){
                 console.log(data);

@@ -98,6 +98,7 @@ angular.module('app.home', [])
         }
 
         $scope.openOneApp=function(val){
+            console.log(val);
             try{
                 var appInfo=JSON.stringify(val);
                 window.external.openApp(appInfo);
