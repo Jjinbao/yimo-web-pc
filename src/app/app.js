@@ -769,7 +769,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
                     console.log(data);
                     $scope.appProList = data.list;
                 }).error(function () {
-
+                    $scope.$emit('my.net.break','');
                 })
 
                 $scope.appFeedRecord = function (val) {
@@ -808,6 +808,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
 
                         }
                     }).error(function () {
+                        $scope.$emit('my.net.break','');
                         //$scope.alertTab('网络异常,请检查网络!', $scope.netBreakBack);
                     })
                 }
@@ -926,6 +927,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
                         })
                     }
                 }).error(function () {
+                    $scope.$emit('my.net.break','');
                     //$scope.alertTab('网络异常,请检查网络!',$scope.netBreakBack);
                 })
 
@@ -963,6 +965,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
                         })
                     }
                 }).error(function () {
+                    $scope.$emit('my.net.break','');
                     //$scope.alertTab('网络异常,请检查网络!',$scope.netBreakBack);
                 })
 
@@ -995,6 +998,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
                         })
                     }
                 }).error(function () {
+                    $scope.$emit('my.net.break','');
                     //$scope.alertTab('网络异常,请检查网络!',$scope.netBreakBack);
                 })
 
@@ -1047,6 +1051,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
                         })
                     }
                 }).error(function () {
+                    $scope.$emit('my.net.break','');
                     //$scope.alertTab('网络异常,请检查网络!', $scope.netBreakBack);
                 })
 
@@ -1224,7 +1229,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
 
                                     $scope.modifyNameCan = true;
                                 }).error(function () {
-                                    $scope.modifyNameTip='网络请求错误，请检查网络';
+                                    $scope.modifyNameTip='网络请求错误，请检查网络!';
                                 })
 
                             }
@@ -1289,7 +1294,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
                                     }
                                     $scope.doubleClick = false;
                                 }).error(function () {
-                                    $scope.modifyPasswordTip = '网络故障，请稍候再试'
+                                    $scope.modifyPasswordTip = '网络故障，请检查您的网络!'
                                     $scope.doubleClick = false;
                                 })
                             }
@@ -1307,6 +1312,29 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
 
             },
             templateUrl: 'app/views/mine/nologin.panel.tpl.html'
+        }
+    })
+    .directive('netBreakPanel', function ($http,userService) {
+        return {
+            restrict: 'EA',
+            link: function (scope, element, attr) {
+                scope.reRequestNet=function(){
+                    $http({
+                        url: baseUrl + 'ym/app/list.api',
+                        method: 'POST'
+                    }).success(function (data) {
+                        if(data.result==1&&userService.userMsg.accountId){
+                            scope.$emit('my.on.history','');
+                        }else{
+                            scope.$emit('no.login.panel','');
+                        }
+                        //$scope.appProList = data.list;
+                    }).error(function () {
+                        //$scope.$emit('my.net.break','');
+                    })
+                }
+            },
+            templateUrl: 'app/views/mine/net.break.tpl.html'
         }
     })
     .directive('tmPagination',[function(){

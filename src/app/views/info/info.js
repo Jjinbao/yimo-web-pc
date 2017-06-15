@@ -20,17 +20,17 @@ angular.module('app.info', [])
             $scope.$digest();
         }
         //获取轮播图
-        $http({
-            url: baseUrl + 'ym/show/list.api',
-            method: 'POST'
-        }).success(function (data) {
-            if (data.result == 1) {
-                //$scope.causeul=data;
-                console.log(data);
-            }
-        }).error(function () {
-
-        })
+        //$http({
+        //    url: baseUrl + 'ym/show/list.api',
+        //    method: 'POST'
+        //}).success(function (data) {
+        //    if (data.result == 1) {
+        //        //$scope.causeul=data;
+        //        console.log(data);
+        //    }
+        //}).error(function () {
+        //
+        //})
 
         //获取资讯列表
         $scope.passageList={
@@ -38,7 +38,12 @@ angular.module('app.info', [])
             count:0
         }
         $scope.isNetConnect=false;
+        $scope.holdListDoubleClick=false;
         $scope.getNewsList=function(){
+            if($scope.holdListDoubleClick){
+                return;
+            }
+            $scope.holdListDoubleClick=true;
             $http({
                 url: baseUrl + 'ym/news/list.api',
                 method: 'POST',
@@ -48,6 +53,7 @@ angular.module('app.info', [])
                 }
             }).success(function (data) {
                 console.log(data);
+                $scope.holdListDoubleClick=false;
                 $scope.isNetConnect=false;
                 if(data.result==1){
                     $scope.passageList.list=$scope.passageList.list.concat(data.newsList);
@@ -57,6 +63,7 @@ angular.module('app.info', [])
                     val.formateDate=new Date(val.pubTime*1000).format('yyyy-MM-dd');
                 })
             }).error(function(data){
+                $scope.holdListDoubleClick=false;
                 $scope.isNetConnect=true;
             })
         }
@@ -67,21 +74,41 @@ angular.module('app.info', [])
             list:[],
             count:0
         }
-        $http({
-            url: baseUrl + 'ym/news/list.api',
-            method: 'POST',
-            params: {
-                pageNumber: 1,
-                pageSize: 10,
-                extstr2:1
-            }
-        }).success(function (data) {
-            if(data.result==1){
-                $scope.passageRec.list=$scope.passageRec.list.concat(data.newsList);
-                $scope.passageRec.count=data.totalPage;
-            }
 
-        })
+        $scope.holdNewRecDouble=false;
+        $scope.getRecNews=function(){
+            if($scope.holdNewRecDouble){
+                return;
+            }
+            $scope.holdNewRecDouble=true;
+            $http({
+                url: baseUrl + 'ym/news/list.api',
+                method: 'POST',
+                params: {
+                    pageNumber: 1,
+                    pageSize: 10,
+                    extstr2:1
+                }
+            }).success(function (data) {
+                $scope.isNetConnect=false;
+                $scope.holdNewRecDouble=false;
+                console.log(data);
+                if(data.result==1){
+                    $scope.passageRec.list=$scope.passageRec.list.concat(data.newsList);
+                    $scope.passageRec.count=data.totalPage;
+                }
+
+            }).error(function(){
+                $scope.holdNewRecDouble=false;
+            })
+        }
+
+        $scope.getRecNews();
+
+        $scope.reGetData=function(){
+            $scope.getNewsList();
+            $scope.getRecNews();
+        }
 
         $scope.toDetailPage=function(val){
             $location.path('/detail/list/'+val.rootId+'/'+val.id);
@@ -349,11 +376,13 @@ angular.module('app.info', [])
                 url:baseUrl+'ym/album/list.api',
                 method:'POST'
             }).success(function(res){
+                $scope.holdDoubleClick=false;
+                $scope.isNetBreak=false;
                 console.log(res);
                 if(res.result==1){
                     $scope.albumList=res.albumList;
                 }
-                $scope.holdDoubleClick=false;
+
 
             }).error(function(){
                 $scope.holdDoubleClick=false;

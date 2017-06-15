@@ -87,6 +87,18 @@ angular.module('app.mine', [])
             $scope.nowActivePanel='passageRecord';
 
         })
+        //网络中断
+        $scope.$on('my.net.break',function(evt,data){
+            $scope.nowActivePanel='netBreak';
+        })
+        //历史记录
+        $scope.$on('my.on.history',function(evt,data){
+            $scope.nowActivePanel='history';
+        })
+        //没有登录的界面
+        $scope.$on('no.login.panel',function(evt,data){
+            $scope.nowActivePanel='noLogin';
+        })
         //反馈记录
         $scope.feedRecord = function (val) {
             if ($scope.nowActivePanel == val) {
