@@ -18,6 +18,11 @@
       <input type="search" placeholder="搜索" ng-model="searchInfo">
       <div class="search-btn" ng-click="searchVideo()"></div>
     </div>
+    <div class="user-no-login" style="height: auto;background-color: #f2f2f2;" ng-show="isNetBreak">
+      <img src="./app/img/katong.png">
+      <div class="nologin-intro">无法加载数据，似乎没有网络连接哦！</div>
+      <div class="no-login-btn" ng-click="getAllAlbum()">重试</div>
+    </div>
     <div class="video-result-list">
       <div class="video-item" ng-repeat="album in albumList">
         <img ng-src="{{album.smallImage}}" ng-click="toAlbumDetail(album)">

@@ -37,23 +37,30 @@ angular.module('app.info', [])
             list:[],
             count:0
         }
-        $http({
-            url: baseUrl + 'ym/news/list.api',
-            method: 'POST',
-            params: {
-                pageNumber: 1,
-                pageSize: 10
-            }
-        }).success(function (data) {
-            console.log(data);
-            if(data.result==1){
-                $scope.passageList.list=$scope.passageList.list.concat(data.newsList);
-                $scope.passageList.count=data.totalPage;
-            }
-            $scope.passageList.list.forEach(function(val){
-                val.formateDate=new Date(val.pubTime*1000).format('yyyy-MM-dd');
+        $scope.isNetConnect=false;
+        $scope.getNewsList=function(){
+            $http({
+                url: baseUrl + 'ym/news/list.api',
+                method: 'POST',
+                params: {
+                    pageNumber: 1,
+                    pageSize: 10
+                }
+            }).success(function (data) {
+                console.log(data);
+                $scope.isNetConnect=false;
+                if(data.result==1){
+                    $scope.passageList.list=$scope.passageList.list.concat(data.newsList);
+                    $scope.passageList.count=data.totalPage;
+                }
+                $scope.passageList.list.forEach(function(val){
+                    val.formateDate=new Date(val.pubTime*1000).format('yyyy-MM-dd');
+                })
+            }).error(function(data){
+                $scope.isNetConnect=true;
             })
-        })
+        }
+        $scope.getNewsList();
 
         //获取文章推荐列表
         $scope.passageRec={
@@ -330,6 +337,7 @@ angular.module('app.info', [])
         $scope.albumList=[];
         $scope.recVideoList=[];
 
+        $scope.isNetBreak=false;
         $scope.holdDoubleClick=false;
         $scope.getAllAlbum=function(){
             if($scope.holdDoubleClick){
@@ -347,6 +355,9 @@ angular.module('app.info', [])
                 }
                 $scope.holdDoubleClick=false;
 
+            }).error(function(){
+                $scope.holdDoubleClick=false;
+                $scope.isNetBreak=true;
             })
         }
         $scope.getAllAlbum();
