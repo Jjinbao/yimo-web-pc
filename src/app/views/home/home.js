@@ -88,8 +88,23 @@ angular.module('app.home', [])
                     break;
                 }
             }
+
+            for(var k=0;k<$scope.myAppList.length;k++){
+                if($scope.myAppList[k].id==val.id){
+                    $scope.myAppList[k].enabled=true;
+                    $scope.myAppList[k].status='添加';
+                    break;
+                }
+            }
+            console.log($scope.myAppList);
             $scope.myAddAppList.remove(index);
             var apps=JSON.stringify($scope.myAddAppList);
+            try{
+                $scope.$digest();
+            }catch (e){
+                console.log('222222222222');
+            }
+
             try{
                 window.external.addApp(apps);
             }catch (e){
