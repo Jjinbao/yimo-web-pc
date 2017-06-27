@@ -405,6 +405,7 @@ angular.module('app.info', [])
             if($scope.doubleHold){
                 return;
             }
+            $scope.thirdCategoryId='a';
             $scope.doubleHold=true;
             $http({
                 url: baseUrl + 'ym/album/list.api',

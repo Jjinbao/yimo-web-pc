@@ -13,7 +13,7 @@
     </div>
   </div>
   <div class="video-right-content" ng-style="videoListWidth">
-    <div class="all-video-btn" ng-click="getAllAlbum()">全部</div>
+    <div class="all-video-btn" ng-click="getAllAlbum()" ng-show="thirdCategoryId!=''">全部</div>
     <div class="video-list-search">
       <input type="search" placeholder="搜索" ng-model="searchInfo">
       <div class="search-btn" ng-click="searchVideo()"></div>
