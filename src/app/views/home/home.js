@@ -33,7 +33,8 @@ angular.module('app.home', [])
         //获取用户已经添加的应用
         $scope.myAddAppList=[];
         try{
-            var appList=window.external.addedApp();
+            //var appList=window.external.addedApp();
+            var appList=window.localStorage.getItem('addApps');
             if(appList){
                 $scope.myAddAppList=JSON.parse(appList);
                 for(var m=0;m<$scope.myAddAppList.length;m++){
@@ -66,7 +67,8 @@ angular.module('app.home', [])
             $rootScope.successAlter('添加成功');
             var appStr=JSON.stringify($scope.myAddAppList);
             try{
-                window.external.addApp(appStr);
+                window.localStorage.setItem('addApps',appStr);
+                //window.external.addApp(appStr);
             }catch (e){
 
             }
@@ -106,7 +108,8 @@ angular.module('app.home', [])
             }
 
             try{
-                window.external.addApp(apps);
+                window.localStorage.setItem('addApps',apps);
+                //window.external.addApp(apps);
             }catch (e){
 
             }
