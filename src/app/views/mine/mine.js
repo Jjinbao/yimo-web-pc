@@ -319,4 +319,14 @@ angular.module('app.mine', [])
                 }
             })
         }
+
+        if($rootScope.hisRe.type=='passageRecord'){
+            $scope.nowActivePanel='passageRecord';
+            $rootScope.hisRe.type='';
+        }
+
+        if($rootScope.hisRe.type=='videoRecord'){
+            $scope.nowActivePanel='videoRecord';
+            $rootScope.hisRe.type='';
+        }
     }])

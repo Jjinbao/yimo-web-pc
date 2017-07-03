@@ -1,6 +1,7 @@
 'use strict'
 angular.module('app.info', [])
-    .controller('appPassage', ['$scope', '$http', '$window','$location', function ($scope, $http, $window,$location) {
+    .controller('appPassage', ['$rootScope','$scope', '$http', '$window','$location', function ($rootScope,$scope, $http, $window,$location) {
+        $rootScope.hisRe.type='';
         $scope.panelPassageWidth = {
             width:document.body.clientWidth-279
         }
@@ -115,7 +116,7 @@ angular.module('app.info', [])
         }
     }])
     .controller('passageDetail',['$rootScope','$scope','$location','$routeParams','$http','$sce','$window','userService',function($rootScope,$scope,$location,$routeParams,$http,$sce,$window,userService){
-
+        $rootScope.hisRe.type='';
         $scope.passageId=$routeParams.id;
 
         if(userService.userMsg.accountId){
@@ -279,10 +280,17 @@ angular.module('app.info', [])
             console.log(val);
         }
 
+        $scope.backToList=function(){
+            if($routeParams.from=='history'){
+                $rootScope.hisRe.type='passageRecord';
+            };
+            window.history.back();
+        }
 
 
     }])
-    .controller('videoList', ['$scope','$http','$location', function ($scope,$http,$location) {
+    .controller('videoList', ['$rootScope','$scope','$http','$location', function ($rootScope,$scope,$http,$location) {
+        $rootScope.hisRe.type='';
         $scope.videoListWidth = {
             height:document.body.clientHeight-60,
             width:(document.body.clientWidth-545)<800?800:document.body.clientWidth-545
@@ -424,6 +432,7 @@ angular.module('app.info', [])
 
     }])
     .controller('albumDetail',['$rootScope','$scope','$routeParams','$http','userService','$sce',function($rootScope,$scope,$routeParams,$http,userService,$sce){
+        $rootScope.hisRe.type='';
         $scope.albumListHeight = {
             height:document.body.clientHeight-60
         }
@@ -544,6 +553,9 @@ angular.module('app.info', [])
             console.log('3full screen');
         })*/
         $scope.goBackToList=function(){
+            if($routeParams.from=='history'){
+                $rootScope.hisRe.type='videoRecord';
+            };
             window.history.back();
         }
 

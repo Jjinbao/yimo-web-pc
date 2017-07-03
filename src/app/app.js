@@ -52,6 +52,9 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
     .controller('rootTabCtrl', ['$rootScope', '$scope', '$location', '$modal', 'userService', function ($rootScope, $scope, $location, $modal, userService) {
         $scope.activeTab = 'YY'
         $scope.size = 600;
+        $rootScope.hisRe={
+            type:''
+        }
         $scope.clickTab = function (val) {
             if ($scope.activeTab == val) {
                 return;
@@ -971,7 +974,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
 
                 $scope.openAlbumDetail=function(val){
                     console.log(val);
-                    $location.path('/album/list/1/'+val.album.id);
+                    $location.path('/album/history/1/'+val.album.id);
                 }
             },
             templateUrl: 'app/views/mine/history.video.tpl.html'
@@ -1004,7 +1007,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
 
                 $scope.toDetailPage=function(val){
                     console.log(val);
-                    $location.path('/detail/list/9/'+val.id);
+                    $location.path('/detail/history/9/'+val.id);
                 }
             },
             templateUrl: 'app/views/mine/history.passage.tpl.html'
