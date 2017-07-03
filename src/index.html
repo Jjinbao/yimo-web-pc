@@ -52,8 +52,8 @@
 <![endif]-->
 <div class="nav-tab-bar">
     <div class="nav-bar-content">
-        <div class="nav-left-logo" ng-click="openYmWeb()">
-            <img src="./app/img/logo.png">
+        <div class="nav-left-logo">
+            <img src="./app/img/logo.png" ng-click="openYmWeb()">
         </div>
         <div class="nav-right-tab">
             <a class="yimo-tab" ng-click="clickTab('YY')" ng-class="{true:'yimo-tab-active'}[activeTab=='YY']"
@@ -66,7 +66,7 @@
         </div>
     </div>
     <div class="mine-img-tab" ng-click="clickTab('WD')">
-        <img ng-show="userImg" ng-src="{{userImg}}">
+        <img ng-show="userImg" onerror="javascript:this.src='./app/img/touxiang.png'" ng-src="{{userImg}}">
     </div>
     <div class="index-control-btns">
         <div class="control-close" ng-click="windwoClose()">

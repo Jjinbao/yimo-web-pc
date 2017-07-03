@@ -1,5 +1,5 @@
-var baseUrl='http://123.57.184.42:8080/';
-
+//var baseUrl='http://123.57.184.42:8080/';
+var baseUrl='http://www.bjyimoyun.com/';
 var staticAppList=[
         {id:1005,name:'艾德AIDman单机版',enabled:true,status:'添加',imgSrc:'./app/img/app-adman.png',version:'3.4',intro:'AIDman Pro智能心肺复苏急救训练考核系统单机版产品，连续6年作为全国职业院校护理技能大赛官方指定赛品。',delete:false},
         {id:1007,name:'艾德AIDman网络版教师端',enabled:true,status:'添加',version:'3.4',imgSrc:'./app/img/app-adtech.png',intro:'AIDman Pro智能心肺复苏急救训练考核系统网络版产品，为高效的网络分组教学、训练、考核等使用场景定制。此为教师端软件。',delete:false},
@@ -9,5 +9,3 @@ var staticAppList=[
         {id:1011,name:'宫腔操作模拟系统',enabled:false,status:'开发中',imgSrc:'./app/img/app-gq.png',version:'3.0',intro:'基于本系统可以进行分段诊刮术和盆腔检查操作，并通过计算机对操作进行系统评估。',delete:false},
         {id:1012,name:'心肺听诊模拟人',enabled:false,status:'开发中',imgSrc:'./app/img/app-xf.png',version:'3.0',intro:'操作者可以对模拟人进行心肺听诊操作，训练听诊音的辨别能力。系统集成了训练及考核模式，以适应不同的教学场景。',delete:false}
     ];
-
-
