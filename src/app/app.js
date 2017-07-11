@@ -312,10 +312,10 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
                             $scope.registerTip = '图形验证码不正确';
                             return;
                         }
-                        if (!$scope.registerUser.name) {
-                            $scope.registerTip = '请填写用户名';
-                            return;
-                        }
+                        // if (!$scope.registerUser.name) {
+                        //     $scope.registerTip = '请填写用户名';
+                        //     return;
+                        // }
                         if (!$scope.registerUser.password) {
                             $scope.registerTip = '请填写密码';
                             return;
