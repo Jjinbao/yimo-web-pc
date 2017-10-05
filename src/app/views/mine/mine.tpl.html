@@ -20,6 +20,9 @@
         <div class="mine-item-list user-message-icon" ng-show="haveLoginuser.accountId" ng-class="{true:'active-list active-list-ziliao'}[nowActivePanel=='user']" ng-click="userInfo()">
             用户资料
         </div>
+        <div class="mine-item-list collect-record-icon" ng-class="{true:'active-list active-list-collect'}[nowActivePanel=='collect'||nowActivePanel=='collectList']" ng-click="collectList('collect')">
+            收藏
+        </div>
         <div class="mine-item-list mine-quit-login" ng-show="haveLoginuser.accountId" ng-click="quitLogin()">
             退出登录
         </div>
@@ -34,6 +37,7 @@
             <user-info ng-switch-when="user"></user-info>
             <no-login-panel ng-style="panelWidth" style="background-color: #f2f2f2" ng-switch-when="noLogin"></no-login-panel>
             <feed-record-detail ng-switch-when="feedDetail"></feed-record-detail>
+            <collect-list ng-switch-when="collect"></collect-list>
             <app-use-record ng-switch-when="appRecord"></app-use-record>
             <video-use-record ng-switch-when="videoRecord"></video-use-record>
             <passage-use-record ng-switch-when="passageRecord"></passage-use-record>

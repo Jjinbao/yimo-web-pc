@@ -113,6 +113,21 @@ angular.module('app.mine', [])
                 });
             }
         }
+        //收藏列表
+        $scope.collectList=function(val){
+            console.log(val);
+            if ($scope.nowActivePanel == val) {
+                return;
+            }
+            if (userService.userMsg && userService.userMsg.accountId) {
+                $scope.nowActivePanel = val;
+            } else {
+                $scope.login(val, function (value) {
+                    $scope.changeUserInfo();
+                    $scope.nowActivePanel = value;
+                });
+            }
+        }
 
         //用户信息
         $scope.userInfo = function () {

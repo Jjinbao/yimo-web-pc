@@ -1072,6 +1072,15 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
             templateUrl: 'app/views/mine/feed.record.html'
         }
     })
+    .directive('collectList',function(){
+        return {
+            restrict: 'EA',
+            link: function (scope, element, attr) {
+                console.log('这个是什么样的自行车');
+            },
+            templateUrl: 'app/views/mine/collect.list.html'
+        }
+    })
     .directive('feedRecordDetail', function () {
         return {
             restrict: 'EA',
