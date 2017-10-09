@@ -1,0 +1,4 @@
+<form action="" method="POST" class="prv-choice">
+    <select name="province" class="province" ng-init="province.id='0'" ng-model="province.id" ng-change="provinceChange(province.id);city.id='0';" ng-options="id as name for (id,name) in provinceArr"></select>
+    <select name="city" class="city" ng-init="city.id='0'" ng-model="city.id" ng-change="cityChange(city.id);" ng-options="id as name for (id,name) in getCityArr"></select>
+</form>

@@ -204,7 +204,10 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
                         password: '',
                         rePassword: '',
                         name: '',
-                        img: ''
+                        img: '',
+                        company:'',
+                        prov:'',
+                        city:''
                     }
                     $scope.closeRegisterModal = function () {
                         $rootScope.registerModal.close();
@@ -332,6 +335,15 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
                             $scope.registerTip = '两次密码输入不一致';
                             return;
                         }
+                        if (!$scope.registerUser.company) {
+                            $scope.registerTip = '请输入单位名称';
+                            return;
+                        }
+                        console.log($scope.registerUser.prov);
+                        if (!$scope.registerUser.prov||!$scope.registerUser.city||$scope.registerUser.prov=='省份') {
+                            $scope.registerTip = '请选择省份城市';
+                            return;
+                        }
                         $scope.regDoubleClick = true;
                         $scope.registerTip = '';
                         $http({
@@ -377,6 +389,8 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
                                 }
                             } else if (data.result == 106) {
                                 $scope.registerTip = '系统错误，稍后重试';
+                            }else{
+                                $scope.registerTip = '缺少参数，您可能没有获取验证码';
                             }
                             $scope.regDoubleClick = false;
                         }).error(function () {
@@ -384,6 +398,12 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
                             $scope.regDoubleClick = false;
                         })
                     }
+                    //选择省份城市
+                    $scope.$on('choice.city',function(e,data){
+                        $scope.registerUser.prov=data.prov;
+                        $scope.registerUser.city=data.city;
+
+                    })
                 }
             });
         }
@@ -1072,11 +1092,36 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
             templateUrl: 'app/views/mine/feed.record.html'
         }
     })
-    .directive('collectList',function(){
+    .directive('collectList',function(userService, $http,$location){
         return {
             restrict: 'EA',
             link: function (scope, element, attr) {
-                console.log('这个是什么样的自行车');
+                $http({
+                    url: baseUrl + 'ym/history/list.api',
+                    method: 'POST',
+                    params: {
+                        accountId: userService.userMsg.accountId,
+                        type: 'album',
+                        sign: md5('ymy' + userService.userMsg.accountId + 'album'),
+                        categoryId:1
+                    }
+                }).success(function (data) {
+                    console.log(data);
+                    if (data.result == 1) {
+                        scope.videoUseList = data.list;
+                        scope.videoUseList.forEach(function (val) {
+                            val.date = new Date(parseInt(val.readTime) * 1000).toLocaleString().replace(/:\d{1,2}$/, ' ');
+                        })
+                    }
+                }).error(function () {
+                    scope.$emit('my.net.break','');
+                    //$scope.alertTab('网络异常,请检查网络!',$scope.netBreakBack);
+                })
+
+                scope.openAlbumDetail=function(val){
+                    console.log(val);
+                    $location.path('/album/history/1/'+val.album.id);
+                }
             },
             templateUrl: 'app/views/mine/collect.list.html'
         }
@@ -1536,6 +1581,39 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
 
             }
         };
+    }])
+    .directive('provCity',[function(){
+        return {
+            restrict:'EA',
+            link:function($scope,ele,attr){
+                $scope.provinceArr = provinceArr ; //省份数据
+
+                $scope.cityArr = cityArr;    //城市数据
+                $scope.getCityArr = $scope.cityArr[0]; //默认为省份
+                $scope.getCityIndexArr = ['0','0'] ; //这个是索引数组，根据切换得出切换的索引就可以得到省份及城市
+
+                //改变省份触发的事件 [根据索引更改城市数据]
+                $scope.provinceChange = function(index)
+                {
+                    $scope.getCityArr = $scope.cityArr[index] ; //根据索引写入城市数据
+                    $scope.getCityIndexArr[1] = '0' ; //清除残留的数据
+                    $scope.getCityIndexArr[0] = index ;
+                    //输出查看数据
+                    console.log($scope.getCityIndexArr,provinceArr[$scope.getCityIndexArr[0]],cityArr[$scope.getCityIndexArr[0]][$scope.getCityIndexArr[1]]);
+                    $scope.$emit('choice.city',{prov:provinceArr[$scope.getCityIndexArr[0]],city:cityArr[$scope.getCityIndexArr[0]][$scope.getCityIndexArr[1]]})
+                }
+                //改变城市触发的事件
+                $scope.cityChange = function(index)
+                {
+                    $scope.getCityIndexArr[1] = index ;
+                    //输出查看数据
+                    console.log($scope.getCityIndexArr,provinceArr[$scope.getCityIndexArr[0]],cityArr[$scope.getCityIndexArr[0]][$scope.getCityIndexArr[1]]);
+                    $scope.$emit('choice.city',{prov:provinceArr[$scope.getCityIndexArr[0]],city:cityArr[$scope.getCityIndexArr[0]][$scope.getCityIndexArr[1]]})
+                }
+            },
+            templateUrl:'app/views/mine/prov.city.html'
+
+        }
     }])
     //.directive('ngRightClick', function($parse) {
     //    return function(scope, element, attrs) {

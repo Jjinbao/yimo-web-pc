@@ -22,7 +22,7 @@ angular.module('app.home', [])
             }
         })
         $scope.myAppList=staticAppList;
-        console.log($scope.myAppList);
+
         // $http({
         //     url:baseUrl+'ym/app/list.api',
         //     method:'POST'
@@ -128,6 +128,13 @@ angular.module('app.home', [])
         $scope.mouseRightClick=function(val){
             console.log(val)
         }
-
+        //应用分类
+        $scope.nowClassic='QB';
+        $scope.choiceAppClassic=function(val){
+            if(val==$scope.nowClassic){
+                return;
+            }
+            $scope.nowClassic=val;
+        }
     }])
 

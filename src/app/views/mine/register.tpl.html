@@ -1,4 +1,4 @@
-<div class="login-panel">
+<div class="login-panel reg-height" style="height: 530px;">
     <div class="close-btn" ng-click="closeRegisterModal()"></div>
     <div class="login-header">
         <!--<img src="./app/img/u10.png">-->
@@ -27,6 +27,12 @@
         </div>
         <div class="login-password register-password">
             <input type="password" placeholder="请重复密码" maxlength="12" ng-model="registerUser.rePassword" required>
+        </div>
+        <div class="login-password register-password">
+            <input type="text" placeholder="单位名称" ng-model="registerUser.company" required>
+        </div>
+        <div class="login-password register-password">
+            <prov-city></prov-city>
         </div>
         <div class="login-info-tip" ng-show="registerTip">
             {{registerTip}}

@@ -5,7 +5,19 @@
         <div class="no-login-btn" ng-click="reGetData()">重试</div>
     </div>
     <div class="passage-content-panel" id="passagelist" ng-style="panelPassageWidth">
+        <div class="app-classic" style="margin-left: 0;margin-right: 0">
+            <div class="one-classic one-classic-active" ng-class="{true:'one-classic-active'}[nowClassic=='QB']" ng-click="choiceAppClassic('QB')">全部</div>
+            <div class="one-classic" ng-class="{true:'one-classic-active'}[nowClassic=='CZGF']" ng-click="choiceAppClassic('CZGF')">操作规范</div>
+            <div class="one-classic" ng-class="{true:'one-classic-active'}[nowClassic=='SSLY']" ng-click="choiceAppClassic('SSLY')">赛事掠影</div>
+            <div class="one-classic" ng-class="{true:'one-classic-active'}[nowClassic=='HYFX']" ng-click="choiceAppClassic('HYFX')">会议分享</div>
+            <div class="one-classic" ng-class="{true:'one-classic-active'}[nowClassic=='GSZX']" ng-click="choiceAppClassic('GSZX')">公司资讯</div>
+            <div class="passage-list-search">
+                <input type="search" placeholder="搜索" ng-model="searchInfo">
+                <div class="search-btn" ng-click="searchPassage()"></div>
+            </div>
+        </div>
         <div class="passage-left-content">
+
             <div class="row passage-list">
                 <div class="media list-repeat" style="width: 100%" ng-class="{'none-border':$last}" ng-repeat="news in passageList.list">
                     <a href="#" class="media-left media-middle media-bottom">
@@ -21,7 +33,6 @@
                 </div>
             </div>
         </div>
-
     </div>
     <div class="passage-right-content">
         <div class="hot-passage">

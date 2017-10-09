@@ -20,6 +20,40 @@ angular.module('app.info', [])
             }
             $scope.$digest();
         }
+        //应用分类
+        $scope.nowClassic='QB';
+        $scope.choiceAppClassic=function(val){
+            if(val==$scope.nowClassic){
+                return;
+            }
+            $scope.nowClassic=val;
+        }
+        //搜索文章
+        $scope.searchInfo=''
+        $scope.searchPassage=function(){
+            console.log($scope.searchInfo);
+            if(!$scope.searchInfo){
+                return;
+            }
+            if($scope.doubleHold){
+                return;
+            }
+            $scope.thirdCategoryId='a';
+            $scope.doubleHold=true;
+            $http({
+                url: baseUrl + 'ym/album/list.api',
+                method: 'POST',
+                params:{
+                    albumTitle:encodeURI($scope.searchInfo)
+                }
+            }).success(function (res) {
+                console.log(res);
+                if (res.result == 1) {
+                    $scope.albumList = res.albumList;
+                }
+                $scope.doubleHold=false;
+            })
+        }
         //获取轮播图
         //$http({
         //    url: baseUrl + 'ym/show/list.api',

@@ -7,7 +7,9 @@
             应用推荐
         </div>
     </div>
+
     <div class="mine-right-panel" ng-style="panelWidth" style="background-color: #f2f2f2">
+        <prov-city></prov-city>
         <div ng-switch="nowActive">
             <div ng-switch-when="myApp" style="padding-top: 44px">
                 <div class="one-app-item" style="margin-bottom: 40px;" ng-click="openOneApp(pro)"  ng-repeat="pro in myAddAppList">
@@ -24,13 +26,20 @@
                     <!--<li ng-repeat='m in ms' ng-click='fn($event,m.name)'>{{m.name}}</li>-->
                 <!--</ul>-->
             </div>
-            <div ng-switch-when="recApp" style="padding: 48px 22px;font-size: 0">
+            <div ng-switch-when="recApp" style="padding: 0px 22px;font-size: 0">
                 <!--<div class="one-app-item" style="margin-bottom: 40px;" ng-click="appFeedRecord(pro)"  ng-repeat="pro in myAppList">-->
                     <!--<div class="app-help-feed">-->
                         <!--<img ng-src="{{pro.smallImage}}">-->
                         <!--<div class="app">{{pro.appName}}</div>-->
                     <!--</div>-->
                 <!--</div>-->
+                <div class="app-classic">
+                    <div class="one-classic one-classic-active" ng-class="{true:'one-classic-active'}[nowClassic=='QB']" ng-click="choiceAppClassic('QB')">全部</div>
+                    <div class="one-classic" ng-class="{true:'one-classic-active'}[nowClassic=='JJFS']" ng-click="choiceAppClassic('JJFS')">急救复苏</div>
+                    <div class="one-classic" ng-class="{true:'one-classic-active'}[nowClassic=='ZHJN']" ng-click="choiceAppClassic('ZHJN')">综合技能</div>
+                    <div class="one-classic" ng-class="{true:'one-classic-active'}[nowClassic=='HLJN']" ng-click="choiceAppClassic('HLJN')">护理技能</div>
+                    <div class="one-classic" ng-class="{true:'one-classic-active'}[nowClassic=='QTYY']" ng-click="choiceAppClassic('QTYY')">其他应用</div>
+                </div>
                 <div class="app-recomand-panel" ng-repeat="pro in myAppList">
                     <div class="app-detail">
                         <img ng-src="{{pro.imgSrc}}"/>
@@ -48,6 +57,12 @@
                                 {{pro.intro}}
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="select-province" style="font-size: 14px;">
+                    <div id="city_1">
+                        <select class="prov"></select>
+                        <select class="city"></select>
                     </div>
                 </div>
             </div>
