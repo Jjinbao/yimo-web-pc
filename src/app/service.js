@@ -1,10 +1,12 @@
 angular.module('ympc.services', [])
     .service('userService', function () {
+        //存储用户信息的全局变量
         var result = {
             userMsg: ''
         }
         return result;
     })
+    //基本配置，上传图片
     .constant('config', {
         //后端url，先写成常量
         urlBase: baseUrl,
@@ -19,6 +21,7 @@ angular.module('ympc.services', [])
         imageCount: 100,
         imageFilterType: '|jpg|png|jpeg|'
     })
+    //手机号处理过滤器，传入手机号，传出138****3333类型的手机号
     .filter('ellipsisPhone', [function () {
         return function (val) {
             if (val) {

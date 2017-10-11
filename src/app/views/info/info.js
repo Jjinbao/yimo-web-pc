@@ -1,7 +1,9 @@
 'use strict'
 angular.module('app.info', [])
+    //文章列表控制器
     .controller('appPassage', ['$rootScope','$scope', '$http', '$window','$location', function ($rootScope,$scope, $http, $window,$location) {
         $rootScope.hisRe.type='';
+        //窗口变化，随时适应窗口大小
         $scope.panelPassageWidth = {
             width:document.body.clientWidth-279
         }
@@ -20,8 +22,9 @@ angular.module('app.info', [])
             }
             $scope.$digest();
         }
-        //应用分类
+        //应用分类 QB全部
         $scope.nowClassic='QB';
+        //悬着文章分类，显示不同的分类内容
         $scope.choiceAppClassic=function(val){
             if(val==$scope.nowClassic){
                 return;
@@ -30,14 +33,18 @@ angular.module('app.info', [])
         }
         //搜索文章
         $scope.searchInfo=''
+        //发起搜索文章功能
         $scope.searchPassage=function(){
             console.log($scope.searchInfo);
+            //如果没有搜索内容，返回
             if(!$scope.searchInfo){
                 return;
             }
+            //防止重复点击
             if($scope.doubleHold){
                 return;
             }
+            //
             $scope.thirdCategoryId='a';
             $scope.doubleHold=true;
             $http({
@@ -74,6 +81,7 @@ angular.module('app.info', [])
         }
         $scope.isNetConnect=false;
         $scope.holdListDoubleClick=false;
+        //获取新闻资讯列表
         $scope.getNewsList=function(){
             if($scope.holdListDoubleClick){
                 return;
@@ -111,6 +119,7 @@ angular.module('app.info', [])
         }
 
         $scope.holdNewRecDouble=false;
+        //获取右侧推荐列表，右侧图片展示内容
         $scope.getRecNews=function(){
             if($scope.holdNewRecDouble){
                 return;
@@ -139,7 +148,7 @@ angular.module('app.info', [])
         }
 
         $scope.getRecNews();
-
+        //刷新界面，重新获取一遍列表和推荐列表
         $scope.reGetData=function(){
             $scope.getNewsList();
             $scope.getRecNews();
@@ -149,6 +158,7 @@ angular.module('app.info', [])
             $location.path('/detail/list/'+val.rootId+'/'+val.id);
         }
     }])
+    //文章详情界面控制器
     .controller('passageDetail',['$rootScope','$scope','$location','$routeParams','$http','$sce','$window','userService',function($rootScope,$scope,$location,$routeParams,$http,$sce,$window,userService){
         $rootScope.hisRe.type='';
         $scope.passageId=$routeParams.id;
@@ -323,6 +333,7 @@ angular.module('app.info', [])
 
 
     }])
+    //教学视频列表
     .controller('videoList', ['$rootScope','$scope','$http','$location', function ($rootScope,$scope,$http,$location) {
         $rootScope.hisRe.type='';
         $scope.videoListWidth = {
@@ -465,6 +476,7 @@ angular.module('app.info', [])
         }
 
     }])
+    //教学视频详情页面
     .controller('albumDetail',['$rootScope','$scope','$routeParams','$http','userService','$sce',function($rootScope,$scope,$routeParams,$http,userService,$sce){
         $rootScope.hisRe.type='';
         $scope.albumListHeight = {

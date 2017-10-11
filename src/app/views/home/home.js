@@ -34,6 +34,7 @@ angular.module('app.home', [])
         $scope.myAddAppList=[];
         try{
             //var appList=window.external.addedApp();
+            //从原生端获取已经添加的app列表
             var appList=window.localStorage.getItem('addApps');
             if(appList){
                 $scope.myAddAppList=JSON.parse(appList);
@@ -52,6 +53,7 @@ angular.module('app.home', [])
         }catch (e){
 
         }
+        //添加app函数
         $scope.addApps=function(val){
             if(!val.enabled){
                 return;
@@ -79,7 +81,7 @@ angular.module('app.home', [])
             val.delete=false;
             $rootScope.deleteAppModel(val,$scope.deleteOneApp);
         }
-
+        //删除一个已经添加的app val-要删除的app信息
         $scope.deleteOneApp=function(val){
             val.enabled=true;
             val.status='添加'
@@ -115,6 +117,7 @@ angular.module('app.home', [])
             }
         }
 
+        //打开一个app 和原生端交互
         $scope.openOneApp=function(val){
             console.log(val);
             try{
