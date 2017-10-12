@@ -30,35 +30,58 @@ angular.module('app.info', [])
                 return;
             }
             $scope.nowClassic=val;
+            $scope.getInfoParams.title='';
+            $scope.getInfoParams.searchInfo='';
+            $scope.passageList={
+                list:[],
+                count:0
+            }
+            $scope.getNewsList();
         }
-        //搜索文章
-        $scope.searchInfo=''
+        //发起请求的参数
+        $scope.getInfoParams={
+            categoryId:'',
+            title:'',
+            searchInfo:'',
+            pageNumber: 1,
+            pageSize: 10
+        }
+        $scope.searchDoubleHold=false;
         //发起搜索文章功能
         $scope.searchPassage=function(){
-            console.log($scope.searchInfo);
+
             //如果没有搜索内容，返回
-            if(!$scope.searchInfo){
+            if(!$scope.getInfoParams.searchInfo){
                 return;
             }
             //防止重复点击
-            if($scope.doubleHold){
+            if($scope.searchDoubleHold){
                 return;
             }
-            //
-            $scope.thirdCategoryId='a';
-            $scope.doubleHold=true;
+            $scope.getInfoParams.title=encodeURI($scope.getInfoParams.searchInfo);
+            $scope.searchDoubleHold=true;
+            $scope.passageList={
+                list:[],
+                count:0
+            }
             $http({
-                url: baseUrl + 'ym/album/list.api',
+                url: baseUrl + 'ym/news/list.api',
                 method: 'POST',
-                params:{
-                    albumTitle:encodeURI($scope.searchInfo)
+                params: $scope.getInfoParams
+            }).success(function (data) {
+                console.log(data);
+                $scope.searchDoubleHold=false;
+                $scope.isNetConnect=false;
+                if(data.result==1){
+                    $scope.passageList.list=$scope.passageList.list.concat(data.newsList);
+                    $scope.passageList.count=data.totalPage;
                 }
-            }).success(function (res) {
-                console.log(res);
-                if (res.result == 1) {
-                    $scope.albumList = res.albumList;
-                }
-                $scope.doubleHold=false;
+                $scope.passageList.list.forEach(function(val){
+                    val.formateDate=new Date(val.pubTime*1000).format('yyyy-MM-dd');
+                })
+            }).error(function(data){
+                $scope.searchDoubleHold=false;
+                $scope.isNetConnect=true;
             })
         }
         //获取轮播图
@@ -90,10 +113,7 @@ angular.module('app.info', [])
             $http({
                 url: baseUrl + 'ym/news/list.api',
                 method: 'POST',
-                params: {
-                    pageNumber: 1,
-                    pageSize: 10
-                }
+                params: $scope.getInfoParams
             }).success(function (data) {
                 console.log(data);
                 $scope.holdListDoubleClick=false;

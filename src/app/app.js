@@ -212,8 +212,10 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
                         rePassword: '',//重复面
                         name: '',//用户昵称
                         img: '',//图形验证码图片
+                        mineCompany:'',
                         company:'',//公司
                         prov:'',//省份
+                        province:'',
                         city:''//城市
                     }
                     //关闭注册模态框
@@ -348,7 +350,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
                             $scope.registerTip = '两次密码输入不一致';
                             return;
                         }
-                        if (!$scope.registerUser.company) {
+                        if (!$scope.registerUser.mineCompany) {
                             $scope.registerTip = '请输入单位名称';
                             return;
                         }
@@ -356,8 +358,12 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
                             $scope.registerTip = '请选择省份城市';
                             return;
                         }
+                        $scope.registerUser.province=encodeURI($scope.registerUser.prov);
+                        $scope.registerUser.city=encodeURI($scope.registerUser.city);
+                        $scope.registerUser.company=encodeURI($scope.registerUser.mineCompany);
                         $scope.regDoubleClick = true;
                         $scope.registerTip = '';
+                        console.log($scope.registerUser);
                         //发送ajax请求通知后台，开始注册
                         $http({
                             url: baseUrl + 'ym/account/registerWithCode.api',
@@ -368,6 +374,9 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
                                 randCode: $scope.registerUser.code,
                                 userName: encodeURI($scope.registerUser.name),
                                 password: md5($scope.registerUser.password),
+                                province:$scope.registerUser.province,
+                                city:$scope.registerUser.city,
+                                company:$scope.registerUser.company,
                                 sign: md5('ymy' + $scope.registerUser.identifier.toString() + md5($scope.registerUser.password) + $scope.registerUser.phone + $scope.registerUser.code.toString() + $scope.registerUser.name.toString())
                             }
                         }).success(function (data) {
@@ -1176,6 +1185,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
         return {
             restrict: 'EA',
             link: function ($scope, element, attr) {
+                console.log(userService.userMsg);
                 $scope.modifyPortrait = function () {
                     $rootScope.uploadAvatar = $modal.open({
                         templateUrl: "app/views/mine/upload.avatar.tpl.html",
