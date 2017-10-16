@@ -44,7 +44,7 @@ angular.module('app.info', [])
             title:'',
             searchInfo:'',
             pageNumber: 1,
-            pageSize: 10
+            pageSize: 100
         }
         $scope.searchDoubleHold=false;
         //发起搜索文章功能
@@ -150,7 +150,7 @@ angular.module('app.info', [])
                 method: 'POST',
                 params: {
                     pageNumber: 1,
-                    pageSize: 10,
+                    pageSize: 100,
                     extstr2:1
                 }
             }).success(function (data) {
