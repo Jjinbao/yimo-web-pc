@@ -1096,14 +1096,14 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
         return {
             restrict: 'EA',
             link: function (scope, element, attr) {
+                scope.collectType=1;
                 $http({
-                    url: baseUrl + 'ym/history/list.api',
+                    url: baseUrl + 'ym/collection/list.api',
                     method: 'POST',
                     params: {
                         accountId: userService.userMsg.accountId,
                         type: 'album',
-                        sign: md5('ymy' + userService.userMsg.accountId + 'album'),
-                        categoryId:1
+                        sign: md5('ymy' + userService.userMsg.accountId + 'album')
                     }
                 }).success(function (data) {
                     console.log(data);
@@ -1117,7 +1117,20 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
                     scope.$emit('my.net.break','');
                     //$scope.alertTab('网络异常,请检查网络!',$scope.netBreakBack);
                 })
+                scope.choiceVideo=function(val){
+                    if(scope.collectType==val){
+                        return;
+                    }
+                    scope.collectType=val;
 
+                }
+                scope.choicePassage=function(val){
+                    if(scope.collectType==val){
+                        return;
+                    }
+                    scope.collectType=val;
+
+                }
                 scope.openAlbumDetail=function(val){
                     console.log(val);
                     $location.path('/album/history/1/'+val.album.id);

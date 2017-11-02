@@ -1,7 +1,10 @@
 <div>
-    <div class="panel-heading-reset panel-title"><span style="color: #999">历史记录</span>>视频</div>
+    <div class="panel-heading-reset panel-title">
+        <div class="collect-video" ng-class="{'collect-active':collectType==1}" ng-click="choiceVideo(1)">视频</div>
+        <div class="collect-passage" ng-class="{'collect-active':collectType==2}" ng-click="choicePassage(2)">文章</div>
+    </div>
     <div class="panel-body" style="padding-left: 20px;padding-right: 20px;padding-top: 20px;">
-        <div class="video-history-list">
+        <div class="video-history-list" ng-if="collectType==1">
             <div class="video-history-item" ng-repeat="album in videoUseList">
                 <img ng-src="{{album.album.smallImage}}" ng-click="openAlbumDetail(album)">
                 <div class="video-title" ng-click="openAlbumDetail(album)">
@@ -12,6 +15,20 @@
                     <div class="video-count">
                         {{album.album.videoCount}}个视频
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body" style="padding: 20px;"  ng-if="collectType==1">
+            <div class="media list-repeat" style="min-width: 768px;max-width: 1024px;padding-bottom:20px;border-bottom: 1px solid gainsboro" ng-class="{'none-border':$last}" ng-repeat="news in passageUseList">
+                <a href="#" class="media-left media-middle media-bottom">
+                    <img ng-src="{{news.news.imgSrc}}"  ng-click="toDetailPage(news.news)" width="224" height="142"/>
+                </a>
+                <div class="media-body">
+                    <div class="media-heading history-passage-active" ng-click="toDetailPage(news.news)">{{news.news.title}}</div>
+                    <div class="media-create-date" style="font-size: 14px;color: #999">
+                        阅读时间 {{news.news.date}}
+                    </div>
+                    <p class="media-subheader" style="font-size: 14px;color: #333;margin-top: 30px;cursor: pointer" ng-click="toDetailPage(news.news)">{{news.news.extstr1}}{{news.news.extstr1}}</p>
                 </div>
             </div>
         </div>

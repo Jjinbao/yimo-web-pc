@@ -1,5 +1,5 @@
-// var baseUrl='http://123.57.184.42:8080/';
-var baseUrl='http://www.bjyimoyun.com/';
+ var baseUrl='http://123.57.184.42:8080/';
+//var baseUrl='http://www.bjyimoyun.com/';
 var staticAppList=[
          {id:1005,name:'艾德AIDman单机版',enabled:true,status:'添加',imgSrc:'./app/img/app-adman.png',version:'3.4',intro:'AIDman Pro智能心肺复苏急救训练考核系统单机版产品，连续6年作为全国职业院校护理技能大赛官方指定赛品。',delete:false},
          {id:1007,name:'艾德AIDman网络版教师端',enabled:true,status:'添加',version:'3.4',imgSrc:'./app/img/app-adtech.png',intro:'AIDman Pro智能心肺复苏急救训练考核系统网络版产品，为高效的网络分组教学、训练、考核等使用场景定制。此为教师端软件。',delete:false},
