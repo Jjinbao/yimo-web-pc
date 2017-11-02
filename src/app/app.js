@@ -1,5 +1,5 @@
 'use strict'
-
+//格式化日期函数
 Date.prototype.format = function (format) {
     var o = {
         "M+": this.getMonth() + 1, //month
@@ -18,7 +18,7 @@ Date.prototype.format = function (format) {
                 ("00" + o[k]).substr(("" + o[k]).length));
     return format;
 }
-
+//删除数组元素
 Array.prototype.remove = function (obj) {
     for (var i = 0; i < this.length; i++) {
         var temp = this[i];
@@ -48,7 +48,7 @@ function giveLoginInfo(data) {
 }
 // angular.module('swalk', ['ngRoute','ngAnimate', 'ui.bootstrap', 'app.router', 'app.login', 'app.home', 'app.info', 'app.teach', 'app.mine'])
 angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'angularFileUpload', 'ympc.services', 'app.router', 'app.home', 'app.login', 'app.info', 'app.mine'])
-/*所有控制器的父控制器*/
+    /*所有控制器的父控制器*/
     .controller('rootTabCtrl', ['$rootScope', '$scope', '$location', '$modal', 'userService', function ($rootScope, $scope, $location, $modal, userService) {
         $scope.activeTab = 'YY'
         $scope.size = 600;
@@ -65,23 +65,24 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
             }
         }
         if ($location.url().indexOf('mine') > -1) {
-            $scope.activeTab = 'WD';
+            $scope.activeTab = 'WD';//我的
         } else if ($location.url().indexOf('app') > -1) {
-            $scope.activeTab = 'YY';
+            $scope.activeTab = 'YY';//应用
         } else if ($location.url().indexOf('passage') > -1) {
-            $scope.activeTab = 'ZX';
+            $scope.activeTab = 'ZX';//资讯
         } else if ($location.url().indexOf('teach') > -1) {
-            $scope.activeTab = 'JX';
+            $scope.activeTab = 'JX';//教学
         }
 
         $scope.openYmWeb=function(){
             try{
+                //和原生交互,打开医模云官网
                 window.external.openYMWebsite();
             }catch (e){
 
             }
         }
-
+        //接受用户头像信息，子控制器会把头像信息通过data传递过来，这里会显示到顶部头像栏
         $scope.$on('user.nav.img', function (evt, data) {
             if (data) {
                 $scope.userImg = data;
@@ -92,6 +93,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
         })
         //获取用户登录信息
         try {
+            //从原生端获取到用户的应用信息
             var pcUserInfo = window.external.getUserInfo();
             if (pcUserInfo) {
                 userService.userMsg = JSON.parse(pcUserInfo);
@@ -100,7 +102,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
         } catch (e) {
         }
 
-
+        //登录窗口模态框
         $rootScope.login = function (backParams, callback) {
             $rootScope.loginModal = $modal.open({
                 templateUrl: "app/views/mine/login.tpl.html",
@@ -129,19 +131,24 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
 
                     $scope.messageTip = '';
                     $scope.doubleClick = false;
+                    //登录函数，点击登录按钮，开始登录校验
                     $scope.toLogin = function () {
+                        //拦截用户多次点击
                         if ($scope.doubleClick) {
                             return;
                         }
+                        //如果手机号为空进行拦截
                         if(!$scope.loginUser.phone){
                             $scope.messageTip ='请输入手机号';
                             return;
                         }
+                        //如果没有输入密码拦截
                         if(!$scope.loginUser.password){
                             $scope.messageTip ='请输入密码';
                             return;
                         }
                         $scope.doubleClick = true;
+                        //发送ajax请求，获取登录结果
                         $http({
                             url: baseUrl + 'ym/account/login.api',
                             method: 'POST',
@@ -151,7 +158,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
                                 sign: md5('ymy' + md5($scope.loginUser.password) + $scope.loginUser.phone)
                             }
                         }).success(function (data) {
-
+                            //登陆成功，进行头像替换
                             if (data.result == 1) {
                                 $scope.$emit('user.nav.img', data.smallImg)
                                 userService.userMsg = data;
@@ -197,30 +204,35 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
                 size: 'login',
                 controller: function ($scope, $http, userService, $interval) {
                     $scope.registerUser = {
-                        phone: '',
-                        code: '',
-                        imgcode: '',
-                        identifier: '',
-                        password: '',
-                        rePassword: '',
-                        name: '',
-                        img: '',
-                        company:'',
-                        prov:'',
-                        city:''
+                        phone: '',//用户手机号
+                        code: '',//验证码
+                        imgcode: '',//图形验证码
+                        identifier: '',//后台传递过来的标识码
+                        password: '',//密码
+                        rePassword: '',//重复面
+                        name: '',//用户昵称
+                        img: '',//图形验证码图片
+                        mineCompany:'',
+                        company:'',//公司
+                        prov:'',//省份
+                        province:'',
+                        city:''//城市
                     }
+                    //关闭注册模态框
                     $scope.closeRegisterModal = function () {
                         $rootScope.registerModal.close();
                         //$scope.modal.close();
-
                     };
+                    //错误提示变量
                     $scope.registerTip = '';
 
                     //获取图形验码啊接口
                     $scope.userImgCode = {
                         code: ''
                     };
+                    //重复点击变量
                     $scope.regImgDoubleClick = false;
+                    //获取图形验证码的函数
                     $scope.getImgCode = function () {
                         if ($scope.regImgDoubleClick) {
                             return;
@@ -243,6 +255,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
                     $scope.canGetCode = true;
                     $scope.timeLong = 60;
                     $scope.getCodeBtn = '获取验证码';
+                    //获取手机验证码的函数
                     $scope.getPhoneCode = function () {
                         if (!$scope.canGetCode) {
                             return;
@@ -295,7 +308,9 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
 
                     //注册接口
                     $scope.regDoubleClick = false;
+                    //点击注册按钮，请求后台，开始校验
                     $scope.toRegister = function () {
+                        //防止重复点击
                         if ($scope.regDoubleClick) {
                             return;
                         }
@@ -335,17 +350,21 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
                             $scope.registerTip = '两次密码输入不一致';
                             return;
                         }
-                        if (!$scope.registerUser.company) {
+                        if (!$scope.registerUser.mineCompany) {
                             $scope.registerTip = '请输入单位名称';
                             return;
                         }
-                        console.log($scope.registerUser.prov);
                         if (!$scope.registerUser.prov||!$scope.registerUser.city||$scope.registerUser.prov=='省份') {
                             $scope.registerTip = '请选择省份城市';
                             return;
                         }
+                        $scope.registerUser.province=encodeURI($scope.registerUser.prov);
+                        $scope.registerUser.city=encodeURI($scope.registerUser.city);
+                        $scope.registerUser.company=encodeURI($scope.registerUser.mineCompany);
                         $scope.regDoubleClick = true;
                         $scope.registerTip = '';
+                        console.log($scope.registerUser);
+                        //发送ajax请求通知后台，开始注册
                         $http({
                             url: baseUrl + 'ym/account/registerWithCode.api',
                             method: 'POST',
@@ -355,10 +374,13 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
                                 randCode: $scope.registerUser.code,
                                 userName: encodeURI($scope.registerUser.name),
                                 password: md5($scope.registerUser.password),
+                                province:$scope.registerUser.province,
+                                city:$scope.registerUser.city,
+                                company:$scope.registerUser.company,
                                 sign: md5('ymy' + $scope.registerUser.identifier.toString() + md5($scope.registerUser.password) + $scope.registerUser.phone + $scope.registerUser.code.toString() + $scope.registerUser.name.toString())
                             }
                         }).success(function (data) {
-
+                            //注册成功 自动登录
                             if (data.result == 1) {
                                 $scope.$emit('user.nav.img', data.smallImg)
                                 userService.userMsg = data;
@@ -580,6 +602,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
                                 return;
                             }
                             handleDoubleClick = true;
+                            //发送请求，开始修改密码
                             $http({
                                 url: baseUrl + 'ym/account/findPassword.api',
                                 method: 'POST',
@@ -590,6 +613,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
                                 }
                             }).success(function (data) {
                                 if (data.result == 1) {
+                                    //密码修改成功
                                     $rootScope.findPasswordModal.close();
                                     if (callback) {
                                         $rootScope.login(backParams, callback);
@@ -599,6 +623,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
                                 }
                                 handleDoubleClick = false;
                             }).error(function () {
+                                //网络异常
                                 $scope.findPasswordTip = '网络异常,请检查网络!';
                             })
 
@@ -611,6 +636,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
             });
         }
 
+        //退出登录模态确认框
         $rootScope.existLogin = function (callback) {
             $rootScope.alterSureModal = $modal.open({
                 templateUrl: "app/views/mine/exist.login.tpl.html",
@@ -628,7 +654,11 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
                 }
             })
         }
-
+        /**
+         * 确认删除某一款应用
+         * params:应用参数
+         * callback:回调函数，删除成功后调用
+         * */
         $rootScope.deleteAppModel = function (params, callback) {
             $rootScope.alterSureModal = $modal.open({
                 templateUrl: "app/views/mine/delete.tpl.html",
@@ -649,6 +679,10 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
         }
 
         //$scope.$on('alter.confirm.window',function(evt,data){
+        /*
+        * 成功提示框
+        * data:提示的内容 例如：删除成功
+        * */
         $rootScope.successAlter = function (data) {
             $rootScope.alterModal = $modal.open({
                 templateUrl: "app/views/confirm/tip.tpl.html",
@@ -677,7 +711,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
                 }
             });
         }
-
+        //关闭成功，和c++端交互
         $scope.windwoClose = function () {
             try {
                 window.external.OnbtnClose();
@@ -686,6 +720,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
             }
 
         }
+        //最大化窗口 和原生交互
         $scope.windwoMax = function () {
             try {
                 window.external.OnbtnMax();
@@ -694,6 +729,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
             }
 
         }
+        //最小化窗口 和原生端交互
         $scope.windwoMin = function () {
             try {
                 window.external.OnbtnMin();
@@ -703,6 +739,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
 
         }
     }])
+    //ng-repeat渲染完成界面后调用指令，需要在父控制器中注册名字为ngRepeatFinished的接收器
     .directive('renderFinish', function ($timeout) {//监听dom渲染完毕
         return {
             restrict: 'EA',
@@ -781,6 +818,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
             }
         };
     }])
+    //帮助与反馈界面
     .directive('helpFeed', function ($http) {
         return {
             restrict: 'EA',
@@ -802,6 +840,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
             templateUrl: 'app/views/mine/help.feed.tpl.html'
         }
     })
+    //帮助与反馈界面app界面
     .directive('helpFeedApp', function (userService, $http, $rootScope, $modal) {
         return {
             restrict: 'EA',
@@ -909,18 +948,20 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
             templateUrl: 'app/views/mine/help.feed.questions.html'
         }
     })
+    //历史记录界面
     .directive('historyRecord', function (userService, $http) {
         return {
             restrict: 'EA',
             link: function ($scope, element, attr) {
-
-
+                //应用历史记录 val为参数标识，用来区分那一个历史记录
                 $scope.appUseHistory = function (val) {
                     $scope.$emit('my.app.history', val);
                 }
+                //教学视频历史记录
                 $scope.appVideoHistory = function (val) {
                     $scope.$emit('my.video.history', val);
                 }
+                //文章历史记录
                 $scope.appPassageHistory = function (val) {
                     $scope.$emit('my.passage.history', val);
                 }
@@ -928,7 +969,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
             templateUrl: 'app/views/mine/history.tpl.html'
         }
     })
-    //应用的使用记录
+    //应用的使用记录界面
     .directive('appUseRecord', function (userService, $http) {
         return {
             restrict: 'EA',
@@ -966,6 +1007,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
             templateUrl: 'app/views/mine/app.use.history.html'
         }
     })
+    //视频历史记录界面
     .directive('videoUseRecord', function (userService, $http,$location) {
         return {
             restrict: 'EA',
@@ -1000,6 +1042,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
             templateUrl: 'app/views/mine/history.video.tpl.html'
         }
     })
+    //文章历史记录界面
     .directive('passageUseRecord', function (userService, $http,$location) {
         return {
             restrict: 'EA',
@@ -1033,6 +1076,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
             templateUrl: 'app/views/mine/history.passage.tpl.html'
         }
     })
+    //帮助与反馈
     .directive('feedRecord', function (userService, $http) {
         return {
             restrict: 'EA',
@@ -1092,6 +1136,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
             templateUrl: 'app/views/mine/feed.record.html'
         }
     })
+    //收藏列表-待开发
     .directive('collectList',function(userService, $http,$location){
         return {
             restrict: 'EA',
@@ -1148,10 +1193,12 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
             templateUrl: 'app/views/mine/feed.record.detail.html'
         }
     })
+    //用户信息界面
     .directive('userInfo', function (userService, $http, $modal, $rootScope, config) {
         return {
             restrict: 'EA',
             link: function ($scope, element, attr) {
+                console.log(userService.userMsg);
                 $scope.modifyPortrait = function () {
                     $rootScope.uploadAvatar = $modal.open({
                         templateUrl: "app/views/mine/upload.avatar.tpl.html",
@@ -1308,6 +1355,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
                         }
                     });
                 }
+                //修改支付密码函数 模态框
                 $scope.modifyPassword = function () {
                     $rootScope.modal = $modal.open({
                         templateUrl: "app/views/mine/modify.password.card.html",
@@ -1375,6 +1423,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
             templateUrl: 'app/views/mine/user.info.html'
         }
     })
+    //没有登录，显示这个界面
     .directive('noLoginPanel', function () {
         return {
             restrict: 'EA',
@@ -1384,6 +1433,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
             templateUrl: 'app/views/mine/nologin.panel.tpl.html'
         }
     })
+    //网络不通畅，显示这个界面
     .directive('netBreakPanel', function ($http,userService) {
         return {
             restrict: 'EA',
@@ -1407,6 +1457,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
             templateUrl: 'app/views/mine/net.break.tpl.html'
         }
     })
+    //分页插件
     .directive('tmPagination',[function(){
         return {
             restrict: 'EA',
@@ -1595,6 +1646,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
             }
         };
     }])
+    //省市选择器，二级联动
     .directive('provCity',[function(){
         return {
             restrict:'EA',
@@ -1628,79 +1680,11 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
 
         }
     }])
-    //.directive('ngRightClick', function($parse) {
-    //    return function(scope, element, attrs) {
-    //        var fn = $parse(attrs.ngRightClick);
-    //        element.bind('contextmenu', function(event) {
-    //            scope.$apply(function() {
-    //                event.preventDefault();
-    //                fn(scope, {$event:event});
-    //            });
-    //        });
-    //    };
-    //})
     .filter('formateDate', [function () {
         return function (val) {
             return new Date(parseInt(val) * 1000).toLocaleString().substr(0, 12);
         }
 
     }])
-//     .directive('contextMenu', ['$window', function ($window) {
-//         return {
-//             restrict: 'A',
-//             //require:'^?ngModel',
-//             link: function ($scope, element, attrs) {
-//                 var opened = false;
-//                 var menuElement = angular.element(document.getElementById(attrs.target));
-//
-//                 function open(event, element) {
-//                     $scope.opened = true;
-//                     menuElement.css('top', event.clientY + 'px');
-//                     menuElement.css('left', event.clientX + 'px');
-//                 };
-//                 function close(element) {
-//                     $scope.opened = false;
-//                 };
-//
-//                 $scope.opened = false;
-//
-// //每个项点击的事件
-//                 $scope.fns = {
-//                     "查看": function ($event) {
-//                         alert('LOOK');
-//                     },
-//                     "刷新": function ($event) {
-//                         alert('刷新')
-//                     }
-//                     ,
-//                     "点击": function ($event) {
-//                         alert('点击')
-//                     }
-//                 }
-// //模拟数据填充菜单   数据可通以点击元素过属性传递过来
-// //菜单的html 结构
-// //<ul id='a'><li ng-repeat='m in ms'>{{m.name}}</li></ul>
-//                 $scope.ms = [{name: '删除'}];
-//                 $scope.fn = function ($event, sName) {
-//                     /*
-//                      * 根据sName 来判断使用什么函数
-//                      */
-//
-//                     $scope.fns[sName]($event);
-//                 }
-// //显示右键菜单
-//
-// //窗口绑定点击事件 隐藏右键菜单
-//                 angular.element($window).bind('click', function (event) {
-//                     if (opened) {
-//                         $scope.$apply(function () {
-//                             event.preventDefault();
-//                             close(menuElement);
-//                         });
-//                     }
-//                 });
-//             }
-//         };
-//     }]);
 
 

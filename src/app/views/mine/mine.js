@@ -1,11 +1,14 @@
 angular.module('app.mine', [])
+    //我的主界面，显示个人资料
     .controller('mine', ['$rootScope', '$scope', '$window', '$http', '$modal', 'userService','config', function ($rootScope, $scope, $window, $http, $modal, userService,config) {
+        //随时监听界面大小变化，自动使用屏幕宽度的代码
         $scope.nowActivePanel = '';
         var w = angular.element($window);
         $scope.getWindowDimensions = function () {
             return {'h': w.height(), 'w': w.width()};
         };
         $scope.panelWidth = {}
+        //随时监听界面窗口变化
         $scope.$watchCollection($scope.getWindowDimensions, function (newVal) {
             $scope.panelWidth = {
                 height: newVal.h - 60,
@@ -16,7 +19,7 @@ angular.module('app.mine', [])
             //    width: newVal.w - 200
             //}
         })
-
+        //判断当前用户是否登录
         $rootScope.regOrLogin=function(){
             $scope.haveLoginuser = userService.userMsg;
         }
@@ -29,7 +32,7 @@ angular.module('app.mine', [])
                 $scope.nowActivePanel = 'noLogin'
             }
         }
-
+        //判断是否登录，如果登录显示用户信息，如果没有登录，隐藏历史记录等相关选项
         if (userService.userMsg.accountId) {
             $scope.changeUserInfo();
             $scope.nowActivePanel ='history';
@@ -37,20 +40,23 @@ angular.module('app.mine', [])
             $scope.nowActivePanel = 'noLogin'
         }
 
+        //如果用户没有登录，跳转去登录的函数
         $scope.mineLogin = function () {
             $scope.login('', function (value) {
                 $scope.changeUserInfo();
                 $scope.nowActivePanel ='history';
             });
         }
-        //应用
+        //应用，函数中一直在判断有没有登录
         $scope.application = function (val) {
             if ($scope.nowActivePanel == val) {
                 return;
             }
             if (userService.userMsg && userService.userMsg.accountId) {
+                //登录，跳转到相应的显示界面
                 $scope.nowActivePanel = val;
             } else {
+                //没有登录，清空登录信息，需要重新登录
                 $scope.login(val, function (value) {
                     $scope.changeUserInfo();
                     $scope.nowActivePanel = value;
@@ -62,7 +68,7 @@ angular.module('app.mine', [])
             $scope.historySubtitle = data;
             $scope.nowActivePanel = ''
         })
-
+        //接受帮助与反馈的函数返回
         $scope.$on('help.feed.type', function (evt, data) {
             $scope.helpFeedData = data;
             $scope.nowActivePanel = 'helpFeedApp'
@@ -168,18 +174,21 @@ angular.module('app.mine', [])
         $scope.helpFeedApp = function () {
             $scope.nowActivePanel = 'feed';
         }
-
+        //修改头像函数
         $scope.modifyImg=function(){
             $scope.modifyPortrait($scope.changeUserInfo);
         }
 
+        //上传头像模板
         $scope.modifyPortrait=function(fatherScope){
+            //打开弹窗，等待用户相应操作
             $rootScope.uploadAvatar=$modal.open({
                 templateUrl: "app/views/mine/upload.avatar.tpl.html",
                 backdrop: true,
                 keyboard: false,
                 size:'modify',
                 controller: function ($scope,$http,userService,FileUploader) {
+                    //关闭模态框
                     $scope.closeAvatarModal=function(){
                         $rootScope.uploadAvatar.close();
                     }
