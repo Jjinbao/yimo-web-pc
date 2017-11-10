@@ -23,13 +23,14 @@ angular.module('app.info', [])
             $scope.$digest();
         }
         //应用分类 QB全部
-        $scope.nowClassic='QB';
+        $scope.nowClassic='0';
         //悬着文章分类，显示不同的分类内容
         $scope.choiceAppClassic=function(val){
             if(val==$scope.nowClassic){
                 return;
             }
             $scope.nowClassic=val;
+            $scope.getInfoParams.categoryId=(val=='0'?'':val);
             $scope.getInfoParams.title='';
             $scope.getInfoParams.searchInfo='';
             $scope.passageList={
@@ -59,6 +60,8 @@ angular.module('app.info', [])
                 return;
             }
             $scope.getInfoParams.title=encodeURI($scope.getInfoParams.searchInfo);
+            $scope.getInfoParams.categoryId='';
+            $scope.nowClassic='0';
             $scope.searchDoubleHold=true;
             $scope.passageList={
                 list:[],
@@ -309,6 +312,42 @@ angular.module('app.info', [])
                     $scope.toSubmitComment();
                 });
             }
+        }
+        $scope.submitCollect=function(){
+            if(userService.userMsg&&userService.userMsg.accountId){
+                $scope.toCollect();
+            }else{
+                $rootScope.login('comment',function(){
+                    $scope.$emit('user.nav.img', userService.userMsg.smallImg);
+                    $scope.toCollect();
+                });
+            }
+        }
+        //去提交收藏
+        $scope.holdCollectDoubleClick=false;
+        $scope.toCollect=function(){
+            if($scope.holdCollectDoubleClick){
+                return;
+            }
+            //ym/collection/add.api
+            $scope.holdCollectDoubleClick=true;
+            $http({
+                url:baseUrl+'ym/collection/add.api',
+                method:'POST',
+                params:{
+                    accountId:userService.userMsg.accountId,
+                    type:'news',
+                    typeId:$scope.passageId,
+                    sign:md5('ymy' + userService.userMsg.accountId + 'news'+$scope.passageId)
+                }
+            }).success(function(data){
+                if(data.result==1){
+                    $rootScope.successAlter('收藏成功');
+                }else{
+                    $rootScope.successAlter('收藏失败');
+                }
+                $scope.holdCollectDoubleClick=false;
+            })
         }
         //去提交评论
         $scope.commentContent='';

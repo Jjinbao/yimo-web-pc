@@ -1142,26 +1142,53 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
             restrict: 'EA',
             link: function (scope, element, attr) {
                 scope.collectType=1;
-                $http({
-                    url: baseUrl + 'ym/collection/list.api',
-                    method: 'POST',
-                    params: {
-                        accountId: userService.userMsg.accountId,
-                        type: 'album',
-                        sign: md5('ymy' + userService.userMsg.accountId + 'album')
-                    }
-                }).success(function (data) {
-                    console.log(data);
-                    if (data.result == 1) {
-                        scope.videoUseList = data.list;
-                        scope.videoUseList.forEach(function (val) {
-                            val.date = new Date(parseInt(val.readTime) * 1000).toLocaleString().replace(/:\d{1,2}$/, ' ');
-                        })
-                    }
-                }).error(function () {
-                    scope.$emit('my.net.break','');
-                    //$scope.alertTab('网络异常,请检查网络!',$scope.netBreakBack);
-                })
+                scope.passageUseList=[];
+                scope.collectPassage=function(){
+                    $http({
+                        url: baseUrl + 'ym/collection/list.api',
+                        method: 'POST',
+                        params: {
+                            accountId: userService.userMsg.accountId,
+                            type: 'news',
+                            sign: md5('ymy' + userService.userMsg.accountId + 'news')
+                        }
+                    }).success(function (data) {
+                        console.log(data);
+                        if (data.result == 1) {
+                            scope.passageUseList = data.list;
+                            console.log(scope.passageUseList);
+                            scope.passageUseList.forEach(function (val) {
+                                val.date = new Date(parseInt(val.readTime) * 1000).toLocaleString().replace(/:\d{1,2}$/, ' ');
+                            })
+                        }
+                    }).error(function () {
+                        scope.$emit('my.net.break','');
+                        //$scope.alertTab('网络异常,请检查网络!',$scope.netBreakBack);
+                    })
+                }
+                scope.collectAlbum=function(){
+                    $http({
+                        url: baseUrl + 'ym/collection/list.api',
+                        method: 'POST',
+                        params: {
+                            accountId: userService.userMsg.accountId,
+                            type: 'news',
+                            sign: md5('ymy' + userService.userMsg.accountId + 'news')
+                        }
+                    }).success(function (data) {
+                        console.log(data);
+                        // if (data.result == 1) {
+                        //     scope.videoUseList = data.list;
+                        //     scope.videoUseList.forEach(function (val) {
+                        //         val.date = new Date(parseInt(val.readTime) * 1000).toLocaleString().replace(/:\d{1,2}$/, ' ');
+                        //     })
+                        // }
+                    }).error(function () {
+                        scope.$emit('my.net.break','');
+                        //$scope.alertTab('网络异常,请检查网络!',$scope.netBreakBack);
+                    })
+                }
+
                 scope.choiceVideo=function(val){
                     if(scope.collectType==val){
                         return;
@@ -1174,6 +1201,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
                         return;
                     }
                     scope.collectType=val;
+                    scope.collectPassage();
 
                 }
                 scope.openAlbumDetail=function(val){

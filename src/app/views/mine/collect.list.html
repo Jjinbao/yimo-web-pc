@@ -18,7 +18,7 @@
                 </div>
             </div>
         </div>
-        <div class="panel-body" style="padding: 20px;"  ng-if="collectType==1">
+        <div class="panel-body" style="padding: 20px;"  ng-if="collectType==2">
             <div class="media list-repeat" style="min-width: 768px;max-width: 1024px;padding-bottom:20px;border-bottom: 1px solid gainsboro" ng-class="{'none-border':$last}" ng-repeat="news in passageUseList">
                 <a href="#" class="media-left media-middle media-bottom">
                     <img ng-src="{{news.news.imgSrc}}"  ng-click="toDetailPage(news.news)" width="224" height="142"/>
