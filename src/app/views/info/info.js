@@ -585,6 +585,7 @@ angular.module('app.info', [])
                 id:$routeParams.id
             }
         }).success(function(res){
+            console.log(res)
             $scope.albumDetail=res;
             getAlbumList(res.id);
 
@@ -640,6 +641,44 @@ angular.module('app.info', [])
                 //$scope.videoList.nowActiveVideo=$scope.videoList.list[i+1].videoSrc;
             }
         })
+
+        $scope.dealCollect=function(){
+            if(userService.userMsg&&userService.userMsg.accountId){
+                $scope.subCollect();
+            }else{
+                $rootScope.login('comment',function(){
+                    $scope.$emit('user.nav.img', userService.userMsg.smallImg);
+                    $scope.subCollect();
+                });
+            }
+        }
+
+        $scope.holdDouble=false
+        $scope.subCollect=function(){
+            if($scope.holdDouble){
+                return;
+            }
+            $scope.holdDouble=true;
+
+            $http({
+                url:baseUrl+'ym/collection/add.api',
+                method:'POST',
+                params:{
+                    accountId:userService.userMsg.accountId,
+                    type:'album',
+                    typeId:$routeParams.id,
+                    sign:md5('ymy' + userService.userMsg.accountId + 'album'+$routeParams.id)
+                }
+            }).success(function(res){
+                console.log(res);
+                if(res.result==1){
+                    $rootScope.successAlter('收藏成功');
+                }else{
+                    $rootScope.successAlter('收藏失败');
+                }
+                $scope.holdDouble=false;
+            })
+        }
 
         /*myVideo.addEventListener('play',function(){
             console.log('开始播放');

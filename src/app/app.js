@@ -1172,11 +1172,12 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
                         method: 'POST',
                         params: {
                             accountId: userService.userMsg.accountId,
-                            type: 'news',
-                            sign: md5('ymy' + userService.userMsg.accountId + 'news')
+                            type: 'album',
+                            sign: md5('ymy' + userService.userMsg.accountId + 'album')
                         }
                     }).success(function (data) {
                         console.log(data);
+                        scope.videoUseList=data.list;
                         // if (data.result == 1) {
                         //     scope.videoUseList = data.list;
                         //     scope.videoUseList.forEach(function (val) {
@@ -1188,12 +1189,14 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
                         //$scope.alertTab('网络异常,请检查网络!',$scope.netBreakBack);
                     })
                 }
+                scope.collectAlbum();
 
                 scope.choiceVideo=function(val){
                     if(scope.collectType==val){
                         return;
                     }
                     scope.collectType=val;
+                    scope.collectAlbum();
 
                 }
                 scope.choicePassage=function(val){
