@@ -387,6 +387,9 @@ angular.module('app.info', [])
             if($routeParams.from=='history'){
                 $rootScope.hisRe.type='passageRecord';
             };
+            if($routeParams.from=='collection'){
+                $rootScope.hisRe.type='collect';
+            }
             window.history.back();
         }
 
@@ -700,6 +703,10 @@ angular.module('app.info', [])
             if($routeParams.from=='history'){
                 $rootScope.hisRe.type='videoRecord';
             };
+            if($routeParams.from=='collection'){
+                $rootScope.hisRe.type='collect';
+            }
+
             window.history.back();
         }
 

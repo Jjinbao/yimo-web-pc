@@ -1158,6 +1158,7 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
                             scope.passageUseList = data.list;
                             console.log(scope.passageUseList);
                             scope.passageUseList.forEach(function (val) {
+                                val.news.formateDate=new Date(val.news.pubTime*1000).format('yyyy-MM-dd');
                                 val.date = new Date(parseInt(val.readTime) * 1000).toLocaleString().replace(/:\d{1,2}$/, ' ');
                             })
                         }
@@ -1208,8 +1209,10 @@ angular.module('app', ['ngAnimate', 'ngRoute', 'ui.bootstrap', 'ngImgCrop', 'ang
 
                 }
                 scope.openAlbumDetail=function(val){
-                    console.log(val);
-                    $location.path('/album/history/1/'+val.album.id);
+                    $location.path('/album/collection/1/'+val.album.id);
+                }
+                scope.toDetailPage=function(val){
+                    $location.path('/detail/collection/9/'+val.id);
                 }
             },
             templateUrl: 'app/views/mine/collect.list.html'

@@ -353,4 +353,9 @@ angular.module('app.mine', [])
             $scope.nowActivePanel='videoRecord';
             $rootScope.hisRe.type='';
         }
+
+        if($rootScope.hisRe.type=='collect'){
+            $scope.nowActivePanel='collect';
+            $rootScope.hisRe.type='';
+        }
     }])
